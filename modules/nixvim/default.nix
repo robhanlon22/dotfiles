@@ -30,14 +30,14 @@
         }
         {
           mode = "n";
-          key = "<leader>fb";
+          key = "<leader>op";
           lua = true;
           action = "conf.telescope.file_browser";
           options = { desc = "File browser"; };
         }
         {
           mode = "n";
-          key = "<leader>lg";
+          key = "<leader>sp";
           lua = true;
           action = "conf.telescope.live_grep";
           options = { desc = "Live grep"; };
@@ -82,7 +82,7 @@
           };
           keymaps = {
             diagnostic = {
-              "<leader>de" = {
+              "<leader>do" = {
                 action = "open_float";
                 desc = "Open diagnostics float";
               };
