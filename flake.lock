@@ -42,14 +42,19 @@
         "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-NWT0pVrU7ubzRPL7jFW4WLiTVQY0qbKPWysALGXfnso=",
-        "path": "./flakes/cljstyle",
-        "type": "path"
+        "dir": "flakes/cljstyle",
+        "lastModified": 1706259045,
+        "narHash": "sha256-i8uCMTF7qO2HauLpe/h6SoDFKL+cGyFdZ4YDev4O0ak=",
+        "owner": "robhanlon22",
+        "repo": "hm",
+        "rev": "78b77fd84b29fa3eb90546e1c00e5f3df785c286",
+        "type": "github"
       },
       "original": {
-        "path": "./flakes/cljstyle",
-        "type": "path"
+        "dir": "flakes/cljstyle",
+        "owner": "robhanlon22",
+        "repo": "hm",
+        "type": "github"
       }
     },
     "devshell": {
