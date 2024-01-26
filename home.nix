@@ -1,4 +1,4 @@
-{ pkgs, xdg, specialArgs, ... }:
+{ pkgs, specialArgs, ... }:
 
 {
   home = {
@@ -9,6 +9,7 @@
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
       fd
       gh
+      nodejs
       ripgrep
       ruby
       wormhole-william
@@ -55,15 +56,11 @@
       shiftwidth = 2;
       softtabstop = 2;
       tabstop = 2;
-      termguicolors = true;
       laststatus = 3;
       undofile = true;
     };
 
-    colorschemes.dracula = {
-      enable = true;
-      fullSpecialAttrsSupport = true;
-    };
+    colorscheme = "dracula-soft";
 
     plugins = {
       better-escape = {
@@ -223,6 +220,7 @@
     };
 
     extraPlugins = with pkgs.vimPlugins; [
+      dracula-nvim
       plenary-nvim
       nvim-lspconfig
       typescript-tools-nvim
