@@ -33,6 +33,10 @@
       enable = true;
       source = ./stylua.toml;
     };
+    "nix/nix.conf" = {
+      enable = true;
+      source = ./nix.conf;
+    };
   };
 
   programs = {
