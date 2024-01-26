@@ -1,4 +1,4 @@
-{ pkgs, lib, specialArgs, ... }:
+{ pkgs, xdg, specialArgs, ... }:
 
 {
   home = {
@@ -13,6 +13,11 @@
       ruby
       wormhole-william
     ];
+  };
+
+  xdg.configFile."stylua/stylua.toml" = {
+    enable = true;
+    source = ./stylua.toml;
   };
 
   programs.nixvim = {
@@ -43,9 +48,7 @@
       }
     ];
 
-    clipboard = {
-      register = "unnamedplus";
-    };
+    clipboard = { register = "unnamedplus"; };
 
     options = {
       expandtab = true;
