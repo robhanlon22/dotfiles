@@ -1,12 +1,7 @@
-args@{ pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
-let
-  util = load ./util.nix;
-  load = (lib.flip import) (args // { inherit load util; });
-in {
-  nixpkgs.overlays = [ (load packages/overlay.nix) ];
-
-  imports = util.directories ./modules;
+{
+  imports = lib.my.directories ./modules;
 
   home = {
     packages = with pkgs; [
@@ -15,13 +10,17 @@ in {
       cljstyle
       coreutils
       fd
+      fnm
       gh
       git
       gnupg
       jdk11_headless
+      jenv
       kitty
       nodejs
+      rbenv
       ruby
+      ruby-build
       wormhole-william
     ];
 

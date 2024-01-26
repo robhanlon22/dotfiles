@@ -2,3 +2,7 @@ EDITOR=nvim
 VISUAL=nvim
 
 setopt autopushd
+
+eval "$(fnm env --use-on-cd)"
+eval "$(jenv init -)"
+eval "$(rbenv init - zsh)"

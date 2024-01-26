@@ -4,7 +4,6 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-lib.url = "github:nixos/nixpkgs/nixos-unstable?dir=lib";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,8 +20,12 @@
 
   outputs = { nixpkgs, home-manager, nixvim, cljstyle, ... }: {
     mkConfig = { system, modules ? [ ], username, homeDirectory }:
-      home-manager.lib.homeManagerConfiguration {
+      let
         pkgs = nixpkgs.legacyPackages.${system};
+        lib = pkgs.lib.extend
+          (lib: _: { my = import ./lib { inherit pkgs lib; }; });
+      in home-manager.lib.homeManagerConfiguration {
+        inherit pkgs lib;
         modules = [
           {
             home = {
@@ -33,9 +36,8 @@
             nixpkgs = {
               config.allowUnfree = true;
               overlays = [
-                (_self: _super: {
-                  cljstyle = cljstyle.packages.${system}.default;
-                })
+                (_: _: { cljstyle = cljstyle.packages.${system}.default; })
+                (_: _: { inherit lib; })
               ];
             };
           }

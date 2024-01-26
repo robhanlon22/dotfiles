@@ -146,6 +146,7 @@
         none-ls = {
           enable = true;
           border = "rounded";
+          enableLspFormat = true;
 
           sources = {
             code_actions = {
@@ -174,6 +175,9 @@
               trim_whitespace.enable = true;
             };
           };
+
+          sourcesItems =
+            [{ __raw = ''require("null-ls").builtins.formatting.cljstyle''; }];
         };
 
         nvim-cmp = {
