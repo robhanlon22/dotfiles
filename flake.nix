@@ -13,7 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cljstyle = {
-      url = "path:flakes/cljstyle";
+      url = "path:./flakes/cljstyle";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

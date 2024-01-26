@@ -38,7 +38,7 @@ cat >flake.nix <<EOF
   };
 
   outputs = { hm, ... }:
-    hm.mkConf {
+    hm.mkConfig {
       system = "$(nix eval --expr builtins.currentSystem --raw --impure)";
       modules = [ ./home.nix ];
       username = "$USER";
