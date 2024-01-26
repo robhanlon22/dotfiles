@@ -18,8 +18,6 @@ nix run home-manager/master -- init
 
 cd "$HOME_MANAGER"
 
-rm home.nix
-
 cat >flake.nix <<EOF
 {
   description = "Home Manager configuration of $USER";
@@ -38,12 +36,18 @@ cat >flake.nix <<EOF
     let
       conf = {
         system = "$(nix eval --expr builtins.currentSystem --raw --impure)";
-        modules = [ ];
+        modules = [ ./home.nix ];
         username = "$USER";
         homeDirectory = "$HOME";
       };
     in { homeConfigurations.$USER = hm.mkConfig conf; };
 }
+EOF
+
+cat >home.nix <<EOF
+{ pkgs, ... }:
+
+{ }
 EOF
 
 flake lock update
