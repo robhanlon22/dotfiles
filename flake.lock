@@ -44,11 +44,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-NWT0pVrU7ubzRPL7jFW4WLiTVQY0qbKPWysALGXfnso=",
-        "path": "flakes/cljstyle",
+        "path": "./flakes/cljstyle",
         "type": "path"
       },
       "original": {
-        "path": "flakes/cljstyle",
+        "path": "./flakes/cljstyle",
         "type": "path"
       }
     },
