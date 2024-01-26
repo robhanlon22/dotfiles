@@ -1,9 +1,15 @@
-{ pkgs, specialArgs, ... }:
+args@{ pkgs, specialArgs, ... }:
 
-{
-  nixpkgs.config.allowUnfree = true;
+let
+  util = load ./util.nix;
+  load = path: import path (args // { inherit load util; });
+in {
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [ (load packages/overlay.nix) ];
+  };
 
-  imports = [ ./modules/nixvim ./modules/darwin ./modules/zsh ];
+  imports = util.directories ./modules;
 
   home = {
     inherit (specialArgs) username homeDirectory;
@@ -11,9 +17,9 @@
     stateVersion = "23.11";
 
     packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
-      (callPackage ./packages/antifennel.nix { })
-      (callPackage ./packages/cljstyle { })
+      antifennel
+      caskaydia-cove-nerd-font
+      cljstyle
       coreutils
       fd
       gh

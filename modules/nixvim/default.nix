@@ -253,10 +253,7 @@
         which-key.enable = true;
       };
 
-      extraPackages = with pkgs; [
-        (callPackage ../../packages/fennel-language-server.nix { })
-        solargraph
-      ];
+      extraPackages = with pkgs; [ fennel-language-server solargraph ];
 
       extraPlugins = with pkgs.vimPlugins; [
         dracula-nvim
