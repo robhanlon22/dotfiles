@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of deck";
+  description = "HM builder";
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
@@ -24,26 +24,27 @@
         pkgs = nixpkgs.legacyPackages.${system};
         lib = pkgs.lib.extend
           (lib: _: { my = import ./lib { inherit pkgs lib; }; });
-      in home-manager.lib.homeManagerConfiguration {
-        inherit pkgs lib;
-        modules = [
-          {
-            home = {
-              inherit username homeDirectory;
-              stateVersion = "23.11";
-            };
+        base = {
+          home = {
+            inherit username homeDirectory;
+            stateVersion = "23.11";
+          };
 
-            nixpkgs = {
-              config.allowUnfree = true;
-              overlays = [
-                (_: _: { cljstyle = cljstyle.packages.${system}.default; })
-                (_: _: { inherit lib; })
-              ];
-            };
-          }
-          nixvim.homeManagerModules.nixvim
-          ./home.nix
-        ] ++ modules;
+          nixpkgs = {
+            config.allowUnfree = true;
+            overlays = [
+              (_: _: { cljstyle = cljstyle.packages.${system}.default; })
+              (_: _: { inherit lib; })
+            ];
+          };
+        };
+      in {
+        homeConfigurations.${username} =
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs lib;
+            modules = [ base nixvim.homeManagerModules.nixvim ./home.nix ]
+              ++ modules;
+          };
       };
   };
 }

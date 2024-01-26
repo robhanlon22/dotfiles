@@ -24,7 +24,7 @@ cat >flake.nix <<EOF
 
   inputs = {
     hm.url = "github:robhanlon22/hm/main";
-    # hm.url = "path:/Users/rob.hanlon/Developer/hm";
+    # hm.url = "path:/path/to/local/hm";
 
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
@@ -38,14 +38,12 @@ cat >flake.nix <<EOF
   };
 
   outputs = { hm, ... }:
-    let
-      conf = {
-        system = "$(nix eval --expr builtins.currentSystem --raw --impure)";
-        modules = [ ./home.nix ];
-        username = "$USER";
-        homeDirectory = "$HOME";
-      };
-    in { homeConfigurations.$USER = hm.mkConfig conf; };
+    hm.mkConf {
+      system = "$(nix eval --expr builtins.currentSystem --raw --impure)";
+      modules = [ ./home.nix ];
+      username = "$USER";
+      homeDirectory = "$HOME";
+    };
 }
 EOF
 
