@@ -1,9 +1,8 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, specialArgs, ... }:
 
 {
   home = {
-    username = "deck";
-    homeDirectory = "/home/deck";
+    inherit (specialArgs) username homeDirectory;
     stateVersion = "23.11"; # Please read the comment before changing.
 
     packages = with pkgs; [
@@ -13,7 +12,6 @@
       ripgrep
       ruby
       wormhole-william
-      xorg.xev
     ];
   };
 
@@ -47,7 +45,6 @@
 
     clipboard = {
       register = "unnamedplus";
-      providers.xsel.enable = true;
     };
 
     options = {
@@ -59,8 +56,6 @@
       laststatus = 3;
       undofile = true;
     };
-
-    colorscheme = lib.mkForce "dracula-soft";
 
     colorschemes.dracula = {
       enable = true;

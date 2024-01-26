@@ -14,20 +14,12 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      homeConfigurations.base = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ nixvim.homeManagerModules.nixvim ./home.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+  outputs = { nixpkgs, home-manager, nixvim, ... }: {
+    mkConfig = { system, modules ? [ ], username, homeDirectory }:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        modules = [ nixvim.homeManagerModules.nixvim ./home.nix ] ++ modules;
+        extraSpecialArgs = { inherit username homeDirectory; };
       };
-    };
+  };
 }
