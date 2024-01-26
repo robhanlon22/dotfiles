@@ -1,21 +1,14 @@
-args@{ pkgs, lib, specialArgs, ... }:
+args@{ pkgs, lib, ... }:
 
 let
   util = load ./util.nix;
   load = (lib.flip import) (args // { inherit load util; });
 in {
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ (load packages/overlay.nix) ];
-  };
+  nixpkgs.overlays = [ (load packages/overlay.nix) ];
 
   imports = util.directories ./modules;
 
   home = {
-    inherit (specialArgs) username homeDirectory;
-
-    stateVersion = "23.11";
-
     packages = with pkgs; [
       antifennel
       caskaydia-cove-nerd-font
@@ -25,6 +18,7 @@ in {
       gh
       git
       gnupg
+      jdk11_headless
       kitty
       nodejs
       ruby

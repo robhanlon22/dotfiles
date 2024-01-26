@@ -12,14 +12,35 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cljstyle = {
+      url = "path:flakes/cljstyle";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, ... }: {
+  outputs = { nixpkgs, home-manager, nixvim, cljstyle, ... }: {
     mkConfig = { system, modules ? [ ], username, homeDirectory }:
       home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
-        modules = [ nixvim.homeManagerModules.nixvim ./home.nix ] ++ modules;
-        extraSpecialArgs = { inherit username homeDirectory; };
+        modules = [
+          {
+            home = {
+              inherit username homeDirectory;
+              stateVersion = "23.11";
+            };
+
+            nixpkgs = {
+              config.allowUnfree = true;
+              overlays = [
+                (_self: _super: {
+                  cljstyle = cljstyle.packages.${system}.default;
+                })
+              ];
+            };
+          }
+          nixvim.homeManagerModules.nixvim
+          ./home.nix
+        ] ++ modules;
       };
   };
 }
