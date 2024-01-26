@@ -50,5 +50,5 @@ cat >home.nix <<EOF
 { }
 EOF
 
-flake lock update
+nix flake update
 home-manager switch
