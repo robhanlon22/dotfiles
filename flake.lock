@@ -43,7 +43,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-mXuN+XNZ5Dbs276J0IXU1H9Yi1ZInIeVMnXKqMUGqGE=",
+        "narHash": "sha256-NWT0pVrU7ubzRPL7jFW4WLiTVQY0qbKPWysALGXfnso=",
         "path": "flakes/cljstyle",
         "type": "path"
       },

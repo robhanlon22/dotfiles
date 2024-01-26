@@ -36,30 +36,23 @@
         pkgs = nixpkgs.legacyPackages.${system};
         name = "cljstyle";
         version = "0.16.626";
+        lockfile = "${pkgs.writeText "deps-lock.json"
+          (builtins.readFile ./deps-lock.json)}";
         projectSrc = pkgs.fetchFromGitHub {
           owner = "greglook";
           repo = name;
           rev = "refs/tags/${version}";
           sha256 = "9Iee9FZq/+ig2cVW+flf9tnXE8LEAbEv9fmQ3P9qf+Y=";
         };
-        inherit (clj-nix.packages.${system}) deps-lock;
       in {
         packages = {
-          deps-lock = pkgs.writeShellApplication {
-            name = "deps-lock";
-            runtimeInputs = [ deps-lock ];
-            text = ''
-              deps-lock --deps-include "${projectSrc}/deps.edn"
-            '';
-          };
           default = clj-nix.lib.mkCljApp {
             inherit pkgs;
+
             modules = [{
               name = "mvxcvi/" + name;
 
-              inherit version projectSrc;
-
-              lockfile = builtins.toString ./deps-lock.json;
+              inherit version projectSrc lockfile;
 
               main-ns = "cljstyle.main";
 
