@@ -1,14 +1,51 @@
 { pkgs, specialArgs, ... }:
 
-{
+let
+  antifennel = pkgs.stdenv.mkDerivation {
+    name = "antifennel";
+    version = "0.3.0-dev";
+
+    nativeBuildInputs = [ pkgs.luajit ];
+
+    src = pkgs.fetchFromSourcehut {
+      owner = "~technomancy";
+      repo = "antifennel";
+      rev = "0a411ae58f17a3e2792d1528105292cd76070c96";
+      sha256 = "iuJVBRhhYl+THtDcQbv3SIe/0BWkwxkAYRO1xdIJIqg=";
+    };
+
+    LUA = "${pkgs.luajit}/bin/luajit";
+    LUA_PATH = "lang/?.lua;;";
+    PREFIX = placeholder "out";
+  };
+  fennel-language-server = let rev = "59005549ca1191bf2aa364391e6bf2371889b4f8";
+  in pkgs.rustPlatform.buildRustPackage {
+    name = "fennel-language-server";
+    version = rev;
+
+    src = pkgs.fetchFromGitHub {
+      owner = "rydesun";
+      repo = "fennel-language-server";
+      inherit rev;
+      sha256 = "pp1+lquYRFZLHvU9ArkdLY/kBsfaHoZ9x8wAbWpApck=";
+    };
+
+    cargoSha256 = "B4JV1rgW59FYUuqjPzkFF+/T+4Gpr7o4z7Cmpcszcb8=";
+  };
+in {
   home = {
     inherit (specialArgs) username homeDirectory;
-    stateVersion = "23.11"; # Please read the comment before changing.
+
+    stateVersion = "23.11";
 
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+      antifennel
       fd
+      fennel-language-server
+      fzf
       gh
+      kitty
       nodejs
       ripgrep
       ruby
@@ -16,9 +53,17 @@
     ];
   };
 
-  xdg.configFile."stylua/stylua.toml" = {
-    enable = true;
-    source = ./stylua.toml;
+  xdg.configFile = {
+    "stylua/stylua.toml" = {
+      enable = true;
+      source = ./stylua.toml;
+    };
+
+    "nvim/fnl" = {
+      enable = true;
+      source = nvim/fnl;
+      recursive = true;
+    };
   };
 
   programs.nixvim = {
@@ -30,22 +75,37 @@
     globals = {
       mapleader = " ";
       maplocalleader = " ";
+      sexp_filetypes = "lisp,scheme,clojure,fennel";
     };
 
     keymaps = [
       {
         mode = "n";
-        key = "<leader>p";
+        key = "<leader><leader>";
         lua = true;
-        action = "open_projects";
-        options = { desc = "Switch project"; };
+        action = "conf.telescope.frecency";
+        options = { desc = "Frecency"; };
       }
       {
         mode = "n";
-        key = "<leader><leader>";
+        key = "<leader>pp";
         lua = true;
-        action = "open_frecency";
-        options = { desc = "Open frecent file"; };
+        action = "conf.telescope.zoxide";
+        options = { desc = "Zoxide"; };
+      }
+      {
+        mode = "n";
+        key = "<leader>fb";
+        lua = true;
+        action = "conf.telescope.file_browser";
+        options = { desc = "File browser"; };
+      }
+      {
+        mode = "n";
+        key = "<leader>lg";
+        lua = true;
+        action = "conf.telescope.live_grep";
+        options = { desc = "Live grep"; };
       }
     ];
 
@@ -68,6 +128,10 @@
         mapping = [ "jk" ];
       };
 
+      comment-nvim.enable = true;
+
+      conjure.enable = true;
+
       lsp = {
         enable = true;
         servers = {
@@ -76,29 +140,29 @@
         };
         keymaps = {
           diagnostic = {
-            "<leader>e" = {
+            "<leader>de" = {
               action = "open_float";
               desc = "Open diagnostics float";
             };
-            "<leader>j" = {
+            "<leader>dj" = {
               action = "goto_next";
               desc = "Go to next diagnostic";
             };
-            "<leader>k" = {
+            "<leader>dk" = {
               action = "goto_prev";
               desc = "Go to previous diagnostic";
             };
-            "<leader>q" = {
+            "<leader>dq" = {
               action = "setloclist";
               desc = "Add diagnostics to location list";
             };
           };
           lspBuf = {
-            "<leader>r" = {
+            "<leader>cr" = {
               action = "rename";
               desc = "Rename";
             };
-            "<leader>c" = {
+            "<leader>ca" = {
               action = "code_action";
               desc = "Code actions";
             };
@@ -151,6 +215,7 @@
           };
           formatting = {
             eslint_d.enable = true;
+            fnlfmt.enable = true;
             nixfmt.enable = true;
             prettier = {
               enable = true;
@@ -171,11 +236,11 @@
         mapping = {
           "<Tab>" = {
             modes = [ "i" "s" ];
-            action = "cmp_tab";
+            action = "conf.cmp.tab";
           };
           "<S-Tab>" = {
             modes = [ "i" "s" ];
-            action = "cmp_s_tab";
+            action = "conf.cmp.s_tab";
           };
         };
 
@@ -195,9 +260,9 @@
         window.completion.border = "rounded";
       };
 
-      project-nvim.enable = true;
+      surround.enable = true;
 
-      rainbow-delimiters.enable = true;
+      # rainbow-delimiters.enable = true;
 
       telescope = {
         enable = true;
@@ -205,15 +270,25 @@
           file_browser.enable = true;
           frecency.enable = true;
           fzf-native.enable = true;
-          project-nvim.enable = true;
           undo.enable = true;
         };
       };
 
       treesitter = {
         enable = true;
-        incrementalSelection.enable = true;
-        indent = true;
+        grammarPackages = with pkgs.tree-sitter-grammars; [
+          tree-sitter-clojure
+          tree-sitter-fennel
+          tree-sitter-graphql
+          tree-sitter-java
+          tree-sitter-json
+          tree-sitter-lua
+          tree-sitter-nix
+          tree-sitter-ruby
+          tree-sitter-scss
+          tree-sitter-typescript
+          tree-sitter-yaml
+        ];
       };
 
       which-key.enable = true;
@@ -221,13 +296,19 @@
 
     extraPlugins = with pkgs.vimPlugins; [
       dracula-nvim
-      plenary-nvim
+      hotpot-nvim
       nvim-lspconfig
+      plenary-nvim
+      telescope-zoxide
       typescript-tools-nvim
+      vim-sexp
+      vim-sexp-mappings-for-regular-people
     ];
 
-    extraConfigLuaPre = builtins.readFile nvim/extra-config-pre.lua;
-    extraConfigLua = builtins.readFile nvim/extra-config.lua;
+    extraConfigLuaPre = ''
+      require("hotpot").setup({})
+      local conf = require("conf")()
+    '';
   };
 
   # Let Home Manager install and manage itself.
