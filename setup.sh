@@ -4,7 +4,7 @@ set -euxfo pipefail
 
 HOME_MANAGER="$HOME/.config/home-manager"
 
-if [[ -d "$HOME/.config/home-manager" ]]; then
+if [[ -f "$HOME/.config/home-manager/home.nix" ]]; then
   echo "home-manager appears to already be installed."
   exit 0
 fi
@@ -23,13 +23,18 @@ cat >flake.nix <<EOF
   description = "Home Manager configuration of $USER";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    hm.url = "github:robhanlon22/hm/main";
+    # hm.url = "path:/Users/rob.hanlon/Developer/hm";
+
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+      follows = "hm/nixpkgs";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      follows = "hm/home-manager";
     };
-    hm.url = "github:robhanlon22/hm/main";
-    # hm.url = "path:/path/to/local/hm";
   };
 
   outputs = { hm, ... }:
