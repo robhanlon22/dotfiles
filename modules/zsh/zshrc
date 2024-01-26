@@ -1,0 +1,4 @@
+EDITOR=nvim
+VISUAL=nvim
+
+setopt autopushd

@@ -3,7 +3,7 @@
 {
   nixpkgs.config.allowUnfree = true;
 
-  imports = [ ./modules/nixvim ./modules/mac ];
+  imports = [ ./modules/nixvim ./modules/darwin ./modules/zsh ];
 
   home = {
     inherit (specialArgs) username homeDirectory;
@@ -13,6 +13,7 @@
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
       (callPackage ./packages/antifennel.nix { })
+      (callPackage ./packages/cljstyle { })
       coreutils
       fd
       gh
@@ -23,6 +24,8 @@
       ruby
       wormhole-william
     ];
+
+    file.".editorconfig".source = ./editorconfig;
   };
 
   xdg.configFile = {
@@ -33,11 +36,7 @@
   };
 
   programs = {
-    fzf = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
+    fzf.enable = true;
     kitty = {
       enable = true;
       font = {
@@ -45,33 +44,18 @@
         size = 16;
       };
       settings = {
-        window_padding_width = 5;
+        macos_option_as_alt = "left";
+        shell = "$HOME/.nix-profile/bin/zsh --interactive --login";
         tab_bar_style = "powerline";
         tab_powerline_style = "round";
+        window_padding_width = 5;
       };
-      shellIntegration.enableZshIntegration = true;
       theme = "Dracula";
     };
-
     nixvim.enable = true;
-
     ripgrep.enable = true;
-
-    starship = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    zsh = {
-      enable = true;
-      shellAliases = { ls = "ls --color"; };
-    };
-
-    zoxide = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
+    starship.enable = true;
+    zoxide.enable = true;
     home-manager.enable = true;
   };
 }

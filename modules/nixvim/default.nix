@@ -64,7 +64,7 @@
         };
 
         comment-nvim.enable = true;
-
+        copilot-lua.enable = true;
         conjure.enable = true;
 
         lsp = {
@@ -72,6 +72,7 @@
           servers = {
             bashls.enable = true;
             nil_ls.enable = true;
+            solargraph.enable = true;
           };
           keymaps = {
             diagnostic = {
@@ -184,6 +185,7 @@
           sources = [
             { name = "buffer"; }
             { name = "cmdline"; }
+            { name = "copilot-cmp"; }
             { name = "git"; }
             { name = "luasnip"; }
             { name = "nvim_lsp"; }
@@ -197,7 +199,7 @@
 
         surround.enable = true;
 
-        # rainbow-delimiters.enable = true;
+        rainbow-delimiters.enable = true;
 
         telescope = {
           enable = true;
@@ -209,28 +211,34 @@
           };
         };
 
-        treesitter = {
+        treesitter = let
+          grammarPackages =
+            with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+              tree-sitter-clojure
+              tree-sitter-fennel
+              tree-sitter-graphql
+              tree-sitter-java
+              tree-sitter-json
+              tree-sitter-lua
+              tree-sitter-nix
+              tree-sitter-ruby
+              tree-sitter-scss
+              tree-sitter-typescript
+              tree-sitter-yaml
+            ];
+        in {
           enable = true;
-          grammarPackages = with pkgs.tree-sitter-grammars; [
-            tree-sitter-clojure
-            tree-sitter-fennel
-            tree-sitter-graphql
-            tree-sitter-java
-            tree-sitter-json
-            tree-sitter-lua
-            tree-sitter-nix
-            tree-sitter-ruby
-            tree-sitter-scss
-            tree-sitter-typescript
-            tree-sitter-yaml
-          ];
+          inherit grammarPackages;
+          ensureInstalled = map ({ language }: language) grammarPackages;
         };
 
         which-key.enable = true;
       };
 
-      extraPackages =
-        [ (pkgs.callPackage ../../packages/fennel-language-server.nix { }) ];
+      extraPackages = with pkgs; [
+        (callPackage ../../packages/fennel-language-server.nix { })
+        solargraph
+      ];
 
       extraPlugins = with pkgs.vimPlugins; [
         dracula-nvim
