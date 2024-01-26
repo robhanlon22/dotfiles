@@ -1,8 +1,8 @@
-args@{ pkgs, specialArgs, ... }:
+args@{ pkgs, lib, specialArgs, ... }:
 
 let
   util = load ./util.nix;
-  load = path: import path (args // { inherit load util; });
+  load = (lib.flip import) (args // { inherit load util; });
 in {
   nixpkgs = {
     config.allowUnfree = true;
