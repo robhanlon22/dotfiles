@@ -1,8 +1,16 @@
-EDITOR=nvim
-VISUAL=nvim
+export EDITOR=nvim
+export VISUAL=nvim
+export GPG_TTY="$(tty)"
 
 setopt autopushd
 
 eval "$(fnm env --use-on-cd)"
 eval "$(jenv init -)"
 eval "$(rbenv init - zsh)"
+
+alias nf="nix flake"
+alias nfl="nf lock"
+alias nfu="nf update"
+alias hm="home-manager"
+alias hms="hm switch"
+alias nfuhms="(cd $HOME/.config/home-manager && nfu && hms)"

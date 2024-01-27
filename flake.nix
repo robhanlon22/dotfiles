@@ -4,18 +4,11 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    cljstyle = {
-      url = "github:robhanlon22/hm?dir=flakes/cljstyle";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    flake-utils.url = "github:numtide/flake-utils";
+    home-manager.url = "github:nix-community/home-manager";
+    nixvim.url = "github:nix-community/nixvim";
+    cljstyle.url = "path:flakes/cljstyle";
+    # cljstyle.url = "github:robhanlon22/hm?dir=flakes/cljstyle";
   };
 
   outputs = { nixpkgs, home-manager, nixvim, cljstyle, ... }: {

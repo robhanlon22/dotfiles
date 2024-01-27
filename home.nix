@@ -8,15 +8,17 @@
       antifennel
       caskaydia-cove-nerd-font
       cljstyle
+      clojure
       coreutils
       fd
       fnm
       gh
       git
-      gnupg
       jdk11_headless
       jenv
+      jq
       kitty
+      leiningen
       nodejs
       rbenv
       ruby
@@ -57,8 +59,12 @@
     };
     nixvim.enable = true;
     ripgrep.enable = true;
-    starship.enable = true;
+    starship = {
+      enable = true;
+      settings = builtins.fromTOML (builtins.readFile ./starship.toml);
+    };
     zoxide.enable = true;
     home-manager.enable = true;
+    gpg.enable = true;
   };
 }
