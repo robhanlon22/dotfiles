@@ -7,8 +7,8 @@
     flake-utils.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
     nixvim.url = "github:nix-community/nixvim";
-    cljstyle.url = "path:flakes/cljstyle";
-    # cljstyle.url = "github:robhanlon22/hm?dir=flakes/cljstyle";
+    # cljstyle.url = "path:flakes/cljstyle";
+    cljstyle.url = "github:robhanlon22/hm?dir=flakes/cljstyle";
   };
 
   outputs = { nixpkgs, home-manager, nixvim, cljstyle, ... }: {

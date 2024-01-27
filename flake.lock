@@ -27,14 +27,19 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-oiiVq5n/8KXNTCiAhwbnMst8HNg+AMrP+2t1LFIESTk=",
-        "path": "flakes/cljstyle",
-        "type": "path"
+        "dir": "flakes/cljstyle",
+        "lastModified": 1706342184,
+        "narHash": "sha256-mg7VULDU0PsZqtvQoDWGIVtdblaaQjMemjVLXBLMcHs=",
+        "owner": "robhanlon22",
+        "repo": "hm",
+        "rev": "2f99d7d9608b912e2ea974f11ac2fa37e1f6f472",
+        "type": "github"
       },
       "original": {
-        "path": "flakes/cljstyle",
-        "type": "path"
+        "dir": "flakes/cljstyle",
+        "owner": "robhanlon22",
+        "repo": "hm",
+        "type": "github"
       }
     },
     "devshell": {
