@@ -1,7 +1,7 @@
 { lib, ... }:
 
 {
-  config.programs = {
+  programs = {
     zsh = {
       enable = true;
       enableAutosuggestions = true;

@@ -4,7 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    clj-nix.url = "github:jlesquembre/clj-nix";
+    clj-nix = {
+      url = "github:jlesquembre/clj-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, flake-utils, clj-nix, ... }:

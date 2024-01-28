@@ -39,32 +39,4 @@
       source = ./nix.conf;
     };
   };
-
-  programs = {
-    fzf.enable = true;
-    kitty = {
-      enable = true;
-      font = {
-        name = "Caskaydia Cove Nerd Font Mono";
-        size = 16;
-      };
-      settings = {
-        macos_option_as_alt = "left";
-        shell = "$HOME/.nix-profile/bin/zsh --interactive --login";
-        tab_bar_style = "powerline";
-        tab_powerline_style = "round";
-        window_padding_width = 5;
-      };
-      theme = "Dracula";
-    };
-    nixvim.enable = true;
-    ripgrep.enable = true;
-    starship = {
-      enable = true;
-      settings = builtins.fromTOML (builtins.readFile ./starship.toml);
-    };
-    zoxide.enable = true;
-    home-manager.enable = true;
-    gpg.enable = true;
-  };
 }

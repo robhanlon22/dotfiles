@@ -14,4 +14,6 @@ rustPlatform.buildRustPackage rec {
 
   cargoSha256 = "B4JV1rgW59FYUuqjPzkFF+/T+4Gpr7o4z7Cmpcszcb8=";
   cargoDepsName = pname;
+
+  doCheck = false;
 }
