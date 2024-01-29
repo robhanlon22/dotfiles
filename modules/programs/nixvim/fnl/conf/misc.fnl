@@ -8,15 +8,15 @@
                                             (. :bg))
                       :overrides {:CursorLine {:bg "#434958"}}})))
 
-  (fn deadcolumn-setup []
-    (let [deadcolumn (require :deadcolumn)]
-      (deadcolumn.setup {})))
+  (fn virt-column-setup []
+    (let [virt-column (require :virt-column)]
+      (virt-column.setup {})))
 
   (fn ufo-setup []
     (ufo.setup {:provider_selector (fn [] [:treesitter :indent])}))
 
   (fn []
-    (deadcolumn-setup)
+    (virt-column-setup)
     (dracula-setup)
     (ufo-setup)
     {:ufo {:open_all_folds ufo.openAllFolds :close_all_folds ufo.closeAllFolds}}))

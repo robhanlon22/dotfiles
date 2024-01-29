@@ -57,8 +57,6 @@
 
       nix = {};
 
-      notify = {};
-
       nvim-lightbulb = {};
 
       nvim-ufo = {};
@@ -67,13 +65,11 @@
 
       surround = {};
 
-      telescope = {
-        extensions = enabledAll {
-          file_browser = {};
-          frecency = {};
-          fzf-native = {};
-          undo = {};
-        };
+      telescope.extensions = enabledAll {
+        file_browser = {};
+        frecency = {};
+        fzf-native = {};
+        undo = {};
       };
 
       typescript-tools = {settings = {exposeAsCodeAction = "all";};};
@@ -85,12 +81,12 @@
 
     extraPlugins = with pkgs.vimPlugins; [
       (pkgs.vimUtils.buildVimPlugin {
-        name = "deadcolumn-nvim";
+        name = "virt-column-nvim";
         src = pkgs.fetchFromGitHub {
-          owner = "Bekaboo";
-          repo = "deadcolumn.nvim";
-          rev = "b84cdf2fc94c59651ececd5e4d2a0488b38a7a75";
-          sha256 = "FMtPYT7llNl6PsLM6AvLxy7bKpYqkLoI7+e+VCc6xx0=";
+          owner = "lukas-reineke";
+          repo = "virt-column.nvim";
+          rev = "refs/tags/v2.0.2";
+          sha256 = "7ljjJ7UwN2U1xPCtsYbrKdnz6SGQGbM/HrxPTxNKlwo=";
         };
       })
       dracula-nvim
@@ -98,6 +94,7 @@
       hotpot-nvim
       nvim-lspconfig
       plenary-nvim
+      telescope-ui-select-nvim
       telescope-zoxide
       vim-sexp
       vim-sexp-mappings-for-regular-people

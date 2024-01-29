@@ -20,7 +20,7 @@ with lib.my.nixvim.keymap; {
         wk.vim "BufferMovePrevious" "Move buffer to previous position";
       ${alt- ">"} = wk.vim "BufferMoveNext" "Move buffer to next position";
       ${leader} = {
-        b = wk.group "Barbar" {
+        "b" = wk.group "Barbar" {
           b = wk.vim "BufferOrderByBufferNumber" "Order buffers by buffer number";
           d = wk.vim "BufferOrderByDirectory" "Order buffers by directory";
           l = wk.vim "BufferOrderByLanguage" "Order buffers by language";

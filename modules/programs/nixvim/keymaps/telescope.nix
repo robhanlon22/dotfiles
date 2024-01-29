@@ -5,13 +5,13 @@ with lib.my.nixvim.keymap; {
   in {
     ${leader} = {
       ${leader} = telescope "frecency workspace=CWD" "Telescope frecency";
-      ";" = wk.group "Telescope" {
+      s = wk.group "Telescope" {
         b = telescope "buffers" "Buffers";
         f = telescope "file_browser" "File browser";
-        s = telescope "live_grep" "Live grep";
+        p = telescope "live_grep" "Live grep";
         t = telescope "builtin" "Builtin";
-        u = telescope "undo" "Ultisnips";
-        z = telescope "zoxide" "Zoxide";
+        u = telescope "undo" "Undo";
+        d = telescope "zoxide list" "Zoxide";
       };
     };
   };

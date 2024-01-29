@@ -1,12 +1,12 @@
-(let [telescope (require :telescope)
-      telescope-builtin (require :telescope.builtin)]
-  (fn frecency [opts]
-    (let [the-opts (vim.tbl_deep_extend :force {:workspace :CWD} (or opts {}))]
-      (telescope.extensions.frecency.frecency the-opts)))
+(let [telescope (require :telescope)]
+  (fn zoxide-action [{: path}]
+    (vim.cmd.cd path)
+    (telescope.extensions.frecency.frecency {:cwd path :workspace :CWD}))
 
-  (fn zoxide-action [{:path cwd}]
-    (vim.cmd.cd cwd)
-    (frecency {: cwd}))
+  (fn ui-select-setup []
+    (let [telescope-themes (require :telescope.themes)]
+      (telescope.setup {:extensions {:ui-select (telescope-themes.get_dropdown {})}})
+      (telescope.load_extension :ui-select)))
 
   (fn zoxide-setup []
     (let [opts {:extensions {:zoxide {:mappings {:default {:action zoxide-action
@@ -15,8 +15,6 @@
       (telescope.load_extension :zoxide)))
 
   (fn []
+    (ui-select-setup)
     (zoxide-setup)
-    {:telescope {: frecency
-                 :file_browser telescope.extensions.file_browser.file_browser
-                 :live_grep telescope-builtin.live_grep
-                 :zoxide telescope.extensions.zoxide.list}}))
+    {}))

@@ -10,9 +10,9 @@
     viAlias = true;
     vimAlias = true;
 
-    globals = rec {
+    globals = {
       mapleader = " ";
-      maplocalleader = mapleader;
+      maplocalleader = ",";
       sexp_filetypes = "lisp,scheme,clojure,fennel";
     };
 
@@ -22,6 +22,7 @@
       colorcolumn = [80];
       cursorline = true;
       expandtab = true;
+      foldcolumn = "1";
       foldenable = true;
       foldlevel = 99;
       foldlevelstart = 99;

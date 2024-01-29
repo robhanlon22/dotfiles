@@ -23,19 +23,19 @@
       };
       keymaps = with lib.my.nixvim.keymap; {
         diagnostic = {
-          ${leader- "do"} = {
+          ${leader- "cd"} = {
             action = "open_float";
             desc = "Open diagnostics float";
           };
-          ${leader- "dj"} = {
+          ${leader- "cj"} = {
             action = "goto_next";
             desc = "Go to next diagnostic";
           };
-          ${leader- "dk"} = {
+          ${leader- "ck"} = {
             action = "goto_prev";
             desc = "Go to previous diagnostic";
           };
-          ${leader- "dq"} = {
+          ${leader- "cq"} = {
             action = "setloclist";
             desc = "Add diagnostics to location list";
           };

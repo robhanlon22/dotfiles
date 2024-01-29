@@ -44,7 +44,7 @@
         nixvimLib = {nixvim = nixvim.lib.${system}.helpers;};
       in
         nixvimLib
-        // (import ./lib {
+        // (import ./lib.nix {
           inherit pkgs;
           lib = super // nixvimLib;
         }));
@@ -57,6 +57,7 @@
             homeDirectory,
             modules,
             overlays,
+            stateVersion ? "23.11",
           }: {
             homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
               inherit pkgs lib;
@@ -64,8 +65,7 @@
                 [
                   {
                     home = {
-                      inherit homeDirectory username;
-                      stateVersion = "23.11";
+                      inherit homeDirectory username stateVersion;
                     };
 
                     nixpkgs = {
