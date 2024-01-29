@@ -1,5 +1,16 @@
-{lib, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   my = rec {
+    trace = v: builtins.trace v v;
+
+    modules = {
+      whenDarwin = lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin;
+      whenLinux = lib.attrsets.optionalAttrs pkgs.stdenv.isLinux;
+    };
+
     nixvim = {
       keymap = let
         mkMod = m: k: "<${m}-${toString k}>";

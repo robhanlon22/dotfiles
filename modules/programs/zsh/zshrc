@@ -12,5 +12,7 @@ alias nf="nix flake"
 alias nfl="nf lock"
 alias nfu="nf update"
 alias hm="home-manager"
-alias hms="hm switch"
+alias hms="hm switch --show-trace"
 alias nfuhms="(cd $HOME/.config/home-manager && nfu && hms)"
+
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk

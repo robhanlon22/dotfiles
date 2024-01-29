@@ -6,6 +6,7 @@
       coreutils
       fd
       fnm
+      google-java-format
       gh
       git
       jdk11_headless
