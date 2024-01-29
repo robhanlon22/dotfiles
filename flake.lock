@@ -33,11 +33,11 @@
       },
       "locked": {
         "dir": "flakes/cljstyle",
-        "lastModified": 1706515714,
-        "narHash": "sha256-5ImxgvXubaPvPkCCminIGN/Btu8mJZ2kZqmUaXJFm08=",
+        "lastModified": 1706520637,
+        "narHash": "sha256-wFqXkninjkw6hzlyKlvxx0Zb88YCKd9AIzfi4LFipaI=",
         "owner": "robhanlon22",
         "repo": "hm",
-        "rev": "f5ed16225a46a4fb679bff75ed8417a93e6230f6",
+        "rev": "631e1a88de3f3315e25ccafc3f4e8cefb7bb616f",
         "type": "github"
       },
       "original": {
@@ -435,11 +435,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1706515086,
-        "narHash": "sha256-tjWRh6hv2kNGFRV8ESjg3TZDuA6B4Ls1fnru5z89SNA=",
+        "lastModified": 1706519669,
+        "narHash": "sha256-THY4ByWR7FWNp+egOXq9Gg6Kd6rwcjQ3TubeBTJaVOM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "0416c8902949ad6fcfe91af8d9f9efa66bce8bef",
+        "rev": "aad9d1d5df0ba43a33b2b931ea11a7d98fb11927",
         "type": "github"
       },
       "original": {
