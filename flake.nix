@@ -97,12 +97,26 @@
             deadnix = {};
             editorconfig-checker = {};
             luacheck = {};
+            fnlfmt = {
+              name = "fnlfmt";
+              description = "Run fnlfmt on Fennel files";
+              files = "\\.fnl$";
+              entry = "${pkgs.fnlfmt}/bin/fnlfmt --fix";
+            };
             prettier = {
               files = "\\.(md|json|yaml|yml)$";
             };
             statix = {};
             stylua = {};
             taplo = {};
+            "~git-diff" = {
+              name = "git-diff";
+              description = "Show git diff when files have been changed";
+              entry = "git diff --color --exit-code";
+              always_run = true;
+              pass_filenames = false;
+              require_serial = true;
+            };
           };
         };
       };
