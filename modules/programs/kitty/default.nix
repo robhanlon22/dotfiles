@@ -1,8 +1,6 @@
-_:
-
-{
-  programs.kitty = {
-    enable = true;
+{lib, ...}:
+with lib.my.config; {
+  programs.kitty = enabled {
     font = {
       name = "Caskaydia Cove Nerd Font Mono";
       size = 16;

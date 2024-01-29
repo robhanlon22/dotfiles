@@ -1,18 +1,17 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   my = rec {
     nixvim = {
-      keymap = let mkMod = m: k: "<${m}-${toString k}>";
+      keymap = let
+        mkMod = m: k: "<${m}-${toString k}>";
       in rec {
         leader = "<leader>";
         leader- = k: "${leader}${toString k}";
         alt- = mkMod "A";
         ctrl- = mkMod "C";
         wk = {
-          group = name: attrs: { inherit name; } // attrs;
-          vim = command: desc: [ "<cmd>${toString command}<cr>" desc ];
-          lua = fn: desc: [ (lib.nixvim.mkRaw fn) desc ];
+          group = name: attrs: {inherit name;} // attrs;
+          vim = command: desc: ["<cmd>${toString command}<cr>" desc];
+          lua = fn: desc: [(lib.nixvim.mkRaw fn) desc];
         };
       };
     };
@@ -23,8 +22,10 @@
     };
 
     config = rec {
-      enabled = attrsets.merge { enable = true; };
-      allEnabled = builtins.mapAttrs (lib.const enabled);
+      enabling = attr: attrsets.merge {${attr} = true;};
+      enabled = enabling "enable";
+      enablingAll = attr: builtins.mapAttrs (lib.const (enabling attr));
+      enabledAll = enablingAll "enable";
     };
   };
 }

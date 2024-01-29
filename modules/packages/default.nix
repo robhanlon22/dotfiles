@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs;
     [
       cljstyle
@@ -18,7 +16,8 @@
       rbenv
       ruby
       wormhole-william
-    ] ++ (map ((lib.flip pkgs.callPackage) { }) [
+    ]
+    ++ (map ((lib.flip pkgs.callPackage) {}) [
       ./antifennel.nix
       ./caskaydia-cove-nerd-font.nix
       ./jenv.nix

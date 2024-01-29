@@ -1,3 +1,2 @@
-{ pkgs, ... }:
-
-pkgs.nerdfonts.override { fonts = [ "CascadiaCode" ]; }
+{pkgs, ...}:
+pkgs.nerdfonts.override {fonts = ["CascadiaCode"];}

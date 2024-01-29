@@ -2,8 +2,15 @@
   description = "HM builder";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils = {url = "github:numtide/flake-utils";};
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,38 +27,88 @@
     };
   };
 
-  outputs = { cljstyle, home-manager, nixpkgs, nixvim, nur, ... }: {
-    mkConfig = { system, username, homeDirectory, modules, overlays }:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        lib = pkgs.lib.extend (_: super:
-          let nixvimLib = { nixvim = nixvim.lib.${system}.helpers; };
-          in nixvimLib // (import ./lib {
-            inherit pkgs;
-            lib = super // nixvimLib;
-          }));
-        baseModule = {
-          home = {
-            inherit homeDirectory username;
-            stateVersion = "23.11";
-          };
+  outputs = {
+    self,
+    cljstyle,
+    home-manager,
+    nixpkgs,
+    nixvim,
+    nur,
+    flake-utils,
+    pre-commit-hooks,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+      lib = pkgs.lib.extend (_: super: let
+        nixvimLib = {nixvim = nixvim.lib.${system}.helpers;};
+      in
+        nixvimLib
+        // (import ./lib {
+          inherit pkgs;
+          lib = super // nixvimLib;
+        }));
+    in {
+      lib =
+        lib
+        // {
+          mkConfig = {
+            username,
+            homeDirectory,
+            modules,
+            overlays,
+          }: {
+            homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+              inherit pkgs lib;
+              modules =
+                [
+                  {
+                    home = {
+                      inherit homeDirectory username;
+                      stateVersion = "23.11";
+                    };
 
-          nixpkgs = {
-            config.allowUnfree = true;
-            overlays = [
-              (_: _: { cljstyle = cljstyle.packages.${system}.default; })
-              (_: _: { inherit lib; })
-              nur.overlay
-            ] ++ overlays;
+                    nixpkgs = {
+                      config.allowUnfree = true;
+                      overlays =
+                        [
+                          (_: _: {
+                            cljstyle = cljstyle.packages.${system}.default;
+                          })
+                          (_: _: {inherit lib;})
+                          nur.overlay
+                        ]
+                        ++ overlays;
+                    };
+                  }
+                  nixvim.homeManagerModules.nixvim
+                  ./home.nix
+                ]
+                ++ modules;
+            };
           };
         };
-      in {
-        homeConfigurations.${username} =
-          home-manager.lib.homeManagerConfiguration {
-            inherit pkgs lib;
-            modules = [ baseModule nixvim.homeManagerModules.nixvim ./home.nix ]
-              ++ modules;
+
+      checks = {
+        pre-commit-check = pre-commit-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = lib.my.config.enabledAll {
+            alejandra = {};
+            deadnix = {};
+            editorconfig-checker = {};
+            luacheck = {};
+            prettier = {
+              files = "\\.(md|json|yaml|yml)$";
+            };
+            statix = {};
+            stylua = {};
+            taplo = {};
           };
+        };
       };
-  };
+
+      devShells.default = pkgs.mkShell {
+        inherit (self.checks.${system}.pre-commit-check) shellHook;
+      };
+    });
 }

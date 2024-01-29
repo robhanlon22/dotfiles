@@ -1,7 +1,9 @@
-{ pkgs, lib, ... }:
-
 {
-  imports = [ ./keymaps ./plugins ];
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [./keymaps ./plugins];
 
   programs.nixvim = {
     defaultEditor = true;
@@ -17,7 +19,7 @@
     clipboard.register = "unnamedplus";
 
     options = {
-      colorcolumn = [ 80 ];
+      colorcolumn = [80];
       cursorline = true;
       expandtab = true;
       foldenable = true;
@@ -32,8 +34,7 @@
 
     colorscheme = "dracula-soft";
 
-    extraPackages = with pkgs;
-      [ nur.repos.bandithedoge.fennel-language-server ];
+    extraPackages = with pkgs; [nur.repos.bandithedoge.fennel-language-server];
 
     extraConfigLuaPre = builtins.readFile ./pre.lua;
   };

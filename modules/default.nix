@@ -1,5 +1,3 @@
-_:
-
-{
-  imports = [ ./darwin ./linux ./packages ./programs ];
+_: {
+  imports = [./darwin ./linux ./packages ./programs];
 }

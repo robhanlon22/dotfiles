@@ -1,27 +1,25 @@
-{ lib, ... }:
-
-{
+{lib, ...}: {
   programs.nixvim.plugins.lsp = with lib.my.config;
     enabled {
-      servers = allEnabled {
-        bashls = { };
-        clojure-lsp = { };
-        dockerls = { };
-        eslint = { };
-        graphql = { };
-        html = { };
-        java-language-server = { };
-        lua-ls = { };
-        marksman = { };
-        nil_ls = { };
-        pyright = { };
+      servers = enabledAll {
+        bashls = {};
+        clojure-lsp = {};
+        dockerls = {};
+        eslint = {};
+        graphql = {};
+        html = {};
+        java-language-server = {};
+        lua-ls = {};
+        marksman = {};
+        nil_ls = {};
+        pyright = {};
         rust-analyzer = {
           installRustc = true;
           installCargo = true;
         };
-        taplo = { };
-        solargraph = { };
-        yamlls = { };
+        taplo = {};
+        solargraph = {};
+        yamlls = {};
       };
       keymaps = with lib.my.nixvim.keymap; {
         diagnostic = {

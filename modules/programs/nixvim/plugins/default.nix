@@ -1,43 +1,44 @@
-{ pkgs, lib, ... }:
-
 {
-  imports =
-    [ ./lsp.nix ./lualine.nix ./none-ls.nix ./nvim-cmp.nix ./treesitter.nix ];
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [./lsp.nix ./lualine.nix ./none-ls.nix ./nvim-cmp.nix ./treesitter.nix];
 
   programs.nixvim = with lib.my.config; {
-    plugins = allEnabled {
-      auto-session = { };
+    plugins = enabledAll {
+      auto-session = {};
 
-      barbar = { autoHide = true; };
+      barbar = {autoHide = true;};
 
-      better-escape = { mapping = [ "jk" ]; };
+      better-escape = {mapping = ["jk"];};
 
-      comment-nvim = { };
+      comment-nvim = {};
 
-      conjure = { };
+      conjure = {};
 
-      cursorline = { };
+      cursorline = {};
 
       copilot-lua = {
         suggestion.enabled = false;
         panel.enabled = false;
       };
 
-      floaterm = { };
+      floaterm = {};
 
-      inc-rename = { };
+      inc-rename = {};
 
-      indent-blankline = { };
+      indent-blankline = {};
 
-      lastplace = { };
+      lastplace = {};
 
-      leap = { };
+      leap = {};
 
-      lspkind = { extraOptions = { symbol_map = { Copilot = ""; }; }; };
+      lspkind = {extraOptions = {symbol_map = {Copilot = "";};};};
 
-      lsp-format = { };
+      lsp-format = {};
 
-      luasnip = { };
+      luasnip = {};
 
       mini = {
         modules = {
@@ -52,34 +53,34 @@
         };
       };
 
-      navbuddy = { lsp.autoAttach = true; };
+      navbuddy = {lsp.autoAttach = true;};
 
-      nix = { };
+      nix = {};
 
-      notify = { };
+      notify = {};
 
-      nvim-lightbulb = { };
+      nvim-lightbulb = {};
 
-      nvim-ufo = { };
+      nvim-ufo = {};
 
-      rainbow-delimiters = { };
+      rainbow-delimiters = {};
 
-      surround = { };
+      surround = {};
 
       telescope = {
-        extensions = allEnabled {
-          file_browser = { };
-          frecency = { };
-          fzf-native = { };
-          undo = { };
+        extensions = enabledAll {
+          file_browser = {};
+          frecency = {};
+          fzf-native = {};
+          undo = {};
         };
       };
 
-      typescript-tools = { settings = { exposeAsCodeAction = "all"; }; };
+      typescript-tools = {settings = {exposeAsCodeAction = "all";};};
 
-      trouble = { };
+      trouble = {};
 
-      which-key = { };
+      which-key = {};
     };
 
     extraPlugins = with pkgs.vimPlugins; [
