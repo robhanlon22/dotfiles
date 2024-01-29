@@ -33,11 +33,11 @@
       },
       "locked": {
         "dir": "flakes/cljstyle",
-        "lastModified": 1706414578,
-        "narHash": "sha256-byHf5jUDqT00zL9z4seC7TKHKR4ISF1yot9Rb/XgFjc=",
+        "lastModified": 1706515714,
+        "narHash": "sha256-5ImxgvXubaPvPkCCminIGN/Btu8mJZ2kZqmUaXJFm08=",
         "owner": "robhanlon22",
         "repo": "hm",
-        "rev": "c47d0b301fb347511a6d759c3d70b8df1a7e02e7",
+        "rev": "f5ed16225a46a4fb679bff75ed8417a93e6230f6",
         "type": "github"
       },
       "original": {
