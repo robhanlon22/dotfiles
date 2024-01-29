@@ -1,5 +1,8 @@
 (let [cmp (require :cmp)
       luasnip (require :luasnip)]
+  (fn copilot-setup []
+    (vim.api.nvim_set_hl 0 :CmpItemKindCopilot {:fg "#6CC644"}))
+
   (fn comparators-setup []
     (let [{:global {: sorting}} (require :cmp.config)
           copilot (require :copilot_cmp.comparators)
@@ -46,6 +49,7 @@
         (fallback)))
 
   (fn []
+    (copilot-setup)
     (comparators-setup)
     (cmdline-setup)
     (search-setup)

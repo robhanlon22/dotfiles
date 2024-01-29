@@ -1,32 +1,39 @@
 { lib, ... }:
 
 {
-  programs.nixvim.plugins.none-ls = {
-    enable = true;
-    border = "rounded";
-    enableLspFormat = true;
+  programs.nixvim.plugins.none-ls = with lib.my.config;
+    enabled {
+      border = "rounded";
+      enableLspFormat = true;
 
-    sources = {
-      code_actions =
-        lib.my.enable [ "eslint_d" "gitsigns" "shellcheck" "statix" ];
-      diagnostics = lib.my.enable [ "deadnix" "eslint_d" "luacheck" "statix" ];
-      formatting = lib.my.enable [
-        "eslint_d"
-        "fnlfmt"
-        "nixfmt"
-        "shfmt"
-        "stylua"
-        "trim_newlines"
-        "trim_whitespace"
-      ] // {
-        prettier = {
-          enable = true;
-          disableTsServerFormatter = true;
+      sources = {
+        code_actions = allEnabled {
+          eslint_d = { };
+          gitsigns = { };
+          shellcheck = { };
+          statix = { };
+        };
+
+        diagnostics = allEnabled {
+          deadnix = { };
+          eslint_d = { };
+          luacheck = { };
+          statix = { };
+        };
+
+        formatting = allEnabled {
+          eslint_d = { };
+          fnlfmt = { };
+          nixfmt = { };
+          prettier = { disableTsServerFormatter = true; };
+          shfmt = { };
+          stylua = { };
+          trim_newlines = { };
+          trim_whitespace = { };
         };
       };
-    };
 
-    sourcesItems =
-      [{ __raw = ''require("null-ls").builtins.formatting.cljstyle''; }];
-  };
+      sourcesItems =
+        [{ __raw = ''require("null-ls").builtins.formatting.cljstyle''; }];
+    };
 }

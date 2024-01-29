@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
-  imports = [ ./keymaps.nix ./plugins ];
+  imports = [ ./keymaps ./plugins ];
 
   programs.nixvim = {
     defaultEditor = true;
@@ -14,42 +14,32 @@
       sexp_filetypes = "lisp,scheme,clojure,fennel";
     };
 
-    clipboard = { register = "unnamedplus"; };
+    clipboard.register = "unnamedplus";
 
     options = {
+      colorcolumn = [ 80 ];
+      cursorline = true;
       expandtab = true;
+      foldenable = true;
+      foldlevel = 99;
+      foldlevelstart = 99;
+      laststatus = 3;
       shiftwidth = 2;
       softtabstop = 2;
       tabstop = 2;
-      laststatus = 3;
       undofile = true;
     };
 
     colorscheme = "dracula-soft";
 
-    extraPackages = with pkgs; [ fennel-language-server solargraph ];
+    extraPackages = with pkgs;
+      [ nur.repos.bandithedoge.fennel-language-server ];
 
-    extraPlugins = with pkgs.vimPlugins; [
-      dracula-nvim
-      fuzzy-nvim
-      hotpot-nvim
-      nvim-lspconfig
-      plenary-nvim
-      telescope-zoxide
-      typescript-tools-nvim
-      vim-sexp
-      vim-sexp-mappings-for-regular-people
-    ];
-
-    extraConfigLuaPre = ''
-      require("hotpot").setup({})
-      local conf = require("conf")()
-    '';
+    extraConfigLuaPre = builtins.readFile ./pre.lua;
   };
 
   xdg.configFile = {
-    "nvim/fnl" = {
-      enable = true;
+    "nvim/fnl" = lib.my.config.enabled {
       source = ./fnl;
       recursive = true;
     };

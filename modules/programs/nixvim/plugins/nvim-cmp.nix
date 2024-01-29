@@ -1,8 +1,7 @@
-_:
+{ lib, ... }:
 
 {
-  programs.nixvim.plugins.nvim-cmp = {
-    enable = true;
+  programs.nixvim.plugins.nvim-cmp = lib.my.config.enabled {
     snippet = { expand = "luasnip"; };
 
     mapping = {

@@ -1,59 +1,105 @@
-_:
+{ pkgs, lib, ... }:
 
 {
   imports =
-    [ ./lsp.nix ./treesitter.nix ./nvim-cmp.nix ./none-ls.nix ./lualine.nix ];
+    [ ./lsp.nix ./lualine.nix ./none-ls.nix ./nvim-cmp.nix ./treesitter.nix ];
 
-  programs.nixvim.plugins = {
-    barbar = {
-      enable = true;
-      autoHide = true;
-    };
+  programs.nixvim = with lib.my.config; {
+    plugins = allEnabled {
+      auto-session = { };
 
-    better-escape = {
-      enable = true;
-      mapping = [ "jk" ];
-    };
+      barbar = { autoHide = true; };
 
-    comment-nvim.enable = true;
+      better-escape = { mapping = [ "jk" ]; };
 
-    conjure.enable = true;
+      comment-nvim = { };
 
-    copilot-lua = {
-      enable = true;
-      suggestion.enabled = false;
-      panel.enabled = false;
-    };
+      conjure = { };
 
-    luasnip.enable = true;
+      cursorline = { };
 
-    lsp-format.enable = true;
-
-    lspkind = {
-      enable = true;
-      extraOptions = { symbol_map = { Copilot = ""; }; };
-    };
-
-    nix.enable = true;
-
-    persistence.enable = true;
-
-    startify.enable = true;
-
-    surround.enable = true;
-
-    rainbow-delimiters.enable = true;
-
-    telescope = {
-      enable = true;
-      extensions = {
-        file_browser.enable = true;
-        frecency.enable = true;
-        fzf-native.enable = true;
-        undo.enable = true;
+      copilot-lua = {
+        suggestion.enabled = false;
+        panel.enabled = false;
       };
+
+      floaterm = { };
+
+      inc-rename = { };
+
+      indent-blankline = { };
+
+      lastplace = { };
+
+      leap = { };
+
+      lspkind = { extraOptions = { symbol_map = { Copilot = ""; }; }; };
+
+      lsp-format = { };
+
+      luasnip = { };
+
+      mini = {
+        modules = {
+          basics = {
+            options.extra_ui = true;
+            mappings = {
+              windows = true;
+              move_with_alt = true;
+            };
+            autocommands.relnum_in_visual_mode = true;
+          };
+        };
+      };
+
+      navbuddy = { lsp.autoAttach = true; };
+
+      nix = { };
+
+      notify = { };
+
+      nvim-lightbulb = { };
+
+      nvim-ufo = { };
+
+      rainbow-delimiters = { };
+
+      surround = { };
+
+      telescope = {
+        extensions = allEnabled {
+          file_browser = { };
+          frecency = { };
+          fzf-native = { };
+          undo = { };
+        };
+      };
+
+      typescript-tools = { settings = { exposeAsCodeAction = "all"; }; };
+
+      trouble = { };
+
+      which-key = { };
     };
 
-    which-key.enable = true;
+    extraPlugins = with pkgs.vimPlugins; [
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "deadcolumn-nvim";
+        src = pkgs.fetchFromGitHub {
+          owner = "Bekaboo";
+          repo = "deadcolumn.nvim";
+          rev = "b84cdf2fc94c59651ececd5e4d2a0488b38a7a75";
+          sha256 = "FMtPYT7llNl6PsLM6AvLxy7bKpYqkLoI7+e+VCc6xx0=";
+        };
+      })
+      dracula-nvim
+      fuzzy-nvim
+      hotpot-nvim
+      nvim-lspconfig
+      plenary-nvim
+      telescope-zoxide
+      vim-sexp
+      vim-sexp-mappings-for-regular-people
+    ];
   };
 }

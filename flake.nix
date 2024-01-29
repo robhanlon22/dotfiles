@@ -12,6 +12,7 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nur.url = "github:nix-community/NUR";
     cljstyle = {
       # url = "path:flakes/cljstyle";
       url = "github:robhanlon22/hm?dir=flakes/cljstyle";
@@ -19,15 +20,19 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, nixvim, cljstyle, ... }: {
-    mkConfig = { system, modules ? [ ], username, homeDirectory }:
+  outputs = { cljstyle, home-manager, nixpkgs, nixvim, nur, ... }: {
+    mkConfig = { system, username, homeDirectory, modules, overlays }:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        lib = pkgs.lib.extend
-          (lib: _: home-manager.lib // (import ./lib { inherit pkgs lib; }));
-        base = {
+        lib = pkgs.lib.extend (_: super:
+          let nixvimLib = { nixvim = nixvim.lib.${system}.helpers; };
+          in nixvimLib // (import ./lib {
+            inherit pkgs;
+            lib = super // nixvimLib;
+          }));
+        baseModule = {
           home = {
-            inherit username homeDirectory;
+            inherit homeDirectory username;
             stateVersion = "23.11";
           };
 
@@ -36,14 +41,15 @@
             overlays = [
               (_: _: { cljstyle = cljstyle.packages.${system}.default; })
               (_: _: { inherit lib; })
-            ];
+              nur.overlay
+            ] ++ overlays;
           };
         };
       in {
         homeConfigurations.${username} =
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs lib;
-            modules = [ base nixvim.homeManagerModules.nixvim ./home.nix ]
+            modules = [ baseModule nixvim.homeManagerModules.nixvim ./home.nix ]
               ++ modules;
           };
       };

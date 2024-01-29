@@ -1,8 +1,14 @@
 { lib, ... }:
 
 {
-  imports = lib.my.directories ./.;
+  imports = [ ./kitty ./nixvim ./starship ./zsh ];
 
-  programs =
-    lib.my.enable [ "fzf" "gpg" "home-manager" "nixvim" "ripgrep" "zoxide" ];
+  programs = lib.my.config.allEnabled {
+    fzf = { };
+    gpg = { };
+    home-manager = { };
+    nixvim = { };
+    ripgrep = { };
+    zoxide = { };
+  };
 }

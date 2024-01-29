@@ -1,9 +1,27 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
-  nixpkgs.overlays = [
-    (_self: _super:
-      (lib.my.attrsets.fromList builtins.baseNameOf
-        (path: pkgs.callPackage path { }) (lib.my.directories ./.)))
-  ];
+  home.packages = with pkgs;
+    [
+      cljstyle
+      clojure
+      coreutils
+      fd
+      fnm
+      gh
+      git
+      jdk11_headless
+      jq
+      kitty
+      leiningen
+      nodejs
+      rbenv
+      ruby
+      wormhole-william
+    ] ++ (map ((lib.flip pkgs.callPackage) { }) [
+      ./antifennel.nix
+      ./caskaydia-cove-nerd-font.nix
+      ./jenv.nix
+      ./ruby-build.nix
+    ]);
 }

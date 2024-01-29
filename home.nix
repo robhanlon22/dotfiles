@@ -1,33 +1,9 @@
-{ pkgs, lib, ... }:
+_:
 
 {
-  imports = lib.my.directories ./modules;
+  imports = [ ./modules ];
 
-  home = {
-    packages = with pkgs; [
-      antifennel
-      caskaydia-cove-nerd-font
-      cljstyle
-      clojure
-      coreutils
-      fd
-      fnm
-      gh
-      git
-      jdk11_headless
-      jenv
-      jq
-      kitty
-      leiningen
-      nodejs
-      rbenv
-      ruby
-      ruby-build
-      wormhole-william
-    ];
-
-    file.".editorconfig".source = ./editorconfig;
-  };
+  home.file.".editorconfig".source = ./editorconfig;
 
   xdg.configFile = {
     "stylua/stylua.toml" = {

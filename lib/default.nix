@@ -2,30 +2,29 @@
 
 {
   my = rec {
-    directories = path:
-      lib.pipe path [
-        builtins.readDir
-        (lib.attrsets.filterAttrs (_k: v: v == "directory"))
-        builtins.attrNames
-        (map (name: path + /${name}))
-      ];
-    nixvim = rec {
-      leader = "<leader>";
+    nixvim = {
       keymap = let mkMod = m: k: "<${m}-${toString k}>";
-      in {
-        leader = k: "${leader}${k}";
-        alt = mkMod "A";
-        ctrl = mkMod "C";
+      in rec {
+        leader = "<leader>";
+        leader- = k: "${leader}${toString k}";
+        alt- = mkMod "A";
+        ctrl- = mkMod "C";
+        wk = {
+          group = name: attrs: { inherit name; } // attrs;
+          vim = command: desc: [ "<cmd>${toString command}<cr>" desc ];
+          lua = fn: desc: [ (lib.nixvim.mkRaw fn) desc ];
+        };
       };
     };
-    attrsets = rec {
-      fromList = nameFn: valueFn: list:
-        builtins.listToAttrs (map (el: {
-          name = nameFn el;
-          value = valueFn el;
-        }) list);
-      fromNames = fromList lib.id;
+
+    attrsets = {
+      fromList = f: list: builtins.listToAttrs (map f list);
+      merge = a: b: a // b;
     };
-    enable = attrsets.fromNames (lib.const { enable = true; });
+
+    config = rec {
+      enabled = attrsets.merge { enable = true; };
+      allEnabled = builtins.mapAttrs (lib.const enabled);
+    };
   };
 }
