@@ -1,10 +1,29 @@
 {lib, ...}:
 with lib.my.nixvim.keymap; {
-  imports = [./barbar.nix ./telescope.nix ./lsp.nix ./ufo.nix];
+  imports = [
+    ./registrations.nix
+    ./barbar.nix
+    ./telescope.nix
+    ./lsp.nix
+    ./ufo.nix
+  ];
 
-  programs.nixvim.plugins.which-key.registrations = {
-    ${leader- "o"} = wk.group "Open" {
-      t = wk.vim "FloatermToggle" "Toggle floating terminal";
-    };
-  };
+  my.nixvim.which-key.register = [
+    {
+      mappings = {
+        "<F9>" = wk.vim "FloatermToggle" "Toggle floating terminal";
+      };
+      opts = {
+        mode = ["n" "t"];
+      };
+    }
+    {
+      mappings = {
+        "<F10>" = "${ctrl- "\\"}${ctrl- "n"}";
+      };
+      opts = {
+        mode = ["t"];
+      };
+    }
+  ];
 }

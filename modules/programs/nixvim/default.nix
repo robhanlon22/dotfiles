@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+with lib.my.config; {
   imports = [./keymaps ./plugins];
 
   programs.nixvim = {
@@ -18,6 +19,11 @@
 
     clipboard.register = "unnamedplus";
 
+    colorschemes.catppuccin = enabled {
+      flavour = "mocha";
+      integrations.leap = true;
+    };
+
     options = {
       colorcolumn = [80];
       cursorline = true;
@@ -30,10 +36,11 @@
       shiftwidth = 2;
       softtabstop = 2;
       tabstop = 2;
+      title = true;
+      titlelen = 0;
+      titlestring = "%t (nvim)";
       undofile = true;
     };
-
-    colorscheme = "dracula-soft";
 
     extraPackages = with pkgs; [nur.repos.bandithedoge.fennel-language-server];
 

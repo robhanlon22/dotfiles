@@ -59,18 +59,35 @@
 
       nvim-lightbulb = {};
 
-      nvim-ufo = {};
+      nvim-ufo.providerSelector = "conf.ufo.provider_selector";
 
       rainbow-delimiters = {};
 
       surround = {};
 
-      telescope.extensions = enabledAll {
-        file_browser = {};
-        frecency = {};
-        fzf-native = {};
-        undo = {};
+      telescope = {
+        extensions = enabledAll {
+          file_browser = {};
+          frecency = {};
+          fzf-native = {};
+          ui-select = {};
+          undo = {};
+        };
+        extraOptions = {
+          extensions = with lib.nixvim; {
+            frecency.db_safe_mode = true;
+            ui-select = [
+              (mkRaw "conf.telescope.extensions.ui_select.dropdown")
+            ];
+            zoxide.mappings.default = {
+              action = mkRaw "conf.telescope.extensions.zoxide.action";
+              keepinsert = true;
+            };
+          };
+        };
       };
+
+      undotree = {};
 
       typescript-tools = {settings = {exposeAsCodeAction = "all";};};
 
@@ -79,8 +96,9 @@
       which-key = {};
     };
 
-    extraPlugins = with pkgs.vimPlugins; [
-      (pkgs.vimUtils.buildVimPlugin {
+    extraPlugins = with pkgs.vimPlugins;
+    with pkgs.vimUtils; [
+      (buildVimPlugin {
         name = "virt-column-nvim";
         src = pkgs.fetchFromGitHub {
           owner = "lukas-reineke";
@@ -89,6 +107,25 @@
           sha256 = "7ljjJ7UwN2U1xPCtsYbrKdnz6SGQGbM/HrxPTxNKlwo=";
         };
       })
+      (buildVimPlugin {
+        name = "nvim-paredit";
+        src = pkgs.fetchFromGitHub {
+          owner = "julienvincent";
+          repo = "nvim-paredit";
+          rev = "d9bc8d34d440b4daa56aa16cc440b674facd8f89";
+          sha256 = "dSzHYpYHMhgmThnT6ZEqA+axLXlGZLOy7rkzi2YlAts=";
+        };
+      })
+      (buildVimPlugin {
+        name = "nvim-paredit-fennel";
+        src = pkgs.fetchFromGitHub {
+          owner = "julienvincent";
+          repo = "nvim-paredit-fennel";
+          rev = "33380e743109c89fae6823cea4b9f81e635dbeff";
+          sha256 = "+lQetMbP/H8cKXcxuPiQtEel5jyRDxCsfjwF+1SPVNg=";
+        };
+      })
+      dressing-nvim
       dracula-nvim
       fuzzy-nvim
       hotpot-nvim
@@ -96,8 +133,6 @@
       plenary-nvim
       telescope-ui-select-nvim
       telescope-zoxide
-      vim-sexp
-      vim-sexp-mappings-for-regular-people
     ];
   };
 }

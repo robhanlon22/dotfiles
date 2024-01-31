@@ -2,11 +2,10 @@
   pkgs,
   lib,
   ...
-}:
-lib.my.modules.whenDarwin {
+}: {
   imports = [./hammerspoon];
 
-  config = {
+  config = lib.my.modules.ifDarwin {
     home = {
       packages = with pkgs; [
         raycast

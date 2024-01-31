@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils = {url = "github:numtide/flake-utils";};
+    flake-utils.url = "github:numtide/flake-utils";
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs = {
@@ -40,54 +40,48 @@
   }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-      lib = pkgs.lib.extend (_: super: let
-        nixvimLib = {nixvim = nixvim.lib.${system}.helpers;};
-      in
-        nixvimLib
-        // (import ./lib.nix {
-          inherit pkgs;
-          lib = super // nixvimLib;
-        }));
+      lib = import ./lib {
+        inherit pkgs;
+        nixvim = nixvim.lib.${system};
+      };
     in {
-      lib =
-        lib
-        // {
-          mkConfig = {
-            username,
-            homeDirectory,
-            modules,
-            overlays,
-            stateVersion ? "23.11",
-          }: {
-            homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs lib;
-              modules =
-                [
-                  {
-                    home = {
-                      inherit homeDirectory username stateVersion;
-                    };
+      lib = {
+        mkConfig = {
+          username,
+          homeDirectory,
+          modules,
+          overlays,
+          stateVersion ? "23.11",
+        }: {
+          homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs lib;
+            modules =
+              [
+                {
+                  home = {
+                    inherit homeDirectory username stateVersion;
+                  };
 
-                    nixpkgs = {
-                      config.allowUnfree = true;
-                      overlays =
-                        [
-                          (_: _: {
-                            cljstyle = cljstyle.packages.${system}.default;
-                          })
-                          (_: _: {inherit lib;})
-                          nur.overlay
-                        ]
-                        ++ overlays;
-                    };
-                  }
-                  nixvim.homeManagerModules.nixvim
-                  ./home.nix
-                ]
-                ++ modules;
-            };
+                  nixpkgs = {
+                    config.allowUnfree = true;
+                    overlays =
+                      [
+                        (_: _: {
+                          cljstyle = cljstyle.packages.${system}.default;
+                        })
+                        (_: _: {inherit lib;})
+                        nur.overlay
+                      ]
+                      ++ overlays;
+                  };
+                }
+                nixvim.homeManagerModules.nixvim
+                ./home.nix
+              ]
+              ++ modules;
           };
         };
+      };
 
       checks = {
         pre-commit-check = pre-commit-hooks.lib.${system}.run {
@@ -96,13 +90,13 @@
             alejandra = {};
             deadnix = {};
             editorconfig-checker = {};
-            luacheck = {};
             fnlfmt = {
               name = "fnlfmt";
               description = "Run fnlfmt on Fennel files";
               files = "\\.fnl$";
               entry = "${pkgs.fnlfmt}/bin/fnlfmt --fix";
             };
+            luacheck = {};
             prettier = {
               files = "\\.(md|json|yaml|yml)$";
             };

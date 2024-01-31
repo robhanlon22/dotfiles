@@ -2,11 +2,12 @@
   pkgs,
   lib,
   ...
-}:
-with lib.my.config; {
-  home.packages = with pkgs; [xsel];
+}: {
+  config = lib.my.modules.ifLinux (with lib.my.config; {
+    home.packages = with pkgs; [xsel];
 
-  programs.nixvim.clipboard.providers.xsel.enable = true;
+    programs.nixvim.clipboard.providers.xsel.enable = true;
 
-  fonts.fontconfig = enabled {};
+    fonts.fontconfig = enabled {};
+  });
 }
