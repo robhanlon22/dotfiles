@@ -44,41 +44,53 @@
         inherit pkgs;
         nixvim = nixvim.lib.${system};
       };
+      defaultOverlays = [
+        nur.overlay
+        (_: _: {
+          inherit lib;
+          cljstyle = cljstyle.packages.${system}.default;
+        })
+      ];
     in {
-      lib = {
-        mkConfig = {
-          username,
-          homeDirectory,
+      lib = rec {
+        mkOptions = {
           modules,
           overlays,
           stateVersion ? "23.11",
+          ...
         }: {
-          homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs lib;
-            modules =
-              [
-                {
-                  home = {
-                    inherit homeDirectory username stateVersion;
-                  };
+          inherit pkgs lib;
 
-                  nixpkgs = {
-                    config.allowUnfree = true;
-                    overlays =
-                      [
-                        (_: _: {
-                          cljstyle = cljstyle.packages.${system}.default;
-                        })
-                        (_: _: {inherit lib;})
-                        nur.overlay
-                      ]
-                      ++ overlays;
-                  };
-                }
-                nixvim.homeManagerModules.nixvim
-                ./home.nix
-              ]
-              ++ modules;
+          modules =
+            [
+              {
+                home = {inherit stateVersion;};
+              }
+              nixvim.homeManagerModules.nixvim
+              {
+                nixpkgs = {
+                  config.allowUnfree = true;
+                  overlays = defaultOverlays ++ overlays;
+                };
+              }
+              ./home.nix
+            ]
+            ++ modules;
+        };
+
+        mkConfig = args @ {
+          username,
+          homeDirectory,
+          hostname,
+          ...
+        }: let
+          options = mkOptions args;
+        in {
+          homeConfigurations."${username}@${hostname}" = home-manager.lib.homeManagerConfiguration {
+            inherit (options) pkgs lib;
+            modules =
+              [{home = {inherit username homeDirectory;};}]
+              ++ options.modules;
           };
         };
       };
@@ -86,7 +98,7 @@
       checks = {
         pre-commit-check = pre-commit-hooks.lib.${system}.run {
           src = ./.;
-          hooks = lib.my.config.enabledAll {
+          hooks = lib.my.enabledAll {
             alejandra = {};
             deadnix = {};
             editorconfig-checker = {};
