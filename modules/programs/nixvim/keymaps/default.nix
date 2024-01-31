@@ -11,7 +11,7 @@ with lib.my.nixvim.keymap; {
   my.nixvim.which-key.register = [
     {
       mappings = {
-        "<F9>" = wk.vim "FloatermToggle" "Toggle floating terminal";
+        "<F10>" = wk.vim "FloatermToggle" "Toggle floating terminal";
       };
       opts = {
         mode = ["n" "t"];
@@ -19,7 +19,7 @@ with lib.my.nixvim.keymap; {
     }
     {
       mappings = {
-        "<F10>" = "${ctrl- "\\"}${ctrl- "n"}";
+        "<F9>" = ["${ctrl- "\\"}${ctrl- "n"}" "Enter normal mode in terminal"];
       };
       opts = {
         mode = ["t"];

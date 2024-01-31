@@ -3,24 +3,27 @@
   lib,
   ...
 }:
-with lib.my.config; {
-  programs.starship = let
-    flavour = "mocha";
-  in
-    enabled {
-      settings =
-        {
-          format = "$all";
-          palette = "catppuccin_${flavour}";
-        }
-        // builtins.fromTOML (builtins.readFile
-          (pkgs.fetchFromGitHub
-            {
-              owner = "catppuccin";
-              repo = "starship";
-              rev = "main";
-              sha256 = "nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
-            }
-            + /palettes/${flavour}.toml));
-    };
+with lib; let
+  flavor = "mocha";
+  theme =
+    pipe {
+      owner = "catppuccin";
+      repo = "starship";
+      rev = "main";
+      sha256 = "nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
+    } (with builtins; [
+      pkgs.fetchFromGitHub
+      (s: s + /palettes/${flavor}.toml)
+      readFile
+      fromTOML
+    ]);
+in {
+  programs.starship = my.config.enabled {
+    settings =
+      {
+        format = "$all";
+        palette = "catppuccin_${flavor}";
+      }
+      // theme;
+  };
 }
