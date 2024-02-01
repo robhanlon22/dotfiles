@@ -1,7 +1,6 @@
-{
-  pkgs,
-  lib,
-  ...
+{ pkgs
+, lib
+, ...
 }:
 with lib.my.config; let
   source = file: "source ${toString file}";
@@ -25,27 +24,36 @@ with lib.my.config; let
     zshViMode
     zshrc
   ];
-  zshEnabled = enabling "enableZshIntegration" {};
-in {
-  imports = map (initExtra: {programs.zsh = {inherit initExtra;};}) initExtras;
-  programs = {
-    zsh = enabled {
-      enableAutosuggestions = true;
-      shellAliases = {
-        ls = "ls --color";
-        nfu = "nix flake update";
-        hms = "home-manager switch --show-trace";
-        nfuhms = "(cd $HOME/.config/home-manager && nfu && hms)";
-        drs = "darwin-rebuild switch --flake $HOME/.config/nix-darwin --show-trace";
-        nfudrs = "(cd $HOME/.config/nix-darwin && nfu && drs)";
+  zshEnabled = enabling "enableZshIntegration" { };
+in
+{
+  imports = map (initExtra: { programs.zsh = { inherit initExtra; }; }) initExtras;
+  programs =
+    let
+      flake = "$HOME/.config/dotfiles";
+      nfu = cmd: "(cd ${flake} && nfu && ${cmd})";
+      switch = cmd: "${cmd} switch --flake ${flake} --show-trace";
+    in
+    {
+      zsh = enabled {
+        enableAutosuggestions = true;
+        shellAliases = {
+          ls = "ls --color";
+          nfu = "nix flake update";
+          hms = switch "home-manager";
+          nfuhms = nfu "hms";
+          drs = switch "darwin-rebuild";
+          nfudrs = nfu "drs";
+        };
+        syntaxHighlighting = enabled {
+          highlighters = [ "main" "brackets" "cursor" "root" "line" ];
+        };
       };
-      syntaxHighlighting = enabled {highlighters = ["main" "brackets" "cursor" "root" "line"];};
-    };
 
-    direnv = zshEnabled;
-    fzf = zshEnabled;
-    kitty.shellIntegration = zshEnabled;
-    starship = zshEnabled;
-    zoxide = zshEnabled;
-  };
+      direnv = zshEnabled;
+      fzf = zshEnabled;
+      kitty.shellIntegration = zshEnabled;
+      starship = zshEnabled;
+      zoxide = zshEnabled;
+    };
 }

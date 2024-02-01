@@ -1,30 +1,7 @@
 {
-  description = "HM builder";
+  description = "Dotfiles builder";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    systems.url = "github:nix-systems/default";
-    nur.url = "github:nix-community/NUR";
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-    pre-commit = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     cljstyle = {
       # url = "path:flakes/cljstyle";
       url = "github:robhanlon22/hm?dir=flakes/cljstyle";
@@ -34,6 +11,33 @@
         systems.follows = "systems";
       };
     };
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs-ruby = {
+      url = "github:bobvanderlinden/nixpkgs-ruby";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nur.url = "github:nix-community/NUR";
+    pre-commit = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    systems.url = "github:nix-systems/default";
   };
 
   outputs = inputs @ {
@@ -51,7 +55,11 @@
         mkHomeManagerConfiguration = import ./home-manager inputs;
       };
 
-      perSystem = {pkgs, ...}: {
+      perSystem = {
+        pkgs,
+        config,
+        ...
+      }: {
         pre-commit.settings.hooks = {
           alejandra = {enable = true;};
           deadnix = {enable = true;};
@@ -81,6 +89,8 @@
             require_serial = true;
           };
         };
+
+        devShells.default = config.pre-commit.devShell;
       };
     };
 }
