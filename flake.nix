@@ -37,157 +37,50 @@
   };
 
   outputs = inputs @ {
-    cljstyle,
-    home-manager,
-    nixpkgs,
-    nixvim,
-    nur,
-    nix-darwin,
     flake-parts,
     pre-commit,
     systems,
     ...
   }:
-    flake-parts.lib.mkFlake {inherit inputs;} ({self, ...}: {
+    flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [pre-commit.flakeModule];
-
       systems = import systems;
 
-      flake.lib.mkDarwinConfiguration = {
-        system ? "aarch64-darwin",
-        hostname,
-        username,
-        homeDirectory ? "/Users/${username}",
-      }: {
-        ${hostname} = nix-darwin.lib.darwinSystem {
-          modules = [
-            (
-              {pkgs, ...}: {
-                # List packages installed in system profile. To search by name, run:
-                # $ nix-env -qaP | grep wget
-                environment.systemPackages = [];
-
-                # Auto upgrade nix package and the daemon service.
-                services.nix-daemon.enable = true;
-
-                nix = {
-                  package = pkgs.nix;
-                  settings = {
-                    auto-optimise-store = true;
-                    # Necessary for using flakes on this system.
-                    experimental-features = "nix-command flakes";
-                  };
-                };
-
-                # Create /etc/zshrc that loads the nix-darwin environment.
-                programs.zsh.enable = true; # default shell on catalina
-
-                security.pam.enableSudoTouchIdAuth = true;
-
-                system = {
-                  # Set Git commit hash for darwin-version.
-                  configurationRevision = self.rev or self.dirtyRev or null;
-
-                  # Used for backwards compatibility, please read the changelog before
-                  # changing.
-                  # $ darwin-rebuild changelog
-                  stateVersion = 4;
-                };
-
-                users.users.${username}.home = homeDirectory;
-
-                nixpkgs = {
-                  config.allowUnfree = true;
-                  hostPlatform = system;
-                };
-              }
-            )
-          ];
-        };
-      };
-
-      flake.lib.mkHomeManagerConfiguration = args @ {
-        system ? "aarch64-darwin",
-        hostname,
-        username,
-        stateVersion ? "23.11",
-        modules ? [],
-        overlays ? [],
-        ...
-      }: let
-        pkgs = args.pkgs or nixpkgs.legacyPackages.${system};
-        homeDirectory =
-          args.homeDirectory
-          or (
-            if pkgs.stdenv.isDarwin
-            then "/Users/${username}"
-            else "/home/${username}"
-          );
-        lib = nixpkgs.lib.extend (self: _super:
-          import ./lib {
-            inherit pkgs;
-            lib = self;
-            nixvim = nixvim.lib.${system};
-          });
-      in {
-        "${username}@${hostname}" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs lib;
-          modules =
-            [
-              {
-                home = {
-                  inherit username homeDirectory stateVersion;
-                };
-
-                nixpkgs = {
-                  config.allowUnfree = true;
-                  overlays =
-                    [
-                      nur.overlay
-                      (_: _: {
-                        inherit lib;
-                        cljstyle = cljstyle.packages.${system}.default;
-                      })
-                    ]
-                    ++ overlays;
-                };
-              }
-              nixvim.homeManagerModules.nixvim
-              ./home.nix
-            ]
-            ++ modules;
-        };
+      flake.lib = {
+        mkDarwinConfiguration = import ./nix-darwin inputs;
+        mkHomeManagerConfiguration = import ./home-manager inputs;
       };
 
       perSystem = {pkgs, ...}: {
-        pre-commit.settings.hooks =
-          (import ./lib/config.nix {
-            inherit (nixpkgs) lib;
-          })
-          .enabledAll {
-            alejandra = {};
-            deadnix = {};
-            editorconfig-checker = {};
-            fnlfmt = {
-              name = "fnlfmt";
-              description = "Run fnlfmt on Fennel files";
-              files = "\\.fnl$";
-              entry = "${pkgs.fnlfmt}/bin/fnlfmt --fix";
-            };
-            luacheck = {};
-            prettier = {files = "\\.(md|json|yaml|yml)$";};
-            statix = {};
-            stylua = {};
-            taplo = {};
-            "~git-diff" = {
-              name = "git-diff";
-              description = "Show git diff when files have been changed";
-              entry = "git diff --color --exit-code";
-              always_run = true;
-              pass_filenames = false;
-              require_serial = true;
-            };
+        pre-commit.settings.hooks = {
+          alejandra = {enable = true;};
+          deadnix = {enable = true;};
+          editorconfig-checker = {enable = true;};
+          fnlfmt = {
+            enable = true;
+            name = "fnlfmt";
+            description = "Run fnlfmt on Fennel files";
+            files = "\\.fnl$";
+            entry = "${pkgs.fnlfmt}/bin/fnlfmt --fix";
           };
+          luacheck = {enable = true;};
+          prettier = {
+            enable = true;
+            files = "\\.(md|json|yaml|yml)$";
+          };
+          statix = {enable = true;};
+          stylua = {enable = true;};
+          taplo = {enable = true;};
+          "~git-diff" = {
+            enable = true;
+            name = "git-diff";
+            description = "Show git diff when files have been changed";
+            entry = "git diff --color --exit-code";
+            always_run = true;
+            pass_filenames = false;
+            require_serial = true;
+          };
+        };
       };
-    });
+    };
 }

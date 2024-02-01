@@ -5,7 +5,6 @@
 }:
 with lib.my.config; let
   source = file: "source ${toString file}";
-  zshEnabled = enabling "enableZshIntegration" {};
   zshrc = builtins.readFile ./zshrc;
   omzGitAliases = source (builtins.fetchurl {
     url = "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/8be4789bbbef06fe5eed581dc8c58df51e3cd9fd/plugins/git/git.plugin.zsh";
@@ -26,12 +25,20 @@ with lib.my.config; let
     zshViMode
     zshrc
   ];
+  zshEnabled = enabling "enableZshIntegration" {};
 in {
   imports = map (initExtra: {programs.zsh = {inherit initExtra;};}) initExtras;
   programs = {
     zsh = enabled {
       enableAutosuggestions = true;
-      shellAliases = {ls = "ls --color";};
+      shellAliases = {
+        ls = "ls --color";
+        nfu = "nix flake update";
+        hms = "home-manager switch --show-trace";
+        nfuhms = "(cd $HOME/.config/home-manager && nfu && hms)";
+        drs = "darwin-rebuild switch --flake $HOME/.config/nix-darwin --show-trace";
+        nfudrs = "(cd $HOME/.config/nix-darwin && nfu && drs)";
+      };
       syntaxHighlighting = enabled {highlighters = ["main" "brackets" "cursor" "root" "line"];};
     };
 

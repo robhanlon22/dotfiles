@@ -264,11 +264,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1706473109,
-        "narHash": "sha256-iyuAvpKTsq2u23Cr07RcV5XlfKExrG8gRpF75hf1uVc=",
+        "lastModified": 1706746258,
+        "narHash": "sha256-9iNK1cP/dxCFh1NYVLJHijoJxlT3bXxTQToMDNZtjzU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d634c3abafa454551f2083b054cd95c3f287be61",
+        "rev": "2db6a2a42930ffff0ffd690dec3f2c0b6f4fe66d",
         "type": "github"
       },
       "original": {
@@ -299,6 +299,26 @@
       }
     },
     "nix-darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1706581965,
+        "narHash": "sha256-1H7dRdK9LJ7+2X1XQtbwXr+QMqtVVo/ZF0/LIvkjdK8=",
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "rev": "91b9daf672c957ef95a05491a75f62e6a01d5aaf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "nix-darwin_2": {
       "inputs": {
         "nixpkgs": [
           "nixvim",
@@ -415,7 +435,7 @@
       "inputs": {
         "flake-parts": "flake-parts_3",
         "home-manager": "home-manager_2",
-        "nix-darwin": "nix-darwin",
+        "nix-darwin": "nix-darwin_2",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -437,11 +457,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1706769860,
-        "narHash": "sha256-DyRGKj847sU14wUhf5VKfS537mJXeg2KIpemWve4lN0=",
+        "lastModified": 1706774233,
+        "narHash": "sha256-zLXsMg9TbjgPR/ppjc7u+skxI87SYziPIT4xVE/Evpc=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "2dc6c5f06e6323699a6fa713f65793ee4d493917",
+        "rev": "da285bdefd95343608560429b1b223ed5b29fbcb",
         "type": "github"
       },
       "original": {
@@ -507,6 +527,7 @@
         "cljstyle": "cljstyle",
         "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
+        "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
         "nur": "nur",
