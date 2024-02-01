@@ -1,13 +1,10 @@
 {
   pkgs,
+  lib,
   nixvim,
   ...
-}:
-pkgs.lib.extend (self: _super: let
-  args = {
-    inherit pkgs;
-    lib = self;
-  };
+}: let
+  args = {inherit pkgs lib;};
 in {
   my = {
     trace = v: builtins.trace v v;
@@ -17,4 +14,4 @@ in {
     modules = import ./modules.nix args;
   };
   nixvim = nixvim.helpers;
-})
+}

@@ -6,6 +6,5 @@ with lib.my.config; {
 
   xdg.configFile = enabledAll {
     "stylua/stylua.toml".source = ./stylua.toml;
-    "nix/nix.conf".source = ./nix.conf;
   };
 }

@@ -3,13 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    pre-commit-hooks = {
+    systems.url = "github:nix-systems/default";
+    nur.url = "github:nix-community/NUR";
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    pre-commit = {
       url = "github:cachix/pre-commit-hooks.nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -19,86 +21,150 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nur.url = "github:nix-community/NUR";
-    cljstyle = {
-      # url = "path:flakes/cljstyle";
-      url = "github:robhanlon22/hm?dir=flakes/cljstyle";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    cljstyle = {
+      url = "path:flakes/cljstyle";
+      # url = "github:robhanlon22/hm?dir=flakes/cljstyle";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        systems.follows = "systems";
+      };
     };
   };
 
-  outputs = {
-    self,
+  outputs = inputs @ {
     cljstyle,
     home-manager,
     nixpkgs,
     nixvim,
     nur,
-    flake-utils,
-    pre-commit-hooks,
+    nix-darwin,
+    flake-parts,
+    pre-commit,
+    systems,
     ...
   }:
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-      lib = import ./lib {
-        inherit pkgs;
-        nixvim = nixvim.lib.${system};
-      };
-      defaultOverlays = [
-        nur.overlay
-        (_: _: {
-          inherit lib;
-          cljstyle = cljstyle.packages.${system}.default;
-        })
-      ];
-    in {
-      lib = rec {
-        mkOptions = {
-          modules,
-          overlays,
-          stateVersion ? "23.11",
-          ...
-        }: {
-          inherit pkgs lib;
+    flake-parts.lib.mkFlake {inherit inputs;} ({self, ...}: {
+      imports = [pre-commit.flakeModule];
 
+      systems = import systems;
+
+      flake.lib.mkDarwinConfiguration = {
+        system ? "aarch64-darwin",
+        hostname,
+        username,
+        homeDirectory ? "/Users/${username}",
+      }: {
+        ${hostname} = nix-darwin.lib.darwinSystem {
+          modules = [
+            (
+              {pkgs, ...}: {
+                # List packages installed in system profile. To search by name, run:
+                # $ nix-env -qaP | grep wget
+                environment.systemPackages = [];
+
+                # Auto upgrade nix package and the daemon service.
+                services.nix-daemon.enable = true;
+
+                nix = {
+                  package = pkgs.nix;
+                  settings = {
+                    auto-optimise-store = true;
+                    # Necessary for using flakes on this system.
+                    experimental-features = "nix-command flakes";
+                  };
+                };
+
+                # Create /etc/zshrc that loads the nix-darwin environment.
+                programs.zsh.enable = true; # default shell on catalina
+
+                security.pam.enableSudoTouchIdAuth = true;
+
+                system = {
+                  # Set Git commit hash for darwin-version.
+                  configurationRevision = self.rev or self.dirtyRev or null;
+
+                  # Used for backwards compatibility, please read the changelog before
+                  # changing.
+                  # $ darwin-rebuild changelog
+                  stateVersion = 4;
+                };
+
+                users.users.${username}.home = homeDirectory;
+
+                nixpkgs = {
+                  config.allowUnfree = true;
+                  hostPlatform = system;
+                };
+              }
+            )
+          ];
+        };
+      };
+
+      flake.lib.mkHomeManagerConfiguration = args @ {
+        system ? "aarch64-darwin",
+        hostname,
+        username,
+        stateVersion ? "23.11",
+        modules ? [],
+        overlays ? [],
+        ...
+      }: let
+        pkgs = args.pkgs or nixpkgs.legacyPackages.${system};
+        homeDirectory =
+          args.homeDirectory
+          or (
+            if pkgs.stdenv.isDarwin
+            then "/Users/${username}"
+            else "/home/${username}"
+          );
+        lib = nixpkgs.lib.extend (self: _super:
+          import ./lib {
+            inherit pkgs;
+            lib = self;
+            nixvim = nixvim.lib.${system};
+          });
+      in {
+        "${username}@${hostname}" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs lib;
           modules =
             [
               {
-                home = {inherit stateVersion;};
-              }
-              nixvim.homeManagerModules.nixvim
-              {
+                home = {
+                  inherit username homeDirectory stateVersion;
+                };
+
                 nixpkgs = {
                   config.allowUnfree = true;
-                  overlays = defaultOverlays ++ overlays;
+                  overlays =
+                    [
+                      nur.overlay
+                      (_: _: {
+                        inherit lib;
+                        cljstyle = cljstyle.packages.${system}.default;
+                      })
+                    ]
+                    ++ overlays;
                 };
               }
+              nixvim.homeManagerModules.nixvim
               ./home.nix
             ]
             ++ modules;
         };
-
-        mkConfig = args @ {
-          username,
-          homeDirectory,
-          hostname,
-          ...
-        }: let
-          options = mkOptions args;
-        in {
-          homeConfigurations."${username}@${hostname}" = home-manager.lib.homeManagerConfiguration {
-            inherit (options) pkgs lib;
-            modules =
-              [{home = {inherit username homeDirectory;};}]
-              ++ options.modules;
-          };
-        };
       };
 
-      checks = {
-        pre-commit-check = pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = lib.my.enabledAll {
+      perSystem = {pkgs, ...}: {
+        pre-commit.settings.hooks =
+          (import ./lib/config.nix {
+            inherit (nixpkgs) lib;
+          })
+          .enabledAll {
             alejandra = {};
             deadnix = {};
             editorconfig-checker = {};
@@ -109,9 +175,7 @@
               entry = "${pkgs.fnlfmt}/bin/fnlfmt --fix";
             };
             luacheck = {};
-            prettier = {
-              files = "\\.(md|json|yaml|yml)$";
-            };
+            prettier = {files = "\\.(md|json|yaml|yml)$";};
             statix = {};
             stylua = {};
             taplo = {};
@@ -124,11 +188,6 @@
               require_serial = true;
             };
           };
-        };
-      };
-
-      devShells.default = pkgs.mkShell {
-        inherit (self.checks.${system}.pre-commit-check) shellHook;
       };
     });
 }
