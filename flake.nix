@@ -26,8 +26,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     cljstyle = {
-      url = "path:flakes/cljstyle";
-      # url = "github:robhanlon22/hm?dir=flakes/cljstyle";
+      # url = "path:flakes/cljstyle";
+      url = "github:robhanlon22/hm?dir=flakes/cljstyle";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";

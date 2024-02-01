@@ -37,14 +37,19 @@
         ]
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-Hqnx4Dn9HCi++CjFy4eUhjYQ6m8RfqneP777II2KuBc=",
-        "path": "flakes/cljstyle",
-        "type": "path"
+        "dir": "flakes/cljstyle",
+        "lastModified": 1706775178,
+        "narHash": "sha256-u9YAJ+doz2zVKrphYQHXj3U3VAR2Bwmu1T4aQzNkWic=",
+        "owner": "robhanlon22",
+        "repo": "hm",
+        "rev": "96462ccfc77170f1147b9aa747018b0b768440a1",
+        "type": "github"
       },
       "original": {
-        "path": "flakes/cljstyle",
-        "type": "path"
+        "dir": "flakes/cljstyle",
+        "owner": "robhanlon22",
+        "repo": "hm",
+        "type": "github"
       }
     },
     "devshell": {
