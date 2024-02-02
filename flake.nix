@@ -66,15 +66,6 @@
     };
 
   inputs = {
-    cljstyle = {
-      # url = "path:flakes/cljstyle";
-      url = "github:robhanlon22/hm?dir=flakes/cljstyle";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        systems.follows = "systems";
-      };
-    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -85,10 +76,6 @@
     };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixpkgs-ruby = {
-      url = "github:bobvanderlinden/nixpkgs-ruby";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

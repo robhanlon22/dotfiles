@@ -4,8 +4,6 @@
   nixvim,
   home-manager,
   nur,
-  cljstyle,
-  nixpkgs-ruby,
   ...
 }: args @ {
   hostname,
@@ -42,11 +40,7 @@
       overlays =
         [
           nur.overlay
-          nixpkgs-ruby.overlays.default
-          (_: _: {
-            inherit lib;
-            cljstyle = cljstyle.packages.${system}.default;
-          })
+          (_: _: {inherit lib;})
         ]
         ++ overlays;
     };
