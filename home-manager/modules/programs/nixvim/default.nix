@@ -26,7 +26,6 @@ with lib.my.config; {
 
     options = {
       colorcolumn = [80];
-      cursorline = true;
       expandtab = true;
       foldcolumn = "1";
       foldenable = true;

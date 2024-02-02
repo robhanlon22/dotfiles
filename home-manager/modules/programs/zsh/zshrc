@@ -4,10 +4,6 @@ export GPG_TTY="$(tty)"
 
 setopt autopushd
 
-eval "$(fnm env --use-on-cd)"
-eval "$(jenv init -)"
-eval "$(rbenv init - zsh)"
-
 alias nf="nix flake"
 alias nfl="nf lock"
 alias nfu="nf update"

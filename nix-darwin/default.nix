@@ -1,21 +1,25 @@
 {
   self,
   nix-darwin,
+  nixpkgs,
+  system,
   ...
-}: {
-  system ? "aarch64-darwin",
+}: args @ {
   hostname,
   username,
   homeDirectory ? "/Users/${username}",
 }: let
-  base = {
+  baseModule = {
     # Set Git commit hash for darwin-version.
     system.configurationRevision = self.rev or self.dirtyRev or null;
     users.users.${username}.home = homeDirectory;
     nixpkgs.hostPlatform = system;
+    nix.settings.trusted-users = [username];
   };
+  reqArgs = {modules = [baseModule ./configuration.nix];};
+  optArgs = nixpkgs.lib.attrsets.optionalAttrs (args ? pkgs) {inherit (args) pkgs;};
+  darwinConfiguration = nix-darwin.lib.darwinSystem (reqArgs // optArgs);
 in {
-  ${hostname} = nix-darwin.lib.darwinSystem {
-    modules = [base ./configuration.nix];
-  };
+  darwinConfigurations.${hostname} = darwinConfiguration;
+  inherit (darwinConfiguration) pkgs;
 }

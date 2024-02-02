@@ -1,6 +1,70 @@
 {
   description = "Dotfiles builder";
 
+  outputs = inputs @ {
+    flake-parts,
+    pre-commit,
+    systems,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [pre-commit.flakeModule];
+      systems = import systems;
+
+      transposition.lib.adHoc = true;
+
+      perSystem = {
+        pkgs,
+        config,
+        system,
+        ...
+      }: {
+        lib = let
+          args = inputs // {inherit system;};
+        in
+          {
+            homeManagerConfiguration = import ./home-manager args;
+          }
+          // pkgs.lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
+            darwinSystem = import ./nix-darwin args;
+          };
+
+        pre-commit.settings.hooks = {
+          alejandra = {enable = true;};
+          deadnix = {enable = true;};
+          editorconfig-checker = {enable = true;};
+          fnlfmt = {
+            enable = true;
+            name = "fnlfmt";
+            description = "Run fnlfmt on Fennel files";
+            files = "\\.fnl$";
+            entry = "${pkgs.fnlfmt}/bin/fnlfmt --fix";
+          };
+          luacheck = {enable = true;};
+          prettier = {
+            enable = true;
+            files = "\\.(md|json|yaml|yml)$";
+          };
+          shellcheck = {enable = true;};
+          shfmt = {enable = true;};
+          statix = {enable = true;};
+          stylua = {enable = true;};
+          taplo = {enable = true;};
+          "~git-diff" = {
+            enable = true;
+            name = "git-diff";
+            description = "Show git diff when files have been changed";
+            entry = "git diff --color --exit-code";
+            always_run = true;
+            pass_filenames = false;
+            require_serial = true;
+          };
+        };
+
+        devShells.default = config.pre-commit.devShell;
+      };
+    };
+
   inputs = {
     cljstyle = {
       # url = "path:flakes/cljstyle";
@@ -39,60 +103,4 @@
     };
     systems.url = "github:nix-systems/default";
   };
-
-  outputs = inputs @ {
-    flake-parts,
-    pre-commit,
-    systems,
-    ...
-  }:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      imports = [pre-commit.flakeModule];
-      systems = import systems;
-
-      flake.lib = {
-        mkDarwinConfiguration = import ./nix-darwin inputs;
-        mkHomeManagerConfiguration = import ./home-manager inputs;
-      };
-
-      perSystem = {
-        pkgs,
-        config,
-        ...
-      }: {
-        pre-commit.settings.hooks = {
-          alejandra = {enable = true;};
-          deadnix = {enable = true;};
-          editorconfig-checker = {enable = true;};
-          fnlfmt = {
-            enable = true;
-            name = "fnlfmt";
-            description = "Run fnlfmt on Fennel files";
-            files = "\\.fnl$";
-            entry = "${pkgs.fnlfmt}/bin/fnlfmt --fix";
-          };
-          luacheck = {enable = true;};
-          prettier = {
-            enable = true;
-            files = "\\.(md|json|yaml|yml)$";
-          };
-          shellcheck = {enable = true;};
-          shfmt = {enable = true;};
-          statix = {enable = true;};
-          stylua = {enable = true;};
-          taplo = {enable = true;};
-          "~git-diff" = {
-            enable = true;
-            name = "git-diff";
-            description = "Show git diff when files have been changed";
-            entry = "git diff --color --exit-code";
-            always_run = true;
-            pass_filenames = false;
-            require_serial = true;
-          };
-        };
-
-        devShells.default = config.pre-commit.devShell;
-      };
-    };
 }

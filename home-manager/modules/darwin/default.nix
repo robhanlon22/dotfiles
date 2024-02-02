@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+with lib.my.config; {
   imports = [./hammerspoon];
 
   config = lib.my.modules.ifDarwin {
@@ -11,6 +12,7 @@
         raycast
         pinentry_mac
       ];
+
       file.".gnupg/gpg-agent.conf".text = ''
         pinentry-program ${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac
       '';

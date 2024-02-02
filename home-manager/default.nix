@@ -1,4 +1,5 @@
 {
+  system,
   nixpkgs,
   nixvim,
   home-manager,
@@ -7,7 +8,6 @@
   nixpkgs-ruby,
   ...
 }: args @ {
-  system ? "aarch64-darwin",
   hostname,
   username,
   stateVersion ? "23.11",
@@ -16,6 +16,7 @@
   ...
 }: let
   pkgs = args.pkgs or nixpkgs.legacyPackages.${system};
+
   homeDirectory =
     args.homeDirectory
     or (
@@ -23,13 +24,15 @@
       then "/Users/${username}"
       else "/home/${username}"
     );
+
   lib = nixpkgs.lib.extend (self: _super:
     import ./lib {
       inherit pkgs;
       lib = self;
       nixvim = nixvim.lib.${system};
     });
-  base = {
+
+  baseModule = {
     home = {
       inherit username homeDirectory stateVersion;
     };
@@ -49,8 +52,14 @@
     };
   };
 in {
-  "${username}@${hostname}" = home-manager.lib.homeManagerConfiguration {
+  homeConfigurations."${username}@${hostname}" = home-manager.lib.homeManagerConfiguration {
     inherit pkgs lib;
-    modules = [base nixvim.homeManagerModules.nixvim ./home.nix] ++ modules;
+    modules =
+      [
+        baseModule
+        nixvim.homeManagerModules.nixvim
+        ./home.nix
+      ]
+      ++ modules;
   };
 }

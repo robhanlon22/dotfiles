@@ -13,6 +13,13 @@
       # Necessary for using flakes on this system.
       experimental-features = "nix-command flakes";
     };
+    gc = {
+      automatic = true;
+      interval = {
+        Hour = 0;
+        Minute = 0;
+      };
+    };
   };
 
   # Create /etc/zshrc that loads the nix-darwin environment.

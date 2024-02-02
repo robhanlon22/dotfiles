@@ -17,8 +17,6 @@
 
       conjure = {};
 
-      cursorline = {};
-
       copilot-lua = {
         suggestion.enabled = false;
         panel.enabled = false;
@@ -29,6 +27,8 @@
       inc-rename = {};
 
       indent-blankline = {};
+
+      illuminate = {};
 
       lastplace = {};
 
