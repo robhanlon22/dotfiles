@@ -7,6 +7,7 @@
     [
       coreutils
       fd
+      fennel
       gh
       git
       jq

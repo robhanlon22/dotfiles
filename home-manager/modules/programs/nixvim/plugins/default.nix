@@ -9,7 +9,11 @@
     plugins = enabledAll {
       auto-session = {};
 
-      barbar = {autoHide = true;};
+      # barbecue = {};
+
+      # barbar = {autoHide = true;};
+
+      bufferline = {};
 
       better-escape = {mapping = ["jk"];};
 
@@ -53,8 +57,6 @@
         };
       };
 
-      navbuddy = {lsp.autoAttach = true;};
-
       nix = {};
 
       nvim-lightbulb = {};
@@ -89,7 +91,7 @@
 
       undotree = {};
 
-      typescript-tools = {settings = {exposeAsCodeAction = "all";};};
+      typescript-tools.settings.exposeAsCodeAction = "all";
 
       trouble = {};
 
@@ -103,7 +105,7 @@
         src = pkgs.fetchFromGitHub {
           owner = "lukas-reineke";
           repo = "virt-column.nvim";
-          rev = "refs/tags/v2.0.2";
+          rev = "main";
           sha256 = "7ljjJ7UwN2U1xPCtsYbrKdnz6SGQGbM/HrxPTxNKlwo=";
         };
       })
@@ -112,7 +114,7 @@
         src = pkgs.fetchFromGitHub {
           owner = "julienvincent";
           repo = "nvim-paredit";
-          rev = "d9bc8d34d440b4daa56aa16cc440b674facd8f89";
+          rev = "main";
           sha256 = "dSzHYpYHMhgmThnT6ZEqA+axLXlGZLOy7rkzi2YlAts=";
         };
       })
@@ -121,7 +123,7 @@
         src = pkgs.fetchFromGitHub {
           owner = "julienvincent";
           repo = "nvim-paredit-fennel";
-          rev = "33380e743109c89fae6823cea4b9f81e635dbeff";
+          rev = "main";
           sha256 = "+lQetMbP/H8cKXcxuPiQtEel5jyRDxCsfjwF+1SPVNg=";
         };
       })
@@ -131,7 +133,6 @@
       hotpot-nvim
       nvim-lspconfig
       plenary-nvim
-      telescope-ui-select-nvim
       telescope-zoxide
     ];
   };

@@ -21,12 +21,21 @@
       }: {
         lib = let
           args = inputs // {inherit system;};
+          homeManagerConfiguration = import ./home-manager args;
+          darwinSystem = import ./nix-darwin args;
         in
-          {
-            homeManagerConfiguration = import ./home-manager args;
-          }
+          {inherit homeManagerConfiguration;}
           // pkgs.lib.attrsets.optionalAttrs pkgs.stdenv.isDarwin {
-            darwinSystem = import ./nix-darwin args;
+            inherit darwinSystem;
+            darwinComplete = args @ {
+              home-manager ? {},
+              darwin ? {},
+              ...
+            }: let
+              ds = darwinSystem (args // darwin);
+              hmc = homeManagerConfiguration (args // home-manager // {inherit (ds) pkgs;});
+            in
+              ds // hmc;
           };
 
         pre-commit.settings.hooks = {

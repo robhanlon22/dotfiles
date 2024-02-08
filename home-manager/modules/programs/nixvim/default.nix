@@ -21,7 +21,21 @@ with lib.my.config; {
 
     colorschemes.catppuccin = enabled {
       flavour = "mocha";
-      integrations.leap = true;
+      transparentBackground = true;
+      integrations = {
+        cmp = true;
+        gitsigns = true;
+        illuminate = {
+          enabled = true;
+          lsp = true;
+        };
+        indent_blankline.enabled = true;
+        leap = true;
+        lsp_trouble = true;
+        mini.enabled = true;
+        native_lsp.enabled = true;
+        telescope.enabled = true;
+      };
     };
 
     options = {

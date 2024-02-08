@@ -9,24 +9,23 @@ with lib.my.nixvim.keymap; {
               s = toString n;
             in {
               name = s;
-              value = wk.vim "BufferGoto ${s}" "Go to buffer ${s}";
+              value = wk.vim "BufferLineGoToBuffer ${s}" "Go to buffer ${s}";
             }) (lib.lists.range 1 9);
           in
             {
-              p = wk.vim "BufferPrevious" "Previous";
-              n = wk.vim "BufferNext" "Next";
+              p = wk.vim "BufferLineCyclePrev" "Previous";
+              n = wk.vim "BufferLineCycleNext" "Next";
+              f = wk.vim "BufferLinePick" "Pick";
               P =
-                wk.vim "BufferMovePrevious" "Move to previous position";
-              N = wk.vim "BufferMoveNext" "Move to next position";
-              d = wk.vim "BufferClose" "Close";
-              D = wk.vim "BufferRestore" "Restore";
-              K = wk.vim "BufferCloseAllButCurrentOrPinned" "Close all but current or pinned";
-              s = wk.vim "BufferPin" "Pin";
+                wk.vim "BufferLineMovePrev" "Move to previous position";
+              N = wk.vim "BufferLineMoveNext" "Move to next position";
+              d = wk.vim "bdelete" "Close";
+              K = wk.vim "BufferLineCloseOthers" "Close others";
+              s = wk.vim "BufferLineTogglePin" "Pin";
               o = {
-                b = wk.vim "BufferOrderByBufferNumber" "Order by buffer number";
-                d = wk.vim "BufferOrderByDirectory" "Order by directory";
-                l = wk.vim "BufferOrderByLanguage" "Order by language";
-                w = wk.vim "BufferOrderByWindowNumber" "Order by window number";
+                d = wk.vim "BufferLineSortByDirectory" "Sort by directory";
+                l = wk.vim "BufferLineSortByExtension" "Sort by extension";
+                w = wk.vim "BufferLineSortByTabs" "Sort by tabs";
               };
             }
             // bufferGoto

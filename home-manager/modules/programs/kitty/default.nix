@@ -9,6 +9,8 @@ with lib.my.config; {
       "cmd+t" = "new_tab_with_cwd";
     };
     settings = {
+      background_opacity = "0.95";
+      background_blur = "5";
       bell_on_tab = "🐱 ";
       enable_audio_bell = false;
       hide_window_decorations = "yes";
@@ -20,7 +22,7 @@ with lib.my.config; {
       tab_bar_style = "powerline";
       tab_powerline_style = "slanted";
       tab_title_template = "{title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}";
-      window_padding_width = 5;
+      window_padding_width = 10;
     };
     theme = "Catppuccin-Mocha";
   };

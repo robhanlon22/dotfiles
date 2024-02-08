@@ -6,7 +6,6 @@
   nur,
   ...
 }: args @ {
-  hostname,
   username,
   stateVersion ? "23.11",
   modules ? [],
@@ -46,7 +45,7 @@
     };
   };
 in {
-  homeConfigurations."${username}@${hostname}" = home-manager.lib.homeManagerConfiguration {
+  homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
     inherit pkgs lib;
     modules =
       [

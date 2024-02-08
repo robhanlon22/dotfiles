@@ -1,7 +1,7 @@
 (let [telescope (require :telescope)
       telescope-themes (require :telescope.themes)]
   (fn zoxide-action [{: path}]
-    (vim.cmd.cd path)
+    (vim.cmd.tcd path)
     (telescope.extensions.frecency.frecency {:cwd path :workspace :CWD}))
 
   (fn []

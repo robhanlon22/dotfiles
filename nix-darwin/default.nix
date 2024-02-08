@@ -8,6 +8,7 @@
   hostname,
   username,
   homeDirectory ? "/Users/${username}",
+  ...
 }: let
   baseModule = {
     # Set Git commit hash for darwin-version.
