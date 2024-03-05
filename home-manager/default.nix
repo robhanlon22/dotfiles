@@ -24,9 +24,8 @@
 
   lib = nixpkgs.lib.extend (self: _super:
     import ./lib {
-      inherit pkgs;
+      inherit pkgs nixvim;
       lib = self;
-      nixvim = nixvim.lib.${system};
     });
 
   baseModule = {

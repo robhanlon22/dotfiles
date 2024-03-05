@@ -14,5 +14,8 @@ in {
     config = import ./config.nix args;
     modules = import ./modules.nix args;
   };
-  nixvim = nixvim.helpers;
+  nixvim = import "${nixvim}/lib/helpers.nix" {
+    inherit pkgs lib;
+    _nixvimTests = false;
+  };
 }
