@@ -63,7 +63,7 @@
             enable = true;
             name = "git-diff";
             description = "Show git diff when files have been changed";
-            entry = "git diff --color --exit-code";
+            entry = "${pkgs.git}/bin/git diff --color --exit-code";
             always_run = true;
             pass_filenames = false;
             require_serial = true;
