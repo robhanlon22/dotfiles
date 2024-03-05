@@ -5,7 +5,6 @@
 }: {
   home.packages = with pkgs;
     [
-      coreutils
       fd
       fennel
       gh
