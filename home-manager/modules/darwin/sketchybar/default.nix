@@ -15,10 +15,8 @@ in {
       '';
     };
 
-    launchd = {
-      enable = true;
-      agents = darwin.launchdAgent "sketchybar" {
-        enable = true;
+    launchd.agents = darwin.launchdAgents {
+      sketchybar = {
         zshProgram = "${sketchybar}/bin/sketchybar";
       };
     };

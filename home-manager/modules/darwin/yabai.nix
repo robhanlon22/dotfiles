@@ -34,9 +34,8 @@
   );
 in {
   config = lib.my.modules.ifDarwin {
-    launchd.agents = lib.my.darwin.launchdAgent "yabai" {
-      enable = true;
-      ProgramArguments = ["${yabai}" "--verbose" "--config" "${yabairc}"];
+    launchd.agents = lib.my.darwin.launchdAgents {
+      yabai.ProgramArguments = ["${yabai}" "--verbose" "--config" "${yabairc}"];
     };
   };
 }

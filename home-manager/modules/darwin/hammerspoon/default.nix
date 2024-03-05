@@ -61,10 +61,11 @@ in {
 
     launchd = {
       enable = true;
-      agents = lib.my.darwin.launchdAgent "hammerspoon" {
-        enable = true;
-        debug = true;
-        Program = "${hammerspoon}/share/Hammerspoon.app/Contents/MacOS/Hammerspoon";
+      agents = lib.my.darwin.launchdAgents {
+        hammerspoon = {
+          debug = true;
+          Program = "${hammerspoon}/share/Hammerspoon.app/Contents/MacOS/Hammerspoon";
+        };
       };
     };
   };

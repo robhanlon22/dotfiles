@@ -2,14 +2,13 @@
   pkgs,
   lib,
   ...
-}: rec {
-  launchdAgent = name: {
-    enable ? true,
-    zshProgram ? null,
-    debug ? false,
-    ...
-  } @ args: {
-    ${name} = {
+}: {
+  launchdAgents = lib.mapAttrs (name: {
+      enable ? true,
+      zshProgram ? null,
+      debug ? false,
+      ...
+    } @ args: {
       inherit enable;
       config =
         {
@@ -31,8 +30,5 @@
         // (
           builtins.removeAttrs args ["zshProgram" "debug" "enable"]
         );
-    };
-  };
-
-  launchdAgents = lib.concatMapAttrs launchdAgent;
+    });
 }

@@ -7,18 +7,18 @@
 
   programs.nixvim = {
     plugins = {
-      auto-session = {enable = true;};
+      auto-session.enable = true;
 
-      bufferline = {enable = true;};
+      bufferline.enable = true;
 
       better-escape = {
         enable = true;
         mapping = ["jk"];
       };
 
-      comment-nvim = {enable = true;};
+      comment-nvim.enable = true;
 
-      conjure = {enable = true;};
+      conjure.enable = true;
 
       copilot-lua = {
         enable = true;
@@ -26,26 +26,26 @@
         panel.enabled = false;
       };
 
-      floaterm = {enable = true;};
+      floaterm.enable = true;
 
-      inc-rename = {enable = true;};
+      inc-rename.enable = true;
 
-      indent-blankline = {enable = true;};
+      indent-blankline.enable = true;
 
-      illuminate = {enable = true;};
+      illuminate.enable = true;
 
-      lastplace = {enable = true;};
+      lastplace.enable = true;
 
-      leap = {enable = true;};
+      leap.enable = true;
 
       lspkind = {
         enable = true;
         extraOptions = {symbol_map = {Copilot = "";};};
       };
 
-      lsp-format = {enable = true;};
+      lsp-format.enable = true;
 
-      luasnip = {enable = true;};
+      luasnip.enable = true;
 
       mini = {
         enable = true;
@@ -61,27 +61,27 @@
         };
       };
 
-      nix = {enable = true;};
+      nix.enable = true;
 
-      nvim-lightbulb = {enable = true;};
+      nvim-lightbulb.enable = true;
 
       nvim-ufo = {
         enable = true;
         providerSelector = "conf.ufo.provider_selector";
       };
 
-      rainbow-delimiters = {enable = true;};
+      rainbow-delimiters.enable = true;
 
-      surround = {enable = true;};
+      surround.enable = true;
 
       telescope = {
         enable = true;
         extensions = {
-          file_browser = {enable = true;};
-          frecency = {enable = true;};
-          fzf-native = {enable = true;};
-          ui-select = {enable = true;};
-          undo = {enable = true;};
+          file_browser.enable = true;
+          frecency.enable = true;
+          fzf-native.enable = true;
+          ui-select.enable = true;
+          undo.enable = true;
         };
         extraOptions = {
           extensions = with lib.nixvim; {
@@ -97,13 +97,16 @@
         };
       };
 
-      undotree = {enable = true;};
+      undotree.enable = true;
 
-      typescript-tools.settings.exposeAsCodeAction = "all";
+      typescript-tools = {
+        enable = true;
+        settings.exposeAsCodeAction = "all";
+      };
 
-      trouble = {enable = true;};
+      trouble.enable = true;
 
-      which-key = {enable = true;};
+      which-key.enable = true;
     };
 
     extraPlugins = with pkgs.vimPlugins;

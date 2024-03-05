@@ -9,7 +9,7 @@
     home = {
       packages = with pkgs; [
         coreutils
-        darwin.iproute2mac
+        findutils
         raycast
       ];
 
@@ -17,5 +17,7 @@
         pinentry-program ${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac
       '';
     };
+
+    launchd.enable = true;
   };
 }
