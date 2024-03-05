@@ -19,12 +19,14 @@
       '';
     };
 
-    programs.kitty = {
-      font.size = 16;
-      settings = {
-        macos_option_as_alt = "left";
-        macos_titlebar_color = "background";
-        shell = "${config.programs.zsh.package}/bin/zsh -il";
+    programs = {
+      kitty = {
+        font.size = 16;
+        settings = {
+          macos_option_as_alt = "left";
+          macos_titlebar_color = "background";
+          shell = "${config.programs.zsh.package}/bin/zsh -il";
+        };
       };
 
       zsh.plugins = {
