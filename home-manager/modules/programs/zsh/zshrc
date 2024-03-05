@@ -3,11 +3,6 @@ fast-theme -q XDG:catppuccin-mocha
 compstyle ohmyzsh
 
 bindkey -v
-ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
-function zvm_after_init() {
-  zvm_bindkey viins '^R' fzf-history-widget
-  zvm_bindkey vicmd '^R' fzf-history-widget
-}
 
 export EDITOR=nvim
 export VISUAL=nvim

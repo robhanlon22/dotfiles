@@ -1,10 +1,7 @@
 {config, ...}: {
   programs.kitty = {
     enable = true;
-    font = {
-      name = "Caskaydia Cove Nerd Font Mono";
-      size = 16;
-    };
+    font.name = "Caskaydia Cove Nerd Font Mono";
     keybindings = {
       "cmd+t" = "new_tab_with_cwd";
     };

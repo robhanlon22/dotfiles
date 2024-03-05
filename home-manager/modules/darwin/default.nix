@@ -18,6 +18,8 @@
       '';
     };
 
+    programs.kitty.font.size = 16;
+
     launchd.enable = true;
   };
 }

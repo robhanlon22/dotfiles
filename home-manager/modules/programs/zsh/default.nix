@@ -3,6 +3,7 @@
 
   programs.zsh = {
     enable = true;
+    enableAutosuggestions = true;
     antidote = {
       enable = true;
       plugins = [
@@ -16,11 +17,9 @@
         "belak/zsh-utils path:utility"
 
         # And the rest of the fun plugins :)
-        "jeffreytse/zsh-vi-mode"
         "ohmyzsh/ohmyzsh path:plugins/brew"
         "ohmyzsh/ohmyzsh path:plugins/git"
         "zdharma-continuum/fast-syntax-highlighting"
-        "zsh-users/zsh-autosuggestions"
       ];
     };
     enableCompletion = false;
