@@ -7,6 +7,19 @@
     viAlias = true;
     vimAlias = true;
 
+    autoCmd = [
+      {
+        event = ["InsertEnter"];
+        pattern = "*";
+        command = "set norelativenumber";
+      }
+      {
+        event = ["InsertLeave"];
+        pattern = "*";
+        command = "set relativenumber";
+      }
+    ];
+
     globals = {
       mapleader = " ";
       maplocalleader = ",";
@@ -42,6 +55,8 @@
       foldlevel = 99;
       foldlevelstart = 99;
       laststatus = 3;
+      number = true;
+      relativenumber = true;
       shiftwidth = 2;
       softtabstop = 2;
       tabstop = 2;

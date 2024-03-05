@@ -14,8 +14,6 @@
       hide_window_decorations = "yes";
       inactive_tab_background = "#313244";
       inactive_tab_foreground = "#bac2de";
-      macos_option_as_alt = "left";
-      macos_titlebar_color = "background";
       shell = "${config.programs.zsh.package}/bin/zsh --interactive --login";
       tab_bar_align = "left";
       tab_bar_background = "none";

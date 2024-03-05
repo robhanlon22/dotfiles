@@ -18,7 +18,13 @@
       '';
     };
 
-    programs.kitty.font.size = 16;
+    programs.kitty = {
+      font.size = 16;
+      settings = {
+        macos_option_as_alt = "left";
+        macos_titlebar_color = "background";
+      };
+    };
 
     launchd.enable = true;
   };
