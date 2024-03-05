@@ -22,6 +22,8 @@
     format = lib.mkDefault "$all";
     palette = "catppuccin_${flavor}";
     command_timeout = 50;
+    directory = nerdfonts.directory // {style = "bold teal";};
+    git_branch = nerdfonts.git_branch // {style = "bold lavender";};
     shell = {
       disabled = false;
       bash_indicator = "󰣪";
