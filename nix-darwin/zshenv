@@ -1,5 +1,0 @@
-eval "$('@brewPath@' shellenv)"
-
-typeset -aU path
-
-path=("$HOME/.nix-profile/bin" "${path[@]}")
