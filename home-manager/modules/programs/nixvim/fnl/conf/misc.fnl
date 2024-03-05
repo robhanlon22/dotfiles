@@ -9,6 +9,11 @@
     (let [virt-column (require :virt-column)]
       (virt-column.setup {})))
 
+  (fn copilot-chat-setup []
+    (let [copilot-chat (require :CopilotChat)]
+      (copilot-chat.setup {})))
+
+  (copilot-chat-setup)
   (nvim-paredit-setup)
   (virt-column-setup)
   {})

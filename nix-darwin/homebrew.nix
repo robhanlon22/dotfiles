@@ -1,4 +1,8 @@
-{config, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   brewPath = "${config.homebrew.brewPrefix}/brew";
 in {
   system.activationScripts.preUserActivation.text = ''
@@ -8,11 +12,16 @@ in {
     fi
   '';
 
-  programs.zsh.shellInit = ''
-    eval "$('${brewPath}' shellenv)"
-    typeset -aU path
-    path=("$HOME/.nix-profile/bin" "''${path[@]}")
-  '';
+  programs.zsh = {
+    shellInit = ''
+      eval "$('${brewPath}' shellenv)"
+      typeset -aU path
+      path=("$HOME/.nix-profile/bin" "''${path[@]}")
+    '';
+    interactiveShellInit = ''
+      source '${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/brew/brew.plugin.zsh'
+    '';
+  };
 
   launchd.user.agents.brew-upgrade = {
     script = ''

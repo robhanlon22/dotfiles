@@ -29,16 +29,7 @@
         };
       };
 
-      zsh.plugins = [
-        {
-          name = "brew";
-          src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/brew";
-        }
-      ];
-
-      nixvim.globals = {
-        sqlite_clib_path = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
-      };
+      nixvim.globals.sqlite_clib_path = "${pkgs.sqlite.out}/lib/libsqlite3.dylib";
     };
 
     launchd.enable = true;

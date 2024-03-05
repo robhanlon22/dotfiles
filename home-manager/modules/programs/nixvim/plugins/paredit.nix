@@ -15,7 +15,7 @@
         owner = "julienvincent";
         repo = "nvim-paredit-fennel";
         rev = "master";
-        sha256 = "+lQetMbP/H8cKXcxuPiQtEel5jyRDxCsfjwF+1SPVNg=";
+        hash = "sha256-+lQetMbP/H8cKXcxuPiQtEel5jyRDxCsfjwF+1SPVNg=";
       };
     }
   ];

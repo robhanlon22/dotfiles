@@ -12,7 +12,7 @@
       copilot-cmp.enable = true;
       friendly-snippets.enable = true;
       lsp.capabilities = ''
-        capabilities = vim.tbl_deep_extend("force", capabilities, require('cmp_nvim_lsp').default_capabilities())
+        capabilities = conf.cmp.capabilities(capabilities)
       '';
       lspkind.enable = true;
       luasnip.enable = true;

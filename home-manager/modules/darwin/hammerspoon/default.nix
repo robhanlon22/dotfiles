@@ -10,7 +10,7 @@
 
     src = fetchzip {
       url = "https://github.com/Hammerspoon/hammerspoon/releases/download/${version}/Hammerspoon-${version}.zip";
-      sha256 = "Q14NBizKz7LysEFUTjUHCUnVd6+qEYPSgWwrOGeT9Q0=";
+      hash = "sha256-Q14NBizKz7LysEFUTjUHCUnVd6+qEYPSgWwrOGeT9Q0=";
     };
 
     dontConfigure = true;

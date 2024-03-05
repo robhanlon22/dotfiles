@@ -11,9 +11,9 @@
       builtins.readFile
       builtins.fromTOML
     ];
-  catppuccin = readTOML (builtins.fetchurl {
+  catppuccin = readTOML (pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/catppuccin/starship/main/palettes/mocha.toml";
-    sha256 = "cSaZrSfbk97d2kV3q5dT924MgmUuY8eYIIU0PIygH5w=";
+    hash = "sha256-cSaZrSfbk97d2kV3q5dT924MgmUuY8eYIIU0PIygH5w=";
   });
   nerdfonts = readTOML (pkgs.runCommand "starship-nerdfonts" {} ''
     ${config.programs.starship.package}/bin/starship preset nerd-font-symbols -o $out

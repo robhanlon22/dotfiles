@@ -41,9 +41,9 @@
 
   xdg.configFile."fsh/themes/catppuccin-mocha.ini" = {
     enable = true;
-    source = builtins.fetchurl {
+    source = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/catppuccin/zsh-fsh/main/themes/catppuccin-mocha.ini";
-      sha256 = "7eIiR+ERWFXOq7IR/VMZqGhQgZ8uQ4jfvNR9MWgMSuk=";
+      hash = "sha256-7eIiR+ERWFXOq7IR/VMZqGhQgZ8uQ4jfvNR9MWgMSuk=";
     };
   };
 }

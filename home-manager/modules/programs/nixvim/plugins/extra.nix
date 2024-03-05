@@ -29,7 +29,16 @@
             owner = "lukas-reineke";
             repo = "virt-column.nvim";
             rev = "master";
-            sha256 = "7ljjJ7UwN2U1xPCtsYbrKdnz6SGQGbM/HrxPTxNKlwo=";
+            hash = "sha256-7ljjJ7UwN2U1xPCtsYbrKdnz6SGQGbM/HrxPTxNKlwo=";
+          };
+        }
+        {
+          name = "CopilotChat-nvim";
+          src = fetchFromGitHub {
+            owner = "CopilotC-Nvim";
+            repo = "CopilotChat.nvim";
+            rev = "canary";
+            hash = "sha256-vD/qO+CrQloi7gJsZwjyRHsdD6XQmrMhIG1WCGHZb3Q=";
           };
         }
       ]

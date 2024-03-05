@@ -9,6 +9,7 @@
     ./paredit.nix
     ./telescope.nix
     ./treesitter.nix
+    ./trouble.nix
     ./nvim-cmp.nix
     ./ufo.nix
     ./which-key.nix
