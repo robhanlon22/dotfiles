@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  imports = [./keymaps ./plugins];
+  imports = [./plugins];
 
   programs.nixvim = {
     enable = true;
@@ -23,7 +23,6 @@
     globals = {
       mapleader = " ";
       maplocalleader = ",";
-      sexp_filetypes = "lisp,scheme,clojure,fennel";
     };
 
     clipboard.register = "unnamedplus";
@@ -33,7 +32,6 @@
       flavour = "mocha";
       transparentBackground = true;
       integrations = {
-        cmp = true;
         gitsigns = true;
         illuminate = {
           enabled = true;
@@ -68,7 +66,11 @@
 
     extraPackages = with pkgs; [nur.repos.bandithedoge.fennel-language-server];
 
-    extraConfigLuaPre = builtins.readFile ./pre.lua;
+    extraConfigLuaPre = ''
+      require("hotpot").setup({})
+
+      local conf = require("conf")(vim)
+    '';
   };
 
   xdg.configFile = {

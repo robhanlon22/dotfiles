@@ -1,40 +1,25 @@
 {
-  programs.nixvim.plugins.nvim-cmp = {
-    enable = true;
-    snippet = {expand = "luasnip";};
-
-    mapping = {
-      "<tab>" = {
-        modes = ["i" "s"];
-        action = "conf.cmp.tab";
-      };
-      "<s-tab>" = {
-        modes = ["i" "s"];
-        action = "conf.cmp.s_tab";
-      };
-      "<cr>" = {
-        modes = ["i" "s"];
-        action = "conf.cmp.cr";
-      };
+  programs.nixvim = {
+    plugins = {
+      cmp-buffer.enable = true;
+      cmp-cmdline-history.enable = true;
+      cmp-cmdline.enable = true;
+      cmp-fuzzy-buffer.enable = true;
+      cmp-fuzzy-path.enable = true;
+      cmp-nvim-lsp-document-symbol.enable = true;
+      cmp-nvim-lsp-signature-help.enable = true;
+      cmp-nvim-lsp.enable = true;
+      copilot-cmp.enable = true;
+      friendly-snippets.enable = true;
+      lsp.capabilities = ''
+        capabilities = vim.tbl_deep_extend("force", capabilities, require('cmp_nvim_lsp').default_capabilities())
+      '';
+      lspkind.enable = true;
+      luasnip.enable = true;
+      nvim-cmp.enable = true;
     };
-
-    mappingPresets = ["insert" "cmdline"];
-
-    sources = [
-      {name = "cmdline";}
-      {name = "copilot";}
-      {name = "fuzzy_buffer";}
-      {name = "fuzzy_path";}
-      {name = "git";}
-      {name = "luasnip";}
-      {name = "nvim_lsp";}
-      {name = "nvim_lsp_document_symbol";}
-      {name = "nvim_lsp_signature_help";}
-      {name = "nvim_lua";}
-      {name = "rg";}
-      {name = "zsh";}
-    ];
-
-    window.completion.border = "rounded";
+    extraConfigLuaPost = ''
+      conf.cmp.setup()
+    '';
   };
 }

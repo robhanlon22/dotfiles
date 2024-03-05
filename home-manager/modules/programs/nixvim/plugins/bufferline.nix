@@ -3,8 +3,11 @@
   lib,
   ...
 }: {
-  my.nixvim.which-key.register = with config.my.lib.nixvim.keymap; [
+  programs.nixvim.plugins.bufferline.enable = true;
+
+  my.programs.nixvim.plugins.which-key.register = with config.my.lib.nixvim.keymap; [
     {
+      opts.prefix = leader;
       mappings = {
         b = wk.group "Buffer" (
           let
@@ -25,7 +28,7 @@
               d = wk.vim "bdelete" "Close";
               K = wk.vim "BufferLineCloseOthers" "Close others";
               s = wk.vim "BufferLineTogglePin" "Pin";
-              o = {
+              o = wk.group "Sort" {
                 d = wk.vim "BufferLineSortByDirectory" "Sort by directory";
                 l = wk.vim "BufferLineSortByExtension" "Sort by extension";
                 w = wk.vim "BufferLineSortByTabs" "Sort by tabs";
@@ -34,7 +37,6 @@
             // bufferGoto
         );
       };
-      opts.prefix = leader;
     }
   ];
 }

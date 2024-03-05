@@ -4,7 +4,7 @@
   ...
 }:
 with lib; {
-  options.my.nixvim.which-key.register = mkOption (with types; {
+  options.my.programs.nixvim.plugins.which-key.register = mkOption (with types; {
     type = listOf (submodule {
       options = {
         mappings = mkOption {
@@ -34,25 +34,30 @@ with lib; {
       };
     });
   });
+
   config = {
-    programs.nixvim.extraConfigLua = let
-      isntEmpty = v: v != {};
-    in
-      strings.concatMapStringsSep "\n" (
-        {
-          mappings,
-          opts,
-        }: let
-          args = pipe [mappings opts] [
-            (map (v: strings.optionalString (isntEmpty v) (config.nixvim.helpers.toLuaObject v)))
-            (lists.remove "")
-            (strings.concatStringsSep ", ")
-          ];
-        in
-          lib.strings.optionalString (isntEmpty mappings) ''
-            require("which-key").register(${args})
-          ''
-      )
-      config.my.nixvim.which-key.register;
+    programs.nixvim = {
+      plugins.which-key.enable = true;
+
+      extraConfigLua = let
+        isntEmpty = v: v != {};
+      in
+        strings.concatMapStringsSep "\n" (
+          {
+            mappings,
+            opts,
+          }: let
+            args = pipe [mappings opts] [
+              (map (v: strings.optionalString (isntEmpty v) (config.nixvim.helpers.toLuaObject v)))
+              (lists.remove "")
+              (strings.concatStringsSep ", ")
+            ];
+          in
+            lib.strings.optionalString (isntEmpty mappings) ''
+              require("which-key").register(${args})
+            ''
+        )
+        config.my.programs.nixvim.plugins.which-key.register;
+    };
   };
 }

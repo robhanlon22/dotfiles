@@ -20,6 +20,7 @@
     };
     shellAliases = {
       ls = "ls --color=auto";
+      cat = "bat";
     };
   };
 }
