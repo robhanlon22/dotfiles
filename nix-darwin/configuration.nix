@@ -61,34 +61,4 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-
-  services = {
-    yabai = {
-      enable = true;
-      config = {
-        active_window_opacity = 1.0;
-        auto_balance = "off";
-        focus_follows_mouse = "off";
-        external_bar = "all:44:0";
-        insert_feedback_color = "0xffd75f5f";
-        layout = "stack";
-        mouse_action1 = "move";
-        mouse_action2 = "resize";
-        mouse_drop_action = "swap";
-        mouse_follows_focus = "off";
-        mouse_modifier = "fn";
-        normal_window_opacity = 0.90;
-        split_ratio = 0.50;
-        split_type = "auto";
-        window_animation_duration = 0.0;
-        window_animation_frame_rate = 120;
-        window_opacity = "off";
-        window_opacity_duration = 0.0;
-        window_origin_display = "default";
-        window_placement = "second_child";
-        window_shadow = "on";
-        window_zoom_persist = "on";
-      };
-    };
-  };
 }

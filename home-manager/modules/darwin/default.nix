@@ -3,7 +3,7 @@
   lib,
   ...
 }: {
-  imports = [./hammerspoon ./sketchybar];
+  imports = [./hammerspoon ./sketchybar ./yabai.nix];
 
   config = lib.my.modules.ifDarwin {
     home = {

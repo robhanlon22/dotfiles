@@ -1,10 +1,10 @@
-{lib, ...}:
-with lib.my.config; {
+{
   imports = [./modules];
 
   home.file.".editorconfig".source = ../.editorconfig;
 
-  xdg.configFile = enabledAll {
-    "stylua/stylua.toml".source = ./stylua.toml;
+  xdg.configFile."stylua/stylua.toml" = {
+    enable = true;
+    source = ./stylua.toml;
   };
 }

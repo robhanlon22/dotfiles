@@ -1,12 +1,8 @@
-{
-  pkgs,
-  lib,
-  ...
-}:
-with lib.my.config; {
+{pkgs, ...}: {
   imports = [./keymaps ./plugins];
 
   programs.nixvim = {
+    enable = true;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
@@ -19,7 +15,8 @@ with lib.my.config; {
 
     clipboard.register = "unnamedplus";
 
-    colorschemes.catppuccin = enabled {
+    colorschemes.catppuccin = {
+      enable = true;
       flavour = "mocha";
       transparentBackground = true;
       integrations = {
@@ -61,7 +58,8 @@ with lib.my.config; {
   };
 
   xdg.configFile = {
-    "nvim/fnl" = lib.my.config.enabled {
+    "nvim/fnl" = {
+      enable = true;
       source = ./fnl;
       recursive = true;
     };

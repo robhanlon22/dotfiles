@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
+{pkgs, ...}: let
   grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
     tree-sitter-bash
     tree-sitter-clojure
@@ -23,11 +19,11 @@
     tree-sitter-yaml
   ];
 in {
-  programs.nixvim.plugins.treesitter = with lib.my.config;
-    enabled {
-      inherit grammarPackages;
-      ensureInstalled = map ({language}: language) grammarPackages;
-      folding = true;
-      incrementalSelection = enabled {};
-    };
+  programs.nixvim.plugins.treesitter = {
+    enable = true;
+    inherit grammarPackages;
+    ensureInstalled = map ({language}: language) grammarPackages;
+    folding = true;
+    incrementalSelection = {enable = true;};
+  };
 }

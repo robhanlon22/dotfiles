@@ -5,46 +5,50 @@
 }: {
   imports = [./lsp.nix ./lualine.nix ./none-ls.nix ./nvim-cmp.nix ./treesitter.nix];
 
-  programs.nixvim = with lib.my.config; {
-    plugins = enabledAll {
-      auto-session = {};
+  programs.nixvim = {
+    plugins = {
+      auto-session = {enable = true;};
 
-      # barbecue = {};
+      bufferline = {enable = true;};
 
-      # barbar = {autoHide = true;};
+      better-escape = {
+        enable = true;
+        mapping = ["jk"];
+      };
 
-      bufferline = {};
+      comment-nvim = {enable = true;};
 
-      better-escape = {mapping = ["jk"];};
-
-      comment-nvim = {};
-
-      conjure = {};
+      conjure = {enable = true;};
 
       copilot-lua = {
+        enable = true;
         suggestion.enabled = false;
         panel.enabled = false;
       };
 
-      floaterm = {};
+      floaterm = {enable = true;};
 
-      inc-rename = {};
+      inc-rename = {enable = true;};
 
-      indent-blankline = {};
+      indent-blankline = {enable = true;};
 
-      illuminate = {};
+      illuminate = {enable = true;};
 
-      lastplace = {};
+      lastplace = {enable = true;};
 
-      leap = {};
+      leap = {enable = true;};
 
-      lspkind = {extraOptions = {symbol_map = {Copilot = "";};};};
+      lspkind = {
+        enable = true;
+        extraOptions = {symbol_map = {Copilot = "";};};
+      };
 
-      lsp-format = {};
+      lsp-format = {enable = true;};
 
-      luasnip = {};
+      luasnip = {enable = true;};
 
       mini = {
+        enable = true;
         modules = {
           basics = {
             options.extra_ui = true;
@@ -57,23 +61,27 @@
         };
       };
 
-      nix = {};
+      nix = {enable = true;};
 
-      nvim-lightbulb = {};
+      nvim-lightbulb = {enable = true;};
 
-      nvim-ufo.providerSelector = "conf.ufo.provider_selector";
+      nvim-ufo = {
+        enable = true;
+        providerSelector = "conf.ufo.provider_selector";
+      };
 
-      rainbow-delimiters = {};
+      rainbow-delimiters = {enable = true;};
 
-      surround = {};
+      surround = {enable = true;};
 
       telescope = {
-        extensions = enabledAll {
-          file_browser = {};
-          frecency = {};
-          fzf-native = {};
-          ui-select = {};
-          undo = {};
+        enable = true;
+        extensions = {
+          file_browser = {enable = true;};
+          frecency = {enable = true;};
+          fzf-native = {enable = true;};
+          ui-select = {enable = true;};
+          undo = {enable = true;};
         };
         extraOptions = {
           extensions = with lib.nixvim; {
@@ -89,13 +97,13 @@
         };
       };
 
-      undotree = {};
+      undotree = {enable = true;};
 
       typescript-tools.settings.exposeAsCodeAction = "all";
 
-      trouble = {};
+      trouble = {enable = true;};
 
-      which-key = {};
+      which-key = {enable = true;};
     };
 
     extraPlugins = with pkgs.vimPlugins;

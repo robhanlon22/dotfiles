@@ -1,36 +1,43 @@
 {lib, ...}: {
-  programs.nixvim.plugins.none-ls = with lib.my.config;
-    enabled {
-      border = "rounded";
-      enableLspFormat = true;
+  programs.nixvim.plugins.none-ls = {
+    enable = true;
+    border = "rounded";
+    enableLspFormat = true;
 
-      sources = {
-        code_actions = enabledAll {
-          eslint_d = {};
-          gitsigns = {};
-          shellcheck = {};
-          statix = {};
-        };
-
-        diagnostics = enabledAll {
-          deadnix = {};
-          eslint_d = {};
-          luacheck = {};
-          statix = {};
-        };
-
-        formatting = enabledAll {
-          alejandra = {};
-          eslint_d = {};
-          fnlfmt = {};
-          prettier = {disableTsServerFormatter = true;};
-          shfmt = {};
-          stylua = {};
-          trim_newlines = {};
-          trim_whitespace = {};
-        };
+    sources = {
+      code_actions = {
+        eslint_d = {enable = true;};
+        gitsigns = {enable = true;};
+        shellcheck = {enable = true;};
+        statix = {enable = true;};
       };
 
-      sourcesItems = [{__raw = ''require("null-ls").builtins.formatting.cljstyle'';}];
+      diagnostics = {
+        deadnix = {enable = true;};
+        eslint_d = {enable = true;};
+        luacheck = {enable = true;};
+        statix = {enable = true;};
+      };
+
+      formatting = {
+        alejandra = {enable = true;};
+        eslint_d = {enable = true;};
+        fnlfmt = {enable = true;};
+        prettier = {
+          enable = true;
+          disableTsServerFormatter = true;
+        };
+        shfmt = {enable = true;};
+        stylua = {enable = true;};
+        trim_newlines = {enable = true;};
+        trim_whitespace = {enable = true;};
+      };
     };
+
+    sourcesItems = [
+      (
+        lib.nixvim.mkRaw ''require("null-ls").builtins.formatting.cljstyle''
+      )
+    ];
+  };
 }

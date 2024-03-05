@@ -1,6 +1,6 @@
-{lib, ...}:
-with lib.my.config; {
-  programs.kitty = enabled {
+{
+  programs.kitty = {
+    enable = true;
     font = {
       name = "Caskaydia Cove Nerd Font Mono";
       size = 16;

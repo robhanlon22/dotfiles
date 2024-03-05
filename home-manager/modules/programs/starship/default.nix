@@ -2,11 +2,10 @@
   pkgs,
   lib,
   ...
-}:
-with lib; let
+}: let
   flavor = "mocha";
-  theme = with builtins;
-    pipe {
+  theme =
+    lib.pipe {
       owner = "catppuccin";
       repo = "starship";
       rev = "main";
@@ -14,11 +13,12 @@ with lib; let
     } [
       pkgs.fetchFromGitHub
       (s: s + /palettes/${flavor}.toml)
-      readFile
-      fromTOML
+      lib.readFile
+      builtins.fromTOML
     ];
 in {
-  programs.starship = my.config.enabled {
+  programs.starship = {
+    enable = true;
     settings =
       {
         format = "$all";

@@ -1,5 +1,6 @@
-{lib, ...}: {
-  programs.nixvim.plugins.lualine = lib.my.config.enabled {
+{
+  programs.nixvim.plugins.lualine = {
+    enable = true;
     globalstatus = true;
     sectionSeparators = {
       left = "";

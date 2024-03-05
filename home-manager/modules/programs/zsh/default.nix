@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}:
-with lib.my.config; let
+{pkgs, ...}: let
   source = file: "source ${toString file}";
   zshrc = builtins.readFile ./zshrc;
   omzGitAliases = source (builtins.fetchurl {
@@ -30,15 +25,17 @@ with lib.my.config; let
     zshViMode
     zshrc
   ];
-  zshEnabled = enabling "enableZshIntegration" {};
+  zshEnabled = {
+    enableZshIntegration = true;
+  };
+  flake = "$HOME/.config/dotfiles";
+  nfu = cmd: "(cd ${flake} && nfu && ${cmd})";
+  switch = cmd: "${cmd} switch --flake ${flake} --show-trace";
 in {
   imports = map (initExtra: {programs.zsh = {inherit initExtra;};}) initExtras;
-  programs = let
-    flake = "$HOME/.config/dotfiles";
-    nfu = cmd: "(cd ${flake} && nfu && ${cmd})";
-    switch = cmd: "${cmd} switch --flake ${flake} --show-trace";
-  in {
-    zsh = enabled {
+  programs = {
+    zsh = {
+      enable = true;
       enableAutosuggestions = true;
       shellAliases = {
         ls = "ls --color";
@@ -48,7 +45,8 @@ in {
         drs = switch "darwin-rebuild";
         nfudrs = nfu "drs";
       };
-      syntaxHighlighting = enabled {
+      syntaxHighlighting = {
+        enable = true;
         highlighters = ["main" "brackets" "cursor" "root" "line"];
       };
     };
