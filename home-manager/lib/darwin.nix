@@ -4,7 +4,7 @@
   ...
 }: rec {
   launchdAgent = name: {
-    enable ? false,
+    enable ? true,
     zshProgram ? null,
     debug ? false,
     ...
@@ -23,6 +23,7 @@
         )
         // (
           lib.optionalAttrs debug {
+            Debug = true;
             StandardOutPath = "/tmp/${name}.out";
             StandardErrorPath = "/tmp/${name}.err";
           }

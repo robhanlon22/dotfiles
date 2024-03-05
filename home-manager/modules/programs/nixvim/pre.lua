@@ -1,4 +1,5 @@
+-- luacheck: globals vim, ignore conf
+
 require("hotpot").setup({})
 
--- luacheck: ignore conf
-local conf = require("conf")()
+local conf = require("conf")(vim)

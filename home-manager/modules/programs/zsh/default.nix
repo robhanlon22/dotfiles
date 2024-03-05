@@ -26,7 +26,7 @@
     enableCompletion = false;
     initExtra = "source ${./zshrc}";
     shellAliases = {
-      ls = "ls --color";
+      ls = "ls --color=auto";
     };
   };
 
