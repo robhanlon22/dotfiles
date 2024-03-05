@@ -1,16 +1,37 @@
-{
+{lib, ...}: let
+  inherit (lib.my) shellIntegrations;
+in {
   imports = [./kitty ./nixvim ./starship ./zsh];
 
   programs = {
-    direnv = {
+    carapace =
+      shellIntegrations
+      // {
+        enable = true;
+      };
+
+    direnv =
+      shellIntegrations
+      // {
+        enable = true;
+        nix-direnv.enable = true;
+      };
+
+    nushell = {enable = true;};
+
+    fzf = {
       enable = true;
-      nix-direnv.enable = true;
+      enableZshIntegration = true;
     };
-    fzf = {enable = true;};
+
     gpg = {enable = true;};
-    home-manager = {enable = true;};
-    nixvim = {enable = true;};
+
     ripgrep = {enable = true;};
-    zoxide = {enable = true;};
+
+    zoxide =
+      shellIntegrations
+      // {
+        enable = true;
+      };
   };
 }

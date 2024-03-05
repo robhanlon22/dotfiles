@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   programs.kitty = {
     enable = true;
     font = {
@@ -8,6 +8,7 @@
     keybindings = {
       "cmd+t" = "new_tab_with_cwd";
     };
+    shellIntegration.enableZshIntegration = true;
     settings = {
       background_opacity = "0.95";
       background_blur = "5";
@@ -16,7 +17,7 @@
       hide_window_decorations = "yes";
       macos_option_as_alt = "left";
       macos_titlebar_color = "background";
-      shell = "$HOME/.nix-profile/bin/zsh --interactive --login";
+      shell = "${config.programs.zsh.package}/bin/zsh --interactive --login";
       tab_bar_edge = "bottom";
       tab_bar_min_tabs = 1;
       tab_bar_style = "powerline";

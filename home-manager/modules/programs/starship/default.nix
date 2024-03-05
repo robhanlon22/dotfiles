@@ -12,21 +12,23 @@
       sha256 = "nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
     } [
       pkgs.fetchFromGitHub
-      (s: s + /palettes/${flavor}.toml)
+      (s: "${s}/palettes/${flavor}.toml")
       lib.readFile
       builtins.fromTOML
     ];
 in {
-  programs.starship = {
-    enable = true;
-    settings =
-      {
-        format = "$all";
-        palette = "catppuccin_${flavor}";
-        command_timeout = 50;
-      }
-      // theme;
-  };
+  programs.starship =
+    lib.my.shellIntegrations
+    // {
+      enable = true;
+      settings =
+        theme
+        // {
+          format = "$all";
+          palette = "catppuccin_${flavor}";
+          command_timeout = 50;
+        };
+    };
 
   programs.zsh.initExtraFirst = ''
     export STARSHIP_LOG=error

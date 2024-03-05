@@ -3,6 +3,7 @@
   lib,
   ...
 }: let
+  yabai = "${pkgs.yabai}/bin/yabai";
   yabairc = pkgs.writeScript "yabairc" (
     lib.pipe {
       active_window_opacity = 1;
@@ -27,7 +28,7 @@
       window_shadow = "off";
       window_zoom_persist = "on";
     } [
-      (lib.mapAttrsToList (p: v: "yabai -m config ${p} ${toString v}"))
+      (lib.mapAttrsToList (p: v: "${yabai} -m config ${p} ${toString v}"))
       (lib.concatStringsSep "\n")
     ]
   );
@@ -35,7 +36,7 @@ in {
   config = lib.my.modules.ifDarwin {
     launchd.agents = lib.my.darwin.launchdAgent "yabai" {
       enable = true;
-      ProgramArguments = ["${pkgs.yabai}/bin/yabai" "--config" "${yabairc}"];
+      ProgramArguments = ["${yabai}" "--verbose" "--config" "${yabairc}"];
     };
   };
 }

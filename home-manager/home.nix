@@ -7,4 +7,6 @@
     enable = true;
     source = ./stylua.toml;
   };
+
+  programs.home-manager.enable = true;
 }

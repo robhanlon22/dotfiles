@@ -1,6 +1,4 @@
-let
-  zshEnabled = {enableZshIntegration = true;};
-in {
+{
   imports = [./nix.nix ./init-extra.nix];
 
   programs = {
@@ -15,11 +13,5 @@ in {
         highlighters = ["main" "brackets" "cursor" "root" "line"];
       };
     };
-
-    direnv = zshEnabled;
-    fzf = zshEnabled;
-    kitty.shellIntegration = zshEnabled;
-    starship = zshEnabled;
-    zoxide = zshEnabled;
   };
 }
