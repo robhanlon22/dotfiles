@@ -1,4 +1,4 @@
-{config, ...}: {
+{
   programs.kitty = {
     enable = true;
     font.name = "CaskaydiaCove Nerd Font Mono";
@@ -37,7 +37,6 @@
       inactive_tab_background = "#313244";
       inactive_tab_foreground = "#bac2de";
       scrollback_pager = ''nvim -c "silent write! /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer - "'';
-      shell = "${config.programs.zsh.package}/bin/zsh --interactive --login";
       tab_bar_align = "left";
       tab_bar_background = "none";
       tab_bar_edge = "top";

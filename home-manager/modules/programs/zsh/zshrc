@@ -1,9 +1,3 @@
-fast-theme -q XDG:catppuccin-mocha
+fast-theme -q XDG:themes/catppuccin-mocha
 
-compstyle ohmyzsh
-
-bindkey -v
-
-export EDITOR=nvim
-export VISUAL=nvim
-export GPG_TTY="$(tty)"
+compstyle zshzoo

@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -15,6 +16,7 @@
         font.size = 14;
         settings = {
           wayland_titlebar_color = "background";
+          shell = "${config.programs.zsh.package}/bin/zsh";
         };
       };
     };
