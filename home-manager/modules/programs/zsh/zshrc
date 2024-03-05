@@ -1,7 +1,14 @@
+fast-theme -q XDG:catppuccin-mocha
+
+compstyle ohmyzsh
+
+bindkey -v
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+function zvm_after_init() {
+  zvm_bindkey viins '^R' atuin-search-viins
+  zvm_bindkey vicmd '^R' atuin-search-vicmd
+}
+
 export EDITOR=nvim
 export VISUAL=nvim
 export GPG_TTY="$(tty)"
-
-setopt autopushd
-
-ZVM_VI_INSERT_ESCAPE_BINDKEY=jk

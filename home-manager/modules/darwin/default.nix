@@ -8,8 +8,9 @@
   config = lib.my.modules.ifDarwin {
     home = {
       packages = with pkgs; [
-        raycast
         coreutils
+        darwin.iproute2mac
+        raycast
       ];
 
       file.".gnupg/gpg-agent.conf".text = ''

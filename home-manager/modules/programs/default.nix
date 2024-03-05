@@ -4,6 +4,17 @@ in {
   imports = [./kitty ./nixvim ./starship ./zsh];
 
   programs = {
+    atuin =
+      shellIntegrations
+      // {
+        enable = true;
+        settings = {
+          inline_height = 30;
+          keymap_mode = "auto";
+          update_check = false;
+        };
+      };
+
     carapace =
       shellIntegrations
       // {
@@ -17,16 +28,16 @@ in {
         nix-direnv.enable = true;
       };
 
-    nushell = {enable = true;};
+    nushell.enable = true;
 
     fzf = {
       enable = true;
       enableZshIntegration = true;
     };
 
-    gpg = {enable = true;};
+    gpg.enable = true;
 
-    ripgrep = {enable = true;};
+    ripgrep.enable = true;
 
     zoxide =
       shellIntegrations
