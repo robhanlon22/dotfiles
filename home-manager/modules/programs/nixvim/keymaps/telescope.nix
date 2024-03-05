@@ -4,7 +4,7 @@ with lib.my.nixvim.keymap; {
     telescope = s: wk.vim "Telescope ${s}";
   in {
     ${leader} = {
-      ${leader} = telescope "frecency workspace=CWD" "Telescope frecency";
+      ${leader} = telescope "find_files" "Find files";
       s = wk.group "Telescope" {
         b = telescope "buffers" "Buffers";
         f = telescope "file_browser" "File browser";

@@ -38,7 +38,6 @@
     options = {
       colorcolumn = [80];
       expandtab = true;
-      foldcolumn = "1";
       foldenable = true;
       foldlevel = 99;
       foldlevelstart = 99;
@@ -48,7 +47,7 @@
       tabstop = 2;
       title = true;
       titlelen = 0;
-      titlestring = "%t (nvim)";
+      titlestring = "\\ %{substitute(getcwd(),$HOME,'~','')}\ \󰇙\ %t";
       undofile = true;
     };
 

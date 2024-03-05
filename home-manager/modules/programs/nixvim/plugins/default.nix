@@ -56,7 +56,6 @@
               windows = true;
               move_with_alt = true;
             };
-            autocommands.relnum_in_visual_mode = true;
           };
         };
       };
@@ -78,21 +77,15 @@
         enable = true;
         extensions = {
           file_browser.enable = true;
-          frecency.enable = true;
           fzf-native.enable = true;
           ui-select.enable = true;
           undo.enable = true;
         };
         extraOptions = {
           extensions = with lib.nixvim; {
-            frecency.db_safe_mode = true;
             ui-select = [
               (mkRaw "conf.telescope.extensions.ui_select.dropdown")
             ];
-            zoxide.mappings.default = {
-              action = mkRaw "conf.telescope.extensions.zoxide.action";
-              keepinsert = true;
-            };
           };
         };
       };
@@ -109,42 +102,48 @@
       which-key.enable = true;
     };
 
-    extraPlugins = with pkgs.vimPlugins;
-    with pkgs.vimUtils; [
-      (buildVimPlugin {
-        name = "virt-column-nvim";
-        src = pkgs.fetchFromGitHub {
-          owner = "lukas-reineke";
-          repo = "virt-column.nvim";
-          rev = "master";
-          sha256 = "7ljjJ7UwN2U1xPCtsYbrKdnz6SGQGbM/HrxPTxNKlwo=";
-        };
-      })
-      (buildVimPlugin {
-        name = "nvim-paredit";
-        src = pkgs.fetchFromGitHub {
-          owner = "julienvincent";
-          repo = "nvim-paredit";
-          rev = "master";
-          sha256 = "dSzHYpYHMhgmThnT6ZEqA+axLXlGZLOy7rkzi2YlAts=";
-        };
-      })
-      (buildVimPlugin {
-        name = "nvim-paredit-fennel";
-        src = pkgs.fetchFromGitHub {
-          owner = "julienvincent";
-          repo = "nvim-paredit-fennel";
-          rev = "master";
-          sha256 = "+lQetMbP/H8cKXcxuPiQtEel5jyRDxCsfjwF+1SPVNg=";
-        };
-      })
-      dressing-nvim
-      dracula-nvim
-      fuzzy-nvim
-      hotpot-nvim
-      nvim-lspconfig
-      plenary-nvim
-      telescope-zoxide
-    ];
+    extraPlugins = with pkgs;
+      (
+        with vimPlugins; [
+          dressing-nvim
+          dracula-nvim
+          fuzzy-nvim
+          hotpot-nvim
+          nvim-lspconfig
+          plenary-nvim
+          telescope-zoxide
+        ]
+      )
+      ++ (
+        map vimUtils.buildVimPlugin [
+          {
+            name = "virt-column-nvim";
+            src = fetchFromGitHub {
+              owner = "lukas-reineke";
+              repo = "virt-column.nvim";
+              rev = "master";
+              sha256 = "7ljjJ7UwN2U1xPCtsYbrKdnz6SGQGbM/HrxPTxNKlwo=";
+            };
+          }
+          {
+            name = "nvim-paredit";
+            src = pkgs.fetchFromGitHub {
+              owner = "julienvincent";
+              repo = "nvim-paredit";
+              rev = "master";
+              sha256 = "dSzHYpYHMhgmThnT6ZEqA+axLXlGZLOy7rkzi2YlAts=";
+            };
+          }
+          {
+            name = "nvim-paredit-fennel";
+            src = pkgs.fetchFromGitHub {
+              owner = "julienvincent";
+              repo = "nvim-paredit-fennel";
+              rev = "master";
+              sha256 = "+lQetMbP/H8cKXcxuPiQtEel5jyRDxCsfjwF+1SPVNg=";
+            };
+          }
+        ]
+      );
   };
 }
