@@ -7,26 +7,31 @@
     };
     shellIntegration.enableZshIntegration = true;
     settings = let
-      # hyper-saturated because these colors are sometimes used as background
-      # clors and text loses readability since they're so close to white by
-      # default
+      # Hyper-saturate these colors so they can used with both light and dark
+      # foreground text
       red = "#F30044";
       green = "#A6E3A1";
       yellow = "#FAA800";
       blue = "#3F9FF1";
       magenta = "#F500B2";
       cyan = "#39E4E4";
-    in {
+    in rec {
       background_blur = "5";
       background_opacity = "0.95";
       bell_on_tab = "🐱 ";
 
       color1 = red;
+      color9 = color1;
       color2 = green;
+      color10 = color2;
       color3 = yellow;
+      color11 = color3;
       color4 = blue;
+      color12 = color4;
       color5 = magenta;
+      color13 = color5;
       color6 = cyan;
+      color14 = color6;
 
       enable_audio_bell = false;
       hide_window_decorations = "yes";
