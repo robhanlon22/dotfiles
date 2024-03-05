@@ -1,4 +1,4 @@
-{lib, ...}: {
+{
   programs.nixvim.plugins.none-ls = {
     enable = true;
     border = "rounded";
@@ -6,38 +6,33 @@
 
     sources = {
       code_actions = {
-        eslint_d = {enable = true;};
-        gitsigns = {enable = true;};
-        shellcheck = {enable = true;};
-        statix = {enable = true;};
+        eslint_d.enable = true;
+        gitsigns.enable = true;
+        shellcheck.enable = true;
+        statix.enable = true;
       };
 
       diagnostics = {
-        deadnix = {enable = true;};
-        eslint_d = {enable = true;};
-        luacheck = {enable = true;};
-        statix = {enable = true;};
+        deadnix.enable = true;
+        eslint_d.enable = true;
+        luacheck.enable = true;
+        statix.enable = true;
       };
 
       formatting = {
-        alejandra = {enable = true;};
-        eslint_d = {enable = true;};
-        fnlfmt = {enable = true;};
+        alejandra.enable = true;
+        eslint_d.enable = true;
+        fnlfmt.enable = true;
         prettier = {
           enable = true;
           disableTsServerFormatter = true;
         };
-        shfmt = {enable = true;};
-        stylua = {enable = true;};
-        trim_newlines = {enable = true;};
-        trim_whitespace = {enable = true;};
+        shfmt.enable = true;
+        sqlfluff.enable = true;
+        stylua.enable = true;
+        trim_newlines.enable = true;
+        trim_whitespace.enable = true;
       };
     };
-
-    sourcesItems = [
-      (
-        lib.nixvim.mkRaw ''require("null-ls").builtins.formatting.cljstyle''
-      )
-    ];
   };
 }

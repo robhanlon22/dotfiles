@@ -7,14 +7,13 @@
     };
     shellIntegration.enableZshIntegration = true;
     settings = let
-      # Hyper-saturate these colors so they can used with both light and dark
-      # foreground text
-      red = "#F30044";
-      green = "#A6E3A1";
-      yellow = "#FAA800";
-      blue = "#3F9FF1";
-      magenta = "#F500B2";
-      cyan = "#39E4E4";
+      # Use latte colors because black and white text can render on top of them
+      red = "#E78284";
+      green = "#A6D189";
+      yellow = "#E5C890";
+      blue = "#8CAAEE";
+      magenta = "#F4B8E4";
+      cyan = "#81C8BE";
     in rec {
       background_blur = "5";
       background_opacity = "0.95";

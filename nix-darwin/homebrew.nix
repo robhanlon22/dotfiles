@@ -20,11 +20,11 @@ in {
 
   launchd.user.agents.brew-upgrade = {
     script = ''
-      '${brewPath}' upgrade --greedy && '${brewPath}' cleanup
+      '${brewPath}' upgrade --greedy && '${brewPath}' cleanup && '${brewPath}' autoremove
     '';
     serviceConfig.StartCalendarInterval = [
       {
-        Hour = 0;
+        Hour = 9;
         Minute = 0;
       }
     ];

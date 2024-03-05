@@ -13,6 +13,7 @@
     tree-sitter-regex
     tree-sitter-ruby
     tree-sitter-scss
+    tree-sitter-sql
     tree-sitter-typescript
     tree-sitter-vim
     tree-sitter-vimdoc
