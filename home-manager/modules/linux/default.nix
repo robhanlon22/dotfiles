@@ -4,10 +4,13 @@
   ...
 }: {
   config = lib.my.modules.ifLinux {
-    home.packages = [pkgs.xsel];
+    home.packages = with pkgs; [xsel wl-clipboard];
 
     programs = {
-      nixvim.clipboard.providers.xsel.enable = true;
+      nixvim.clipboard.providers = {
+        xsel.enable = true;
+        wl-copy.enable = true;
+      };
       kitty = {
         font.size = 14;
         settings = {
