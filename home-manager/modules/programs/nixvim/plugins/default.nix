@@ -1,6 +1,6 @@
 {
+  config,
   pkgs,
-  lib,
   ...
 }: {
   imports = [./lsp.nix ./lualine.nix ./none-ls.nix ./nvim-cmp.nix ./treesitter.nix];
@@ -82,7 +82,7 @@
           undo.enable = true;
         };
         extraOptions = {
-          extensions = with lib.nixvim; {
+          extensions = with config.nixvim.helpers; {
             ui-select = [
               (mkRaw "conf.telescope.extensions.ui_select.dropdown")
             ];

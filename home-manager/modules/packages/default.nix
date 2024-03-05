@@ -1,6 +1,6 @@
 {
+  config,
   pkgs,
-  lib,
   ...
 }: {
   home.packages = with pkgs;
@@ -14,7 +14,7 @@
       ruby
       wormhole-william
     ]
-    ++ (lib.my.callPackages [
+    ++ (config.my.lib.callPackages [
       ./antifennel.nix
       ./caskaydia-cove-nerd-font.nix
     ] {});

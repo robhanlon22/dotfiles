@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -33,8 +34,8 @@
     ]
   );
 in {
-  config = lib.my.modules.ifDarwin {
-    launchd.agents = lib.my.darwin.launchdAgents {
+  config = lib.mkIf pkgs.stdenv.isDarwin {
+    launchd.agents = config.my.lib.darwin.launchdAgents {
       yabai.ProgramArguments = ["${yabai}" "--verbose" "--config" "${yabairc}"];
     };
   };

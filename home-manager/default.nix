@@ -22,12 +22,6 @@
       else "/home/${username}"
     );
 
-  lib = nixpkgs.lib.extend (self: _super:
-    import ./lib {
-      inherit pkgs nixvim;
-      lib = self;
-    });
-
   baseModule = {
     home = {
       inherit username homeDirectory stateVersion;
@@ -35,17 +29,12 @@
 
     nixpkgs = {
       config.allowUnfree = true;
-      overlays =
-        [
-          nur.overlay
-          (_: _: {inherit lib;})
-        ]
-        ++ overlays;
+      overlays = [nur.overlay] ++ overlays;
     };
   };
 in {
   homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-    inherit pkgs lib;
+    inherit pkgs;
     modules =
       [
         baseModule

@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  imports = [./homebrew.nix];
+  imports = [./homebrew.nix ./lib.nix];
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;

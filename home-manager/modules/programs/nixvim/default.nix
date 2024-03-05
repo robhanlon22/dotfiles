@@ -62,7 +62,7 @@
       tabstop = 2;
       title = true;
       titlelen = 0;
-      titlestring = "\\ %{substitute(getcwd(),$HOME,'~','')}\ \󰇙\ %t";
+      titlestring = "\\ %{substitute(getcwd(),$HOME,'~','')}\ \│\ %t";
       undofile = true;
     };
 

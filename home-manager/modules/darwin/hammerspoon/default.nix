@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   ...
@@ -43,7 +44,7 @@
       substitute "${./init.lua}" "$out" --subst-var fennelLib --subst-var yabaiPath
     '';
 in {
-  config = lib.my.modules.ifDarwin {
+  config = lib.mkIf pkgs.stdenv.isDarwin {
     home = {
       packages = [hammerspoon];
       file = {
@@ -61,7 +62,7 @@ in {
 
     launchd = {
       enable = true;
-      agents = lib.my.darwin.launchdAgents {
+      agents = config.my.lib.darwin.launchdAgents {
         hammerspoon = {
           debug = true;
           Program = "${hammerspoon}/share/Hammerspoon.app/Contents/MacOS/Hammerspoon";

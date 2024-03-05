@@ -1,5 +1,5 @@
-{lib, ...}:
-with lib.my.nixvim.keymap; {
+{config, ...}:
+with config.my.lib.nixvim.keymap; {
   imports = [
     ./registrations.nix
     ./barbar.nix

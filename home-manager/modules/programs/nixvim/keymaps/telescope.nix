@@ -1,5 +1,5 @@
-{lib, ...}:
-with lib.my.nixvim.keymap; {
+{config, ...}:
+with config.my.lib.nixvim.keymap; {
   programs.nixvim.plugins.which-key.registrations = let
     telescope = s: wk.vim "Telescope ${s}";
   in {

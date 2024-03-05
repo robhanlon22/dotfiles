@@ -1,11 +1,14 @@
-{lib, ...}:
-with lib.my.nixvim.keymap; {
-  my.nixvim.which-key.register = [
+{
+  config,
+  lib,
+  ...
+}: {
+  my.nixvim.which-key.register = with config.my.lib.nixvim.keymap; [
     {
       mappings = {
         b = wk.group "Buffer" (
           let
-            bufferGoto = lib.my.attrsets.fromList (n: let
+            bufferGoto = config.my.lib.attrsets.fromList (n: let
               s = toString n;
             in {
               name = s;

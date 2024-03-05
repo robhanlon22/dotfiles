@@ -1,12 +1,12 @@
 {
+  config,
   pkgs,
   lib,
   ...
 }: let
   inherit (pkgs) sketchybar sketchybar-app-font;
-  inherit (lib.my) modules darwin;
 in {
-  config = modules.ifDarwin {
+  config = lib.mkIf pkgs.stdenv.isDarwin {
     home = {
       packages = [sketchybar sketchybar-app-font];
 
@@ -15,7 +15,7 @@ in {
       '';
     };
 
-    launchd.agents = darwin.launchdAgents {
+    launchd.agents = config.my.lib.darwin.launchdAgents {
       sketchybar = {
         zshProgram = "${sketchybar}/bin/sketchybar";
       };

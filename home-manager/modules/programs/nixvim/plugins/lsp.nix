@@ -1,4 +1,4 @@
-{lib, ...}: {
+{config, ...}: {
   programs.nixvim.plugins.lsp = {
     enable = true;
     servers = {
@@ -22,7 +22,7 @@
       solargraph = {enable = true;};
       yamlls = {enable = true;};
     };
-    keymaps = with lib.my.nixvim.keymap; {
+    keymaps = with config.my.lib.nixvim.keymap; {
       diagnostic = {
         ${leader- "cd"} = {
           action = "open_float";

@@ -1,5 +1,5 @@
-{lib, ...}: let
-  inherit (lib.my) shellIntegrations;
+{config, ...}: let
+  inherit (config.my.lib) shellIntegrations;
 in {
   imports = [./kitty ./nixvim ./starship ./zsh];
 

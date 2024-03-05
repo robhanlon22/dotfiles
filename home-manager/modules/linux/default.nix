@@ -4,7 +4,7 @@
   lib,
   ...
 }: {
-  config = lib.my.modules.ifLinux {
+  config = lib.mkIf pkgs.stdenv.isLinux {
     home.packages = with pkgs; [xsel wl-clipboard];
 
     programs = {

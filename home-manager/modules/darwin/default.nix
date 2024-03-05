@@ -6,7 +6,7 @@
 }: {
   imports = [./hammerspoon ./sketchybar ./yabai.nix];
 
-  config = lib.my.modules.ifDarwin {
+  config = lib.mkIf pkgs.stdenv.isDarwin {
     home = {
       packages = with pkgs; [
         coreutils
@@ -19,23 +19,12 @@
       '';
     };
 
-    programs = {
-      kitty = {
-        font.size = 16;
-        settings = {
-          macos_option_as_alt = "left";
-          macos_titlebar_color = "background";
-          shell = "${config.programs.zsh.package}/bin/zsh -il";
-        };
-      };
-
-      zsh.plugins = {
-        name = "macos";
-        src = pkgs.fetchFromGitHub {
-          owner = "zshzoo";
-          repo = "macos";
-          rev = "main";
-        };
+    programs.kitty = {
+      font.size = 16;
+      settings = {
+        macos_option_as_alt = "left";
+        macos_titlebar_color = "background";
+        shell = "${config.programs.zsh.package}/bin/zsh -il";
       };
     };
 
