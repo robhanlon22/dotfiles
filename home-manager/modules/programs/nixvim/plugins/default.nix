@@ -105,7 +105,7 @@
         src = pkgs.fetchFromGitHub {
           owner = "lukas-reineke";
           repo = "virt-column.nvim";
-          rev = "main";
+          rev = "master";
           sha256 = "7ljjJ7UwN2U1xPCtsYbrKdnz6SGQGbM/HrxPTxNKlwo=";
         };
       })
@@ -114,7 +114,7 @@
         src = pkgs.fetchFromGitHub {
           owner = "julienvincent";
           repo = "nvim-paredit";
-          rev = "main";
+          rev = "master";
           sha256 = "dSzHYpYHMhgmThnT6ZEqA+axLXlGZLOy7rkzi2YlAts=";
         };
       })
@@ -123,7 +123,7 @@
         src = pkgs.fetchFromGitHub {
           owner = "julienvincent";
           repo = "nvim-paredit-fennel";
-          rev = "main";
+          rev = "master";
           sha256 = "+lQetMbP/H8cKXcxuPiQtEel5jyRDxCsfjwF+1SPVNg=";
         };
       })
