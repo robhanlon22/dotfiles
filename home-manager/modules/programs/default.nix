@@ -5,7 +5,7 @@
 }: {
   imports = [./kitty ./nixvim ./starship ./zsh];
 
-  programs = with my.lib; {
+  programs = with my; {
     bat = let
       theme = "Catppuccin Mocha";
     in {

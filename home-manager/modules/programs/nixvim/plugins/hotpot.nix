@@ -7,7 +7,7 @@
     pkgs.vimPlugins.hotpot-nvim
   ];
 
-  home.activation = my.lib.hm.activations {
+  home.activation = my.hm.activations {
     hotpotCache = ''
       (
         set -x

@@ -1,5 +1,5 @@
 {
-  config,
+  my,
   lib,
   ...
 }:
@@ -48,7 +48,7 @@ with lib; {
             opts,
           }: let
             args = pipe [mappings opts] [
-              (map (v: strings.optionalString (isntEmpty v) (config.nixvim.helpers.toLuaObject v)))
+              (map (v: strings.optionalString (isntEmpty v) (my.nixvim.toLuaObject v)))
               (lists.remove "")
               (strings.concatStringsSep ", ")
             ];
@@ -57,7 +57,7 @@ with lib; {
               require("which-key").register(${args})
             ''
         )
-        config.my.programs.nixvim.plugins.which-key.register;
+        my.programs.nixvim.plugins.which-key.register;
     };
   };
 }

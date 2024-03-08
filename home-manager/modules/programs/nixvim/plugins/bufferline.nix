@@ -5,13 +5,13 @@
 }: {
   programs.nixvim.plugins.bufferline.enable = true;
 
-  my.programs.nixvim.plugins.which-key.register = with my.lib.nixvim.keymap; [
+  my.programs.nixvim.plugins.which-key.register = with my.nixvim.keymap; [
     {
       opts.prefix = leader;
       mappings = {
         b = wk.group "Buffer" (
           let
-            bufferGoto = my.lib.attrsets.fromList (n: let
+            bufferGoto = my.attrsets.fromList (n: let
               s = toString n;
             in {
               name = s;

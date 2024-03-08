@@ -9,14 +9,14 @@
       home = {
         packages = [sketchybar sketchybar-app-font];
 
-        activation = my.lib.hm.activations {
+        activation = my.hm.activations {
           sketchybarReload = ''
             ${sketchybar}/bin/sketchybar --reload
           '';
         };
       };
 
-      launchd.agents = my.lib.darwin.launchdAgents {
+      launchd.agents = my.darwin.launchdAgents {
         sketchybar.zshProgram = "${sketchybar}/bin/sketchybar";
       };
 

@@ -6,7 +6,7 @@
 }: {
   imports = [
     ./hammerspoon
-    ./lib.nix
+    ./my.nix
     ./sketchybar
     ./yabai.nix
   ];

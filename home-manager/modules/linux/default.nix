@@ -5,7 +5,7 @@
   ...
 }: {
   config = lib.mkIf pkgs.stdenv.isLinux {
-    my.lib.terminal.font.size = 13;
+    my.terminal.font.size = 13;
 
     programs = {
       kitty = {

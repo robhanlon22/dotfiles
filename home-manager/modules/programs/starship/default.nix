@@ -37,7 +37,7 @@
     settings = catppuccin // nerdfonts // settings;
   };
 in {
-  programs.starship = my.lib.shellIntegrations // starship;
+  programs.starship = my.shellIntegrations // starship;
 
   programs.zsh.initExtraFirst = ''
     export STARSHIP_LOG=error

@@ -3,7 +3,7 @@
     enable = true;
   };
 
-  my.programs.nixvim.plugins.which-key.register = with my.lib.nixvim.keymap; let
+  my.programs.nixvim.plugins.which-key.register = with my.nixvim.keymap; let
     troubleToggle = s: wk.vim "TroubleToggle ${s}";
   in [
     {

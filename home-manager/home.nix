@@ -1,5 +1,5 @@
 {
-  imports = [./modules ./lib.nix];
+  imports = [./modules ./my.nix];
 
   editorconfig = {
     enable = true;

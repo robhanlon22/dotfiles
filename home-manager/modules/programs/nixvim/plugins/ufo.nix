@@ -4,7 +4,7 @@
     providerSelector = "conf.ufo.provider_selector";
   };
 
-  my.programs.nixvim.plugins.which-key.register = with my.lib.nixvim.keymap; [
+  my.programs.nixvim.plugins.which-key.register = with my.nixvim.keymap; [
     {
       opts.prefix = "z";
       mappings = {

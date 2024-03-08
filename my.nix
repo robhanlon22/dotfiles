@@ -3,14 +3,14 @@
   lib,
   ...
 }: {
-  options.my.lib = lib.mkOption {
+  options.my = lib.mkOption {
     type = lib.types.submodule {
       freeformType = with lib.types; attrsOf anything;
     };
   };
 
   config = {
-    my.lib = {
+    my = {
       trace = v: builtins.trace v v;
       attrsets = {
         fromList = f: list: builtins.listToAttrs (map f list);

@@ -35,7 +35,7 @@
   );
 in {
   config = lib.mkIf pkgs.stdenv.isDarwin {
-    launchd.agents = my.lib.darwin.launchdAgents {
+    launchd.agents = my.darwin.launchdAgents {
       yabai.ProgramArguments = ["${yabai}" "--verbose" "--config" "${yabairc}"];
     };
   };

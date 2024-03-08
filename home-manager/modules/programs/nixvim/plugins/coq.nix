@@ -8,7 +8,7 @@
       recommendedKeymaps = true;
     };
 
-    coq-thirdparty = with my.lib.nixvim.keymap; {
+    coq-thirdparty = with my.nixvim.keymap; {
       enable = true;
       sources = [
         {

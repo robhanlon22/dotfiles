@@ -1,8 +1,4 @@
-{
-  config,
-  my,
-  ...
-}: {
+{my, ...}: {
   programs.nixvim.plugins.telescope = {
     enable = true;
     extensions = {
@@ -21,12 +17,12 @@
         hidden = true;
       };
       extensions.ui-select = [
-        (config.nixvim.helpers.mkRaw "conf.telescope.extensions.ui_select.dropdown")
+        (my.nixvim.mkRaw "conf.telescope.extensions.ui_select.dropdown")
       ];
     };
   };
 
-  my.programs.nixvim.plugins.which-key.register = with my.lib.nixvim.keymap; let
+  my.programs.nixvim.plugins.which-key.register = with my.nixvim.keymap; let
     telescope = s: wk.vim "Telescope ${s}";
   in [
     {

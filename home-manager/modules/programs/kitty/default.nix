@@ -1,7 +1,7 @@
 {my, ...}: {
   programs.kitty = {
     enable = true;
-    inherit (my.lib.terminal) font;
+    inherit (my.terminal) font;
     keybindings = {
       "cmd+t" = "new_tab_with_cwd";
     };
@@ -44,7 +44,7 @@
       tab_bar_style = "fade";
       tab_fade = "0.29629629629 0.44444444444 0.66666666667 1";
       scrollback_pager = ''
-        "$HOME/.nix-profile/bin/nvim" -c "silent write! /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer -"
+        "${my.home.bin}/nvim" -c "silent write! /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer -"
       '';
       window_margin_width = 10;
       window_padding_width = 10;

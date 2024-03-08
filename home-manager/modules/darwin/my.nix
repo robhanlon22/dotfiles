@@ -5,7 +5,7 @@
   ...
 }: {
   config = lib.mkIf pkgs.stdenv.isDarwin {
-    my.lib = {
+    my = {
       terminal.font.size = 15;
 
       darwin = {
