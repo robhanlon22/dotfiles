@@ -1,5 +1,5 @@
 {
-  pkgs,
+  config,
   lib,
   ...
 }: {
@@ -9,12 +9,17 @@
     };
   };
 
-  config.my.lib = {
-    callPackages = paths: args: map (path: pkgs.callPackage path args) paths;
-    trace = v: builtins.trace v v;
-    attrsets = {
-      fromList = f: list: builtins.listToAttrs (map f list);
-      merge = a: b: a // b;
+  config = {
+    my.lib = {
+      trace = v: builtins.trace v v;
+      attrsets = {
+        fromList = f: list: builtins.listToAttrs (map f list);
+        merge = a: b: a // b;
+      };
+    };
+
+    _module.args = {
+      inherit (config) my;
     };
   };
 }

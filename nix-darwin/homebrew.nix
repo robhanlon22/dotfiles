@@ -5,6 +5,8 @@
 }: let
   brewPath = "${config.homebrew.brewPrefix}/brew";
 in {
+  homebrew.enable = true;
+
   system.activationScripts.preUserActivation.text = ''
     echo >&2 "ensuring Homebrew is available..."
     if [ ! -x '${brewPath}' ]; then

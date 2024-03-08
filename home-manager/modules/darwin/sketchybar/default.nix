@@ -1,39 +1,39 @@
 {
-  config,
+  my,
   pkgs,
   lib,
   ...
-}: let
-  inherit (pkgs) sketchybar sketchybar-app-font;
-in {
-  config = lib.mkIf pkgs.stdenv.isDarwin {
-    home = {
-      packages = [sketchybar sketchybar-app-font];
+}: {
+  config = with pkgs;
+    lib.mkIf stdenv.isDarwin {
+      home = {
+        packages = [sketchybar sketchybar-app-font];
 
-      activation.sketchybarReload = lib.hm.dag.entryAfter ["writeBoundary"] ''
-        ${sketchybar}/bin/sketchybar --reload
-      '';
-    };
-
-    launchd.agents = config.my.lib.darwin.launchdAgents {
-      sketchybar = {
-        zshProgram = "${sketchybar}/bin/sketchybar";
+        activation = my.lib.hm.activations {
+          sketchybarReload = ''
+            ${sketchybar}/bin/sketchybar --reload
+          '';
+        };
       };
-    };
 
-    xdg.configFile = {
-      sketchybar = {
-        enable = true;
-        source = ./sketchybar;
-        recursive = true;
+      launchd.agents = my.lib.darwin.launchdAgents {
+        sketchybar.zshProgram = "${sketchybar}/bin/sketchybar";
       };
-      "sketchybar/plugins/icon_map.sh" = {
-        enable = true;
-        source = pkgs.fetchurl {
-          url = "https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v${sketchybar-app-font.version}/icon_map.sh";
-          hash = "sha256-KWWukG9S0RWp534N115eQaaG9wpVUgcTAqAmrEScHmQ=";
+
+      xdg.configFile = {
+        sketchybar = {
+          enable = true;
+          source = ./sketchybar;
+          recursive = true;
+        };
+
+        "sketchybar/plugins/icon_map.sh" = {
+          enable = true;
+          source = fetchurl {
+            url = "https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v${sketchybar-app-font.version}/icon_map.sh";
+            hash = "sha256-KWWukG9S0RWp534N115eQaaG9wpVUgcTAqAmrEScHmQ=";
+          };
         };
       };
     };
-  };
 }

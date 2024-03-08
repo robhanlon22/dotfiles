@@ -1,8 +1,10 @@
 {
   imports = [
     ./bufferline.nix
+    ./cmp.nix
     ./extra.nix
     ./floaterm.nix
+    ./hotpot.nix
     ./lsp.nix
     ./lualine.nix
     ./none-ls.nix
@@ -10,7 +12,6 @@
     ./telescope.nix
     ./treesitter.nix
     ./trouble.nix
-    ./nvim-cmp.nix
     ./ufo.nix
     ./which-key.nix
   ];
@@ -18,12 +19,16 @@
   programs.nixvim.plugins = {
     auto-session.enable = true;
 
+    baleia.enable = true;
+
     better-escape = {
       enable = true;
       mapping = ["jk"];
     };
 
     comment-nvim.enable = true;
+
+    committia.enable = true;
 
     conjure.enable = true;
 
@@ -42,11 +47,6 @@
     leap.enable = true;
 
     luasnip.enable = true;
-
-    mini = {
-      enable = true;
-      modules.basics.options.extra_ui = true;
-    };
 
     nix.enable = true;
 

@@ -1,13 +1,17 @@
-{pkgs, ...}: {
-  programs.zsh = {
-    plugins = let
-      zsh-utils = pkgs.fetchFromGitHub {
-        owner = "belak";
-        repo = "zsh-utils";
-        rev = "main";
-        hash = "sha256-6oLTTY+eUl8VcKpSRQa4tTmERhSaQ8rLirUD9OOL7wg=";
-      };
-    in [
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  programs.zsh = let
+    zsh-utils = pkgs.fetchFromGitHub {
+      owner = "belak";
+      repo = "zsh-utils";
+      rev = "main";
+      hash = "sha256-6oLTTY+eUl8VcKpSRQa4tTmERhSaQ8rLirUD9OOL7wg=";
+    };
+    plugins = [
       {
         name = "completion";
         src = "${zsh-utils}/completion";
@@ -33,10 +37,26 @@
         src = "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions";
       }
     ];
+    sourcePlugin = {
+      name,
+      src,
+    }: ''
+      source '${src}/${name}.plugin.zsh'
+    '';
+  in {
     initExtra = ''
-      fast-theme -q XDG:themes/catppuccin-mocha
+      ${lib.concatMapStringsSep "\n" sourcePlugin plugins}
       compstyle zshzoo
     '';
+  };
+
+  home.activation = let
+    setFastTheme = pkgs.writeShellScript "set-fast-theme" ''
+      source "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh"
+      fast-theme -q XDG:themes/catppuccin-mocha
+    '';
+  in {
+    fastTheme = "${config.programs.zsh.package}/bin/zsh ${setFastTheme}";
   };
 
   xdg.configFile."fsh/themes/catppuccin-mocha.ini" = {

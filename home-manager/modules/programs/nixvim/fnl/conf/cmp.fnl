@@ -81,12 +81,12 @@
                   : window
                   : experimental}))))
 
-(fn gitcommit-setup [{ cmp}]
+(fn gitcommit-setup [{: cmp}]
   (cmp.setup.filetype :gitcommit
                       {:sources (cmp.config.sources [{:name :git}]
                                                     [{:name :buffer}])}))
 
-(fn search-setup [{ : cmp}]
+(fn search-setup [{: cmp}]
   (cmp.setup.cmdline ["/" "?"]
                      {:mapping (cmp.mapping.preset.cmdline)
                       :sources (cmp.config.sources [{:name :command_history}

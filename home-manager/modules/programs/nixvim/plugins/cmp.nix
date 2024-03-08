@@ -9,6 +9,7 @@
       cmp-nvim-lsp-document-symbol.enable = true;
       cmp-nvim-lsp-signature-help.enable = true;
       cmp-nvim-lsp.enable = true;
+      cmp.enable = true;
       copilot-cmp.enable = true;
       friendly-snippets.enable = true;
       lsp.capabilities = ''
@@ -16,7 +17,6 @@
       '';
       lspkind.enable = true;
       luasnip.enable = true;
-      nvim-cmp.enable = true;
     };
     extraConfigLuaPost = ''
       conf.cmp.setup()

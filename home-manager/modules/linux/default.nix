@@ -5,23 +5,22 @@
   ...
 }: {
   config = lib.mkIf pkgs.stdenv.isLinux {
-    home.packages = with pkgs; [xsel wl-clipboard];
+    my.lib.terminal.font.size = 13;
 
     programs = {
-      nixvim = {
-        globals = {
-          sqlite_clib_path = "${pkgs.sqlite.out}/lib/libsqlite3.so";
+      kitty = {
+        settings = {
+          shell = "${config.programs.zsh.package}/bin/zsh";
+          wayland_titlebar_color = "background";
         };
+      };
+
+      nixvim = {
+        globals.sqlite_clib_path = "${pkgs.sqlite.out}/lib/libsqlite3.so";
+
         clipboard.providers = {
           xsel.enable = true;
           wl-copy.enable = true;
-        };
-      };
-      kitty = {
-        font.size = 14;
-        settings = {
-          wayland_titlebar_color = "background";
-          shell = "${config.programs.zsh.package}/bin/zsh";
         };
       };
     };

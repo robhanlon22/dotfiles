@@ -2,7 +2,6 @@
   programs.nixvim.plugins.none-ls = {
     enable = true;
     border = "rounded";
-    enableLspFormat = true;
 
     sources = {
       code_actions = {

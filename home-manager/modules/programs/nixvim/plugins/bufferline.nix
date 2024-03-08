@@ -1,17 +1,17 @@
 {
-  config,
+  my,
   lib,
   ...
 }: {
   programs.nixvim.plugins.bufferline.enable = true;
 
-  my.programs.nixvim.plugins.which-key.register = with config.my.lib.nixvim.keymap; [
+  my.programs.nixvim.plugins.which-key.register = with my.lib.nixvim.keymap; [
     {
       opts.prefix = leader;
       mappings = {
         b = wk.group "Buffer" (
           let
-            bufferGoto = config.my.lib.attrsets.fromList (n: let
+            bufferGoto = my.lib.attrsets.fromList (n: let
               s = toString n;
             in {
               name = s;

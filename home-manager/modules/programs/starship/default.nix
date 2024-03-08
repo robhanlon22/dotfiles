@@ -1,4 +1,5 @@
 {
+  my,
   config,
   pkgs,
   lib,
@@ -36,7 +37,7 @@
     settings = catppuccin // nerdfonts // settings;
   };
 in {
-  programs.starship = config.my.lib.shellIntegrations // starship;
+  programs.starship = my.lib.shellIntegrations // starship;
 
   programs.zsh.initExtraFirst = ''
     export STARSHIP_LOG=error

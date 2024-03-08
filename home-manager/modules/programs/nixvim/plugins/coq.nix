@@ -1,4 +1,4 @@
-{config, ...}: {
+{my, ...}: {
   programs.nixvim.plugins = {
     coq-nvim = {
       enable = true;
@@ -8,7 +8,7 @@
       recommendedKeymaps = true;
     };
 
-    coq-thirdparty = with config.my.lib.nixvim.keymap; {
+    coq-thirdparty = with my.lib.nixvim.keymap; {
       enable = true;
       sources = [
         {

@@ -13,7 +13,7 @@
       ignoreAllDups = true;
     };
     sessionVariables = rec {
-      EDITOR = "${config.programs.nixvim.package}/bin/nvim";
+      EDITOR = "$HOME/.nix-profile/bin/nvim";
       VISUAL = EDITOR;
       GPG_TTY = "$(tty)";
       FAST_WORK_DIR = "${config.xdg.configHome}/fsh";

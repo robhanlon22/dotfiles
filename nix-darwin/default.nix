@@ -8,6 +8,7 @@
   homeDirectory ? "/Users/${username}",
   hostname,
   username,
+  modules ? [],
   ...
 } @ args: let
   baseModule = {
@@ -19,10 +20,12 @@
   };
 
   required = {
-    modules = [
-      baseModule
-      ./configuration.nix
-    ];
+    modules =
+      [
+        baseModule
+        ./configuration.nix
+      ]
+      ++ modules;
   };
 
   optional = nixpkgs.lib.attrsets.optionalAttrs (args ? pkgs) {

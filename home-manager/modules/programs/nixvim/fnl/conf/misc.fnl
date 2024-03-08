@@ -11,7 +11,9 @@
 
   (fn copilot-chat-setup []
     (let [copilot-chat (require :CopilotChat)]
-      (copilot-chat.setup {})))
+      ;; CopilotChat fails loudly when Copilot is not set up, so use pcall here
+      ;; to handle expected errors
+      (pcall copilot-chat.setup {})))
 
   (copilot-chat-setup)
   (nvim-paredit-setup)

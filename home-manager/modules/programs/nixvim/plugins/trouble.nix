@@ -1,9 +1,9 @@
-{config, ...}: {
+{my, ...}: {
   programs.nixvim.plugins.trouble = {
     enable = true;
   };
 
-  my.programs.nixvim.plugins.which-key.register = with config.my.lib.nixvim.keymap; let
+  my.programs.nixvim.plugins.which-key.register = with my.lib.nixvim.keymap; let
     troubleToggle = s: wk.vim "TroubleToggle ${s}";
   in [
     {

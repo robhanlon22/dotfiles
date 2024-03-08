@@ -1,25 +1,21 @@
 {
-  config,
+  my,
   pkgs,
   ...
-}: let
-  inherit (config.my.lib) shellIntegrations;
-in {
+}: {
   imports = [./kitty ./nixvim ./starship ./zsh];
 
-  programs = {
-    bat = {
+  programs = with my.lib; {
+    bat = let
+      theme = "Catppuccin Mocha";
+    in {
       enable = true;
       config = {
-        theme = "Catppuccin-mocha";
+        inherit theme;
       };
-      themes = {
-        Catppuccin-mocha = {
-          src = pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/catppuccin/bat/main/Catppuccin-mocha.tmTheme";
-            hash = "sha256-qMQNJGZImmjrqzy7IiEkY5IhvPAMZpq0W6skLLsng/w=";
-          };
-        };
+      themes.${theme}.src = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme";
+        hash = "sha256-F781wNpM/3rSC4csJfVmuSCwlWXycXzbIPLzg4LXv6s=";
       };
     };
 

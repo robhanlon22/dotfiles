@@ -1,10 +1,10 @@
-{config, ...}: {
+{my, ...}: {
   programs.nixvim.plugins.nvim-ufo = {
     enable = true;
     providerSelector = "conf.ufo.provider_selector";
   };
 
-  my.programs.nixvim.plugins.which-key.register = with config.my.lib.nixvim.keymap; [
+  my.programs.nixvim.plugins.which-key.register = with my.lib.nixvim.keymap; [
     {
       opts.prefix = "z";
       mappings = {

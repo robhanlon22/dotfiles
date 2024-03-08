@@ -1,5 +1,10 @@
-{config, ...}: {
+{my, ...}: {
   programs.nixvim.plugins = {
+    conform-nvim = {
+      enable = true;
+      formatOnSave.lspFallback = true;
+    };
+
     lsp = {
       enable = true;
       servers = {
@@ -24,7 +29,7 @@
         yamlls.enable = true;
       };
 
-      keymaps = with config.my.lib.nixvim.keymap; {
+      keymaps = with my.lib.nixvim.keymap; {
         diagnostic = {
           ${leader- "cd"} = {
             action = "open_float";
@@ -71,17 +76,9 @@
         };
       };
     };
-
-    lspsaga = {
-      enable = true;
-      beacon.enable = true;
-      lightbulb.enable = true;
-    };
-
-    lsp-format.enable = true;
   };
 
-  my.programs.nixvim.plugins.which-key.register = with config.my.lib.nixvim.keymap; [
+  my.programs.nixvim.plugins.which-key.register = with my.lib.nixvim.keymap; [
     {
       opts.prefix = leader;
       mappings.c = wk.group "LSP" {};
