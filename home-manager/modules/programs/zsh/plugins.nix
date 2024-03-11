@@ -11,18 +11,20 @@
       rev = "main";
       hash = "sha256-6oLTTY+eUl8VcKpSRQa4tTmERhSaQ8rLirUD9OOL7wg=";
     };
-    plugins = [
+    pluginsBeforeCompInit = [
       {
         name = "completion";
         src = "${zsh-utils}/completion";
       }
       {
-        name = "history";
-        src = "${zsh-utils}/history";
-      }
-      {
         name = "editor";
         src = "${zsh-utils}/editor";
+      }
+    ];
+    plugins = [
+      {
+        name = "history";
+        src = "${zsh-utils}/history";
       }
       {
         name = "utility";
@@ -37,15 +39,16 @@
         src = "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions";
       }
     ];
-    sourcePlugin = {
+    sourcePlugins = lib.concatMapStringsSep "\n" ({
       name,
       src,
     }: ''
       source '${src}/${name}.plugin.zsh'
-    '';
+    '');
   in {
-    initExtra = ''
-      ${lib.concatMapStringsSep "\n" sourcePlugin plugins}
+    initExtraBeforeCompInit = sourcePlugins pluginsBeforeCompInit;
+    initExtra = lib.mkBefore ''
+      ${sourcePlugins plugins}
       compstyle zshzoo
     '';
   };

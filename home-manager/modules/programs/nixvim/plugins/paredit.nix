@@ -6,7 +6,7 @@
         owner = "julienvincent";
         repo = "nvim-paredit";
         rev = "master";
-        hash = "sha256-sMW4V9T7C2A5DgYHlD1SU8Aq8a5qaBIuDXTIkTHR9dM=";
+        hash = "sha256-rls94nrAlPYpHDXp0eB4UzlLRB5HriBuZMdLGVAzGmA=";
       };
     }
     {

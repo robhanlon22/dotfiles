@@ -2,6 +2,7 @@
   imports = [
     ./bufferline.nix
     ./cmp.nix
+    ./copilot.nix
     ./extra.nix
     ./floaterm.nix
     ./hotpot.nix
@@ -32,12 +33,6 @@
 
     conjure.enable = true;
 
-    copilot-lua = {
-      enable = true;
-      suggestion.enabled = false;
-      panel.enabled = false;
-    };
-
     inc-rename.enable = true;
 
     illuminate.enable = true;
@@ -56,13 +51,13 @@
 
     surround.enable = true;
 
-    undotree.enable = true;
-
     typescript-tools = {
       enable = true;
       settings.exposeAsCodeAction = "all";
     };
 
     trouble.enable = true;
+
+    undotree.enable = true;
   };
 }

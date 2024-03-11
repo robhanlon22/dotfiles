@@ -15,12 +15,11 @@ in {
   '';
 
   programs.zsh = {
-    shellInit = ''
+    interactiveShellInit = ''
       eval "$('${brewPath}' shellenv)"
       typeset -aU path
       path=("$HOME/.nix-profile/bin" "''${path[@]}")
-    '';
-    interactiveShellInit = ''
+      export HOMEBREW_NO_ENV_HINTS=1
       source '${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/brew/brew.plugin.zsh'
     '';
   };

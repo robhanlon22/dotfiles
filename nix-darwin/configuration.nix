@@ -7,7 +7,6 @@
   nix = {
     package = pkgs.nix;
     settings = {
-      auto-optimise-store = true;
       # Necessary for using flakes on this system.
       experimental-features = "nix-command flakes";
     };

@@ -48,8 +48,8 @@ with lib; {
             opts,
           }: let
             args = pipe [mappings opts] [
-              (map (v: strings.optionalString (isntEmpty v) (my.nixvim.toLuaObject v)))
-              (lists.remove "")
+              (lists.remove {})
+              (map my.nixvim.toLuaObject)
               (strings.concatStringsSep ", ")
             ];
           in
