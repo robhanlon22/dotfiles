@@ -7,6 +7,7 @@
     fennel
     gh
     git
+    git-lfs
     jq
     nodejs
     ruby

@@ -18,8 +18,6 @@
   ];
 
   programs.nixvim.plugins = {
-    auto-session.enable = true;
-
     baleia.enable = true;
 
     better-escape = {

@@ -3,8 +3,9 @@
   pkgs,
   lib,
   ...
-}: let
-  hammerspoon = with pkgs; (stdenv.mkDerivation rec {
+}:
+with pkgs; let
+  hammerspoon = stdenv.mkDerivation rec {
     name = "Hammerspoon";
     version = "0.9.100";
 
@@ -34,21 +35,30 @@
 
       runHook postInstall
     '';
-  });
-
-  hammerspoonInit = with pkgs;
-    runCommand "hammerspoon-init.lua" {
-      fennelLib = "${fennel}/share/lua/${lib.versions.majorMinor fennel.lua.version}/?.lua";
-      yabaiPath = "${yabai}/bin/yabai";
-    } ''
-      substitute "${./init.lua}" "$out" --subst-var fennelLib --subst-var yabaiPath
-    '';
+  };
 in {
-  config = lib.mkIf pkgs.stdenv.isDarwin {
+  config = lib.mkIf stdenv.isDarwin {
     home = {
-      packages = [hammerspoon];
+      packages = [
+        hammerspoon
+      ];
+
       file = {
-        ".hammerspoon/init.lua".source = hammerspoonInit;
+        ".hammerspoon/init.lua".text = ''
+          package.path = package.path .. ";${fennel}/share/lua/${lib.versions.majorMinor fennel.lua.version}/?.lua"
+
+          local fennel = require("fennel")
+
+          debug.traceback = fennel.traceback
+
+          fennel.install()
+
+          require("fnl.init")({
+            hs = hs,
+            paths = { yabai = "${yabai}/bin/yabai" },
+          })
+        '';
+
         ".hammerspoon/fnl" = {
           source = ./fnl;
           recursive = true;

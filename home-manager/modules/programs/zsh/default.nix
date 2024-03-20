@@ -4,8 +4,8 @@
   programs.zsh = {
     enable = true;
     autocd = true;
+    autosuggestion.enable = true;
     defaultKeymap = "viins";
-    enableAutosuggestions = true;
     enableCompletion = true;
     history = {
       expireDuplicatesFirst = true;

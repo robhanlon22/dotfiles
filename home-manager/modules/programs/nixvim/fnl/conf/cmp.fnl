@@ -1,8 +1,5 @@
 (fn base-setup [{: vim : cmp}]
-  (let [luasnip (require :luasnip)
-        luasnip-vscode (require :luasnip.loaders.from_vscode)]
-    (luasnip-vscode.lazy_load)
-
+  (let [luasnip (require :luasnip)]
     (fn words-before? []
       (and (not= (vim.api.nvim_buf_get_option 0 :buftype) :prompt)
            (let [(line col) (unpack (vim.api.nvim_win_get_cursor 0))]

@@ -1,3 +1,10 @@
-_: {
-  imports = [./darwin ./linux ./packages ./programs];
+{
+  imports = [
+    ./darwin
+    ./editorconfig.nix
+    ./home-manager.nix
+    ./linux
+    ./packages
+    ./programs
+  ];
 }
