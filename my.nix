@@ -3,11 +3,13 @@
   lib,
   ...
 }: {
-  options.my = lib.mkOption {
-    type = lib.types.submodule {
-      freeformType = with lib.types; attrsOf anything;
+  options.my = with lib;
+    mkOption {
+      type = with types;
+        submodule {
+          freeformType = attrsOf anything;
+        };
     };
-  };
 
   config = {
     my = {

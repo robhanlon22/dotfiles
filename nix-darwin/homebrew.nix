@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   pkgs,
   ...
@@ -14,15 +15,14 @@ in {
     fi
   '';
 
-  programs.zsh = {
-    interactiveShellInit = ''
-      eval "$('${brewPath}' shellenv)"
-      typeset -aU path
-      path=("$HOME/.nix-profile/bin" "''${path[@]}")
-      export HOMEBREW_NO_ENV_HINTS=1
-      source '${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/brew/brew.plugin.zsh'
-    '';
-  };
+  programs.zsh.interactiveShellInit = ''
+    eval "$('${brewPath}' shellenv)"
+    export PATH="${lib.makeBinPath (config.environment.profiles ++ ["$PATH"])}"
+    typeset -aU path
+    path=(''${path[@]})
+    export HOMEBREW_NO_ENV_HINTS=1
+    source '${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/brew/brew.plugin.zsh'
+  '';
 
   launchd.user.agents.brew-upgrade = {
     script = ''
