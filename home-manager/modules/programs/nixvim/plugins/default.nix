@@ -25,7 +25,7 @@
       mapping = ["jk"];
     };
 
-    comment-nvim.enable = true;
+    comment.enable = true;
 
     committia.enable = true;
 
