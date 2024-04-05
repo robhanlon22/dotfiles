@@ -11,44 +11,42 @@
       rev = "main";
       hash = "sha256-6oLTTY+eUl8VcKpSRQa4tTmERhSaQ8rLirUD9OOL7wg=";
     };
-    pluginsBeforeCompInit = [
-      {
-        name = "completion";
-        src = "${zsh-utils}/completion";
-      }
-      {
-        name = "editor";
-        src = "${zsh-utils}/editor";
-      }
-    ];
-    plugins = [
-      {
-        name = "history";
-        src = "${zsh-utils}/history";
-      }
-      {
-        name = "utility";
-        src = "${zsh-utils}/utility";
-      }
-      {
-        name = "git";
-        src = "${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/git";
-      }
-      {
-        name = "fast-syntax-highlighting";
-        src = "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions";
-      }
-    ];
-    sourcePlugins = lib.concatMapStringsSep "\n" ({
+
+    script = name: dir: {inherit name dir;};
+
+    zshUtil = name: script "${name}.plugin" "${zsh-utils}/${name}";
+
+    ohMyZsh = name: dir:
+      script name "${pkgs.oh-my-zsh}/share/oh-my-zsh/${dir}";
+    ohMyZshLib = name: ohMyZsh name "lib";
+    ohMyZshPlugin = name: ohMyZsh "${name}.plugin" "plugins/${name}";
+
+    sourceScripts = lib.concatMapStringsSep "\n" ({
       name,
-      src,
+      dir,
     }: ''
-      source '${src}/${name}.plugin.zsh'
+      source '${dir}/${name}.zsh'
     '');
+
+    pluginsBeforeCompInit = [
+      (zshUtil "completion")
+      (zshUtil "editor")
+    ];
+
+    plugins = [
+      (zshUtil "history")
+      (zshUtil "utility")
+      (ohMyZshPlugin "git")
+      (ohMyZshLib "directories")
+      (ohMyZshLib "spectrum")
+      (script
+        "fast-syntax-highlighting.plugin"
+        "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions")
+    ];
   in {
-    initExtraBeforeCompInit = sourcePlugins pluginsBeforeCompInit;
+    initExtraBeforeCompInit = sourceScripts pluginsBeforeCompInit;
     initExtra = lib.mkBefore ''
-      ${sourcePlugins plugins}
+      ${sourceScripts plugins}
       compstyle zshzoo
     '';
   };

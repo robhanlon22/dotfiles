@@ -2,7 +2,6 @@
   perSystem = {
     pkgs,
     lib,
-    system,
     ...
   }: {
     options.lib.homeManagerConfiguration = with lib;
@@ -13,7 +12,7 @@
       };
 
     config.lib.homeManagerConfiguration = {username, ...} @ args: let
-      modules = import ./modules.nix (args // {inherit inputs system pkgs;});
+      modules = import ./modules.nix (args // {inherit inputs pkgs;});
     in {
       homeConfigurations.${username} = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

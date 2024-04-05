@@ -3,7 +3,6 @@
 
   programs.zsh = {
     enable = true;
-    autocd = true;
     autosuggestion.enable = true;
     defaultKeymap = "viins";
     enableCompletion = true;

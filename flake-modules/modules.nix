@@ -1,5 +1,4 @@
 {
-  system,
   inputs,
   overlays ? [],
   pkgs,
@@ -13,7 +12,6 @@
   ...
 }: {
   nixpkgs.nixpkgs = {
-    hostPlatform = system;
     config.allowUnfree = true;
     overlays = [inputs.nur.overlay] ++ overlays;
   };

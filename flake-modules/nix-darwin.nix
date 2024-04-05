@@ -24,7 +24,7 @@
           configurationModule,
           ...
         } @ args: let
-          modules = import ./modules.nix (args // {inherit inputs system pkgs;});
+          modules = import ./modules.nix (args // {inherit inputs pkgs;});
 
           darwinConfiguration = inputs.nix-darwin.lib.darwinSystem {
             modules = [
@@ -33,6 +33,7 @@
                 system.configurationRevision = self.rev or self.dirtyRev or null;
                 users.users.${username}.home = homeDirectory;
                 nix.settings.trusted-users = [username];
+                nixpkgs.hostPlatform = system;
               }
               modules.nixpkgs
               ../nix-darwin
