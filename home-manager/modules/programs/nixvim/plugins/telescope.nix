@@ -2,7 +2,7 @@
   programs.nixvim.plugins.telescope = {
     enable = true;
     extensions = {
-      file_browser.enable = true;
+      file-browser.enable = true;
       fzf-native = {
         enable = true;
         overrideGenericSorter = true;
@@ -16,9 +16,6 @@
         find_command = ["fd" "--type" "f" "--color" "never"];
         hidden = true;
       };
-      extensions.ui-select = [
-        (my.nixvim.mkRaw "conf.telescope.extensions.ui_select.dropdown")
-      ];
     };
   };
 

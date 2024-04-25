@@ -15,15 +15,6 @@
     ++ (
       map vimUtils.buildVimPlugin [
         {
-          name = "smart-open-nvim";
-          src = fetchFromGitHub {
-            owner = "danielfalk";
-            repo = "smart-open.nvim";
-            rev = "main";
-            hash = "sha256-N0lDSYiHY6+IQ2AJ3dxZlNqgan49y/yw050LvvMrZdM=";
-          };
-        }
-        {
           name = "virt-column-nvim";
           src = fetchFromGitHub {
             owner = "lukas-reineke";

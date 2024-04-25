@@ -1,9 +1,8 @@
 (fn [_vim]
-  (fn smart-open-setup []
-    (let [telescope (require :telescope)]
-      (telescope.setup {:extensions {:smart_open {:match_algorithm :fzf}}})
-      (telescope.load_extension :smart_open)))
+  (fn ui-select-setup []
+    (let [telescope (require :telescope)
+          telescope-themes (require :telescope.themes)]
+      (telescope.setup {:extensions {:ui_select [(telescope-themes.get_dropdown {})]}})))
 
-  (smart-open-setup)
-  (let [telescope-themes (require :telescope.themes)]
-    {:telescope {:extensions {:ui_select {:dropdown (telescope-themes.get_dropdown {})}}}}))
+  (ui-select-setup)
+  {})
