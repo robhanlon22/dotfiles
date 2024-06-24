@@ -13,7 +13,7 @@
           owner = "CopilotC-Nvim";
           repo = "CopilotChat.nvim";
           rev = "canary";
-          hash = "sha256-zbnkO8E7NMC3DamQJo3V9Ui7GmkKZ5b5I5X2do7uGO0=";
+          hash = "sha256-bdGql7WBn4yk44rd+6fK3CwBZNOZOlatnKjJLoyHBDY=";
         };
       })
     ];
