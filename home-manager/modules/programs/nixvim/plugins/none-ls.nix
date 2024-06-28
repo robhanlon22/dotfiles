@@ -1,7 +1,7 @@
 {
   programs.nixvim.plugins.none-ls = {
     enable = true;
-    border = "rounded";
+    settings.border = "rounded";
 
     sources = {
       code_actions = {

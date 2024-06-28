@@ -29,24 +29,26 @@
 
     colorschemes.catppuccin = {
       enable = true;
-      flavour = "mocha";
-      transparentBackground = true;
-      integrations = {
-        gitsigns = true;
-        illuminate = {
-          enabled = true;
-          lsp = true;
+      settings = {
+        flavour = "mocha";
+        transparent_background = true;
+        integrations = {
+          gitsigns = true;
+          illuminate = {
+            enabled = true;
+            lsp = true;
+          };
+          indent_blankline.enabled = true;
+          leap = true;
+          lsp_trouble = true;
+          mini.enabled = true;
+          native_lsp.enabled = true;
+          telescope.enabled = true;
         };
-        indent_blankline.enabled = true;
-        leap = true;
-        lsp_trouble = true;
-        mini.enabled = true;
-        native_lsp.enabled = true;
-        telescope.enabled = true;
       };
     };
 
-    options = {
+    opts = {
       colorcolumn = [80];
       expandtab = true;
       foldenable = true;

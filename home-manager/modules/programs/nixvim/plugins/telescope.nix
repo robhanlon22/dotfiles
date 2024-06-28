@@ -5,13 +5,15 @@
       file-browser.enable = true;
       fzf-native = {
         enable = true;
-        overrideGenericSorter = true;
-        overrideFileSorter = true;
+        settings = {
+          override_generic_sorter = true;
+          override_file_sorter = true;
+        };
       };
       ui-select.enable = true;
       undo.enable = true;
     };
-    extraOptions = {
+    settings = {
       pickers.find_files = {
         find_command = ["fd" "--type" "f" "--color" "never"];
         hidden = true;
