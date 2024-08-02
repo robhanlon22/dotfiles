@@ -32,7 +32,6 @@
       background_opacity = "0.95";
       bell_on_tab = "🐱 ";
       enable_audio_bell = false;
-      hide_window_decorations = "yes";
       inactive_tab_background = "#313244";
       inactive_tab_foreground = "#bac2de";
       tab_bar_align = "left";

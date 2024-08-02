@@ -5,6 +5,7 @@
     (nerdfonts.override {fonts = ["CascadiaCode"];})
     fd
     fennel
+    flips
     gh
     git
     git-lfs

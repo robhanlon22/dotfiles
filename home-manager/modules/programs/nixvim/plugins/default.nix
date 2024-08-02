@@ -20,10 +20,7 @@
   programs.nixvim.plugins = {
     baleia.enable = true;
 
-    better-escape = {
-      enable = true;
-      mapping = ["jk"];
-    };
+    better-escape.enable = true;
 
     comment.enable = true;
 

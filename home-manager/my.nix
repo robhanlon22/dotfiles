@@ -28,7 +28,7 @@
     };
 
     nixvim =
-      config.nixvim.helpers
+      config.lib.nixvim
       // {
         keymap = let
           mkMod = m: k: "<${m}-${toString k}>";

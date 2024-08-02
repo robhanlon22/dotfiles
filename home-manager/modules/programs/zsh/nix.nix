@@ -1,16 +1,9 @@
-let
-  flakeDir = "$HOME/.config/dotfiles";
-  flakeUpdate = "nix flake update";
-  updateAndSwitch = cmd: "(cd ${flakeDir} && ${flakeUpdate} && ${cmd})";
-  switch = cmd: "${cmd} switch --flake ${flakeDir} --show-trace";
-  nixDarwinSwitch = switch "darwin-rebuild";
-  homeManagerSwitch = switch "home-manager";
+{my, ...}: let
+  update = dir: "(cd ${dir} && nix flake switch)";
+  switch = cmd: "${update my.dotfiles.base} && ${update my.dotfiles.config} && ${cmd} switch --flake ${my.dotfiles.config} --show-trace";
 in {
   programs.zsh.shellAliases = {
-    drs = nixDarwinSwitch;
-    hms = homeManagerSwitch;
-    nfu = flakeUpdate;
-    nfudrs = updateAndSwitch nixDarwinSwitch;
-    nfuhms = updateAndSwitch homeManagerSwitch;
+    hmup = switch "home-manager";
+    ndup = switch "darwin-rebuild";
   };
 }

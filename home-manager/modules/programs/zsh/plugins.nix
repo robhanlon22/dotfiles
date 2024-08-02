@@ -9,7 +9,7 @@
       owner = "belak";
       repo = "zsh-utils";
       rev = "main";
-      hash = "sha256-6oLTTY+eUl8VcKpSRQa4tTmERhSaQ8rLirUD9OOL7wg=";
+      hash = "sha256-lO3+Pa8YjQaVkuD93fgO2AOcWN5JvNIBxBDu9+0ck48=";
     };
 
     script = name: dir: {inherit name dir;};
@@ -64,7 +64,7 @@
     enable = true;
     source = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/catppuccin/zsh-fsh/main/themes/catppuccin-mocha.ini";
-      hash = "sha256-7eIiR+ERWFXOq7IR/VMZqGhQgZ8uQ4jfvNR9MWgMSuk=";
+      hash = "sha256-YuiWhbgxlIZRlLBB0ut5ge5KLmnPrqgrBhQ7PUswYU4=";
     };
   };
 }

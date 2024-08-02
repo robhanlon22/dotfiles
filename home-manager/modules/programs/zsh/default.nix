@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  my,
+  ...
+}: {
   imports = [./nix.nix ./plugins.nix];
 
   programs.zsh = {
@@ -18,6 +22,8 @@
       FAST_WORK_DIR = "${config.xdg.configHome}/fsh";
     };
     shellAliases = {
+      cddb = "cd ${my.dotfiles.base}";
+      cddc = "cd ${my.dotfiles.config}";
       ls = "ls --color=auto";
       cat = "bat";
     };

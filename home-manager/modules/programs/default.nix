@@ -15,7 +15,7 @@
       };
       themes.${theme}.src = pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme";
-        hash = "sha256-F781wNpM/3rSC4csJfVmuSCwlWXycXzbIPLzg4LXv6s=";
+        hash = "sha256-UDJ6FlLzwjtLXgyar4Ld3w7x3/zbbBfYLttiNDe4FGY=";
       };
     };
 
