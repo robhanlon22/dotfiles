@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  imports = [./kitty ./nixvim ./starship ./zsh ./wezterm];
+  imports = [./kitty ./nixvim ./starship ./zsh];
 
   programs = with my; {
     bat = let

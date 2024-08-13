@@ -39,9 +39,7 @@ with lib; {
     programs.nixvim = {
       plugins.which-key.enable = true;
 
-      extraConfigLua = let
-        isntEmpty = v: v != {};
-      in
+      extraConfigLua =
         strings.concatMapStringsSep "\n" (
           {
             mappings,
@@ -53,7 +51,7 @@ with lib; {
               (strings.concatStringsSep ", ")
             ];
           in
-            lib.strings.optionalString (isntEmpty mappings) ''
+            lib.strings.optionalString (mappings != {}) ''
               require("which-key").register(${args})
             ''
         )
