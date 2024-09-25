@@ -1,23 +1,8 @@
-{
-  my,
-  pkgs,
-  ...
-}: {
+{my, ...}: {
   imports = [./kitty ./nixvim ./starship ./zsh];
 
   programs = with my; {
-    bat = let
-      theme = "Catppuccin Mocha";
-    in {
-      enable = true;
-      config = {
-        inherit theme;
-      };
-      themes.${theme}.src = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme";
-        hash = "sha256-UDJ6FlLzwjtLXgyar4Ld3w7x3/zbbBfYLttiNDe4FGY=";
-      };
-    };
+    bat.enable = true;
 
     carapace =
       shellIntegrations

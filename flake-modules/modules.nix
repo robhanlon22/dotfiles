@@ -18,9 +18,10 @@
 
   home-manager = {
     imports = [
-      inputs.nixvim.homeManagerModules.nixvim
       ../home-manager
       homeModule
+      inputs.nixvim.homeManagerModules.nixvim
+      inputs.stylix.homeManagerModules.stylix
     ];
     home = {
       inherit username homeDirectory stateVersion;

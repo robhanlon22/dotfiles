@@ -9,10 +9,6 @@
   config.my = {
     home.bin = "${config.home.profileDirectory}/bin";
 
-    terminal = {
-      font.name = "CaskaydiaCove Nerd Font";
-    };
-
     shellIntegrations = {
       enableNushellIntegration = true;
       enableZshIntegration = true;
@@ -27,40 +23,40 @@
         ];
     };
 
-    nixvim =
-      config.lib.nixvim
-      // {
-        keymap = let
-          mkMod = m: k: "<${m}-${toString k}>";
-        in rec {
-          leader = "<leader>";
+    nixvim = {
+      inherit (config.lib.nixvim) toLuaObject mkRaw;
 
-          leader- = k: "${leader}${toString k}";
+      keymap = let
+        mkMod = m: k: "<${m}-${toString k}>";
+      in rec {
+        leader = "<leader>";
 
-          alt- = mkMod "A";
+        leader- = k: "${leader}${toString k}";
 
-          ctrl- = mkMod "C";
+        alt- = mkMod "A";
 
-          which-key = {
-            group = name: attrs:
-              {
-                inherit name;
-              }
-              // attrs;
+        ctrl- = mkMod "C";
 
-            vim = command: desc: [
-              "<cmd>${toString command}<cr>"
-              desc
-            ];
+        which-key = {
+          group = name: attrs:
+            {
+              inherit name;
+            }
+            // attrs;
 
-            lua = fn: desc: [
-              (my.nixvim.mkRaw fn)
-              desc
-            ];
-          };
+          vim = command: desc: [
+            "<cmd>${toString command}<cr>"
+            desc
+          ];
 
-          wk = which-key;
+          lua = fn: desc: [
+            (my.nixvim.mkRaw fn)
+            desc
+          ];
         };
+
+        wk = which-key;
       };
+    };
   };
 }
