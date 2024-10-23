@@ -1,11 +1,42 @@
-{my, ...}: {
+{
+  my,
+  config,
+  ...
+}: let
+  # Use latte colors because black and white text can render on top of them
+  red = "#E78284";
+  green = "#A6D189";
+  yellow = "#E5C890";
+  blue = "#8CAAEE";
+  magenta = "#F4B8E4";
+  cyan = "#81C8BE";
+  inherit (config) stylix;
+in {
   programs.kitty = {
     enable = true;
     keybindings = {
       "cmd+t" = "new_tab_with_cwd";
     };
     shellIntegration.enableZshIntegration = true;
+    font = {
+      inherit (stylix.fonts.monospace) package name;
+      size = stylix.fonts.sizes.terminal;
+    };
     settings = {
+      color1 = red;
+      color9 = red;
+      color2 = green;
+      color10 = green;
+      color3 = yellow;
+      color11 = yellow;
+      color4 = blue;
+      color12 = blue;
+      color5 = magenta;
+      color13 = magenta;
+      color6 = cyan;
+      color14 = cyan;
+
+      background_blur = "5";
       bell_on_tab = "🐱 ";
       enable_audio_bell = false;
       inactive_tab_background = "#313244";
@@ -23,6 +54,8 @@
       '';
       window_margin_width = 10;
       window_padding_width = 10;
+      background_opacity = "${builtins.toString stylix.opacity.terminal}";
     };
+    themeFile = "Catppuccin-Mocha";
   };
 }

@@ -1,7 +1,7 @@
 {my, ...}: {
   programs.nixvim.plugins.nvim-ufo = {
     enable = true;
-    providerSelector = "conf.ufo.provider_selector";
+    settings.provider_selector = "conf.ufo.provider_selector";
   };
 
   my.programs.nixvim.plugins.which-key.register = with my.nixvim.keymap; [

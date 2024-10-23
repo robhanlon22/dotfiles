@@ -6,5 +6,6 @@
     ./linux
     ./packages
     ./programs
+    ./stylix.nix
   ];
 }

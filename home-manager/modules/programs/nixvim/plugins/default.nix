@@ -44,8 +44,6 @@
 
     rainbow-delimiters.enable = true;
 
-    surround.enable = true;
-
     typescript-tools = {
       enable = true;
       settings.exposeAsCodeAction = "all";
@@ -54,5 +52,9 @@
     trouble.enable = true;
 
     undotree.enable = true;
+
+    vim-surround.enable = true;
+
+    web-devicons.enable = true;
   };
 }

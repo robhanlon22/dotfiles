@@ -1,14 +1,16 @@
 {
   programs.nixvim.plugins.lualine = {
     enable = true;
-    globalstatus = true;
-    sectionSeparators = {
-      left = "";
-      right = "";
-    };
-    componentSeparators = {
-      left = "";
-      right = "";
+    settings.options = {
+      globalstatus = true;
+      section_separators = {
+        left = "";
+        right = "";
+      };
+      component_separators = {
+        left = "";
+        right = "";
+      };
     };
   };
 }
