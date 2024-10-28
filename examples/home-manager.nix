@@ -8,30 +8,18 @@
     ...
   }: let
     system = "x86_64-linux";
+    lib = dotfiles.lib.${system};
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [pre-commit.flakeModule];
       systems = [system];
-      flake = dotfiles.lib.${system}.homeManagerConfiguration {
+      flake = lib.homeManagerConfiguration {
         username = "rob";
         overlays = [];
         homeModule = ./home.nix;
       };
       perSystem = {config, ...}: {
-        pre-commit.settings.hooks = {
-          alejandra.enable = true;
-          deadnix.enable = true;
-          statix.enable = true;
-          "~git-diff" = {
-            enable = true;
-            name = "git-diff";
-            description = "Show git diff when files have been changed";
-            entry = "git diff --color --exit-code";
-            always_run = true;
-            pass_filenames = false;
-            require_serial = true;
-          };
-        };
+        pre-commit.settings.hooks = lib.preCommitHooks {};
         devShells.default = config.pre-commit.devShell;
       };
     };
