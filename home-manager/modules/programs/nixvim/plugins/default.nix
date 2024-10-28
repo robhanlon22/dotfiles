@@ -46,7 +46,7 @@
 
     typescript-tools = {
       enable = true;
-      settings.exposeAsCodeAction = "all";
+      settings.expose_as_code_action = "all";
     };
 
     trouble.enable = true;
