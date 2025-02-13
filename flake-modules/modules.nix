@@ -13,7 +13,7 @@
 }: {
   nixpkgs.nixpkgs = {
     config.allowUnfree = true;
-    overlays = [inputs.nur.overlay] ++ overlays;
+    overlays = [inputs.nur.overlays.default] ++ overlays;
   };
 
   home-manager = {

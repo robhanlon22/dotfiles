@@ -1,24 +1,7 @@
-{pkgs, ...}: {
+{
   imports = [./homebrew.nix ./my.nix];
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
-  nix = {
-    package = pkgs.nix;
-    settings = {
-      # Necessary for using flakes on this system.
-      experimental-features = "nix-command flakes";
-    };
-    gc = {
-      automatic = true;
-      interval = {
-        Weekday = 0;
-        Hour = 0;
-        Minute = 0;
-      };
-    };
-  };
+  nix.enable = false;
 
   programs.zsh.enable = true;
 

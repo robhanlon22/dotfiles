@@ -9,7 +9,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     fonts.monospace = {
       name = "CaskaydiaCove Nerd Font";
-      package = pkgs.nerdfonts.override {fonts = ["CascadiaCode"];};
+      package = pkgs.nerd-fonts.caskaydia-cove;
     };
     targets = {
       kitty.enable = false;

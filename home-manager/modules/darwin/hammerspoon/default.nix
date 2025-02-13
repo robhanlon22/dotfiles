@@ -7,11 +7,11 @@
 with pkgs; let
   hammerspoon = stdenv.mkDerivation rec {
     name = "Hammerspoon";
-    version = "0.9.100";
+    version = "1.0.0";
 
     src = fetchzip {
       url = "https://github.com/Hammerspoon/hammerspoon/releases/download/${version}/Hammerspoon-${version}.zip";
-      hash = "sha256-Q14NBizKz7LysEFUTjUHCUnVd6+qEYPSgWwrOGeT9Q0=";
+      hash = "sha256-vqjYCzEXCYBx/gJ32ZNAioruVDy9ghftPAOFMDtYcc0=";
     };
 
     dontConfigure = true;

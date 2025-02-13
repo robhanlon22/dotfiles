@@ -15,7 +15,7 @@
       ;; to handle expected errors
       (pcall copilot-chat.setup {})))
 
-  (copilot-chat-setup)
-  (nvim-paredit-setup)
-  (virt-column-setup)
+  ;;  (copilot-chat-setup)
+  ;;  (nvim-paredit-setup)
+  ;;  (virt-column-setup)
   {})

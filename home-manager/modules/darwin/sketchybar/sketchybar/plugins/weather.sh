@@ -2,7 +2,7 @@
 
 unknown_conditions_icon="󱓤"
 
-if json="$(curl --max-time 10 'wttr.in?format=j1')"; then
+if json="$(curl --max-time 10 'wttr.in/seattle?format=j1')"; then
   current_condition="$(echo "$json" | jq '.current_condition[0]')"
 
   declare -A wwo_codes
