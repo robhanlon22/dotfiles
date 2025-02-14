@@ -1,7 +1,10 @@
-{
+{pkgs, ...}: {
   imports = [./homebrew.nix ./my.nix];
 
-  nix.enable = false;
+  nix = {
+    enable = false;
+    package = pkgs.nix;
+  };
 
   programs.zsh.enable = true;
 

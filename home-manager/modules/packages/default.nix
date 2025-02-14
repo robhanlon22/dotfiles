@@ -13,5 +13,6 @@
     ruby
     sqlite
     wormhole-william
+    yt-dlp
   ];
 }
