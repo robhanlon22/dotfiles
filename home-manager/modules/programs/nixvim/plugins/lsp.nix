@@ -12,7 +12,6 @@
         clojure_lsp.enable = true;
         dockerls.enable = true;
         eslint.enable = true;
-        graphql.enable = true;
         html.enable = true;
         java_language_server.enable = true;
         lua_ls.enable = true;
