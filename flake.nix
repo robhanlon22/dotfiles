@@ -18,7 +18,6 @@
       transposition.lib = {};
 
       perSystem = {
-        pkgs,
         config,
         lib,
         ...
@@ -32,28 +31,7 @@
           };
 
         config = {
-          pre-commit.settings.hooks =
-            config.lib.preCommitHooks
-            // {
-              editorconfig-checker.enable = true;
-              fnlfmt = {
-                enable = true;
-                name = "fnlfmt";
-                description = "Run fnlfmt on Fennel files";
-                files = "\\.fnl$";
-                entry = "${pkgs.fnlfmt}/bin/fnlfmt --fix";
-              };
-              luacheck.enable = true;
-              prettier = {
-                enable = true;
-                files = "\\.(md|json|yaml|yml)$";
-              };
-              shellcheck.enable = true;
-              shfmt.enable = true;
-              stylua.enable = true;
-              taplo.enable = true;
-            };
-
+          pre-commit.settings.hooks = config.lib.preCommitHooks;
           devShells.default = config.pre-commit.devShell;
         };
       };
