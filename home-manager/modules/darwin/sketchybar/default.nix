@@ -1,11 +1,21 @@
 {
   my,
+  config,
   pkgs,
   lib,
   ...
 }: {
+  options.my.programs.sketchybar.enable = lib.mkEnableOption "sketchybar";
+
   config = with pkgs;
-    lib.mkIf stdenv.isDarwin {
+    lib.mkIf config.my.programs.sketchybar.enable {
+      assertions = [
+        {
+          assertion = stdenv.isDarwin;
+          message = "sketchybar is Darwin-only";
+        }
+      ];
+
       home = {
         packages = [sketchybar sketchybar-app-font];
 

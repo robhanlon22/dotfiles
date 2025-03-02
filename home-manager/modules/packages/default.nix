@@ -2,6 +2,7 @@
   imports = [./antifennel.nix];
 
   home.packages = with pkgs; [
+    cmake
     fd
     fennel
     ffmpeg
