@@ -1,0 +1,3 @@
+function loudness() {
+  ffmpeg -i "$1" -hide_banner -filter_complex ebur128=peak=true:framelog=quiet -f null -nostats -
+}

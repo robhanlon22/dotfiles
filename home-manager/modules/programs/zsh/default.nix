@@ -27,5 +27,6 @@
       ls = "ls --color=auto";
       cat = "bat";
     };
+    initExtra = builtins.readFile ./zshrc;
   };
 }

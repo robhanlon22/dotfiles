@@ -17,6 +17,7 @@
         packages = [
           coreutils
           findutils
+          ice-bar
           raycast
         ];
 

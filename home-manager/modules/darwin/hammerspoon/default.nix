@@ -1,7 +1,8 @@
 {
+  config,
+  lib,
   my,
   pkgs,
-  lib,
   ...
 }:
 with pkgs; let
@@ -37,7 +38,16 @@ with pkgs; let
     '';
   };
 in {
-  config = lib.mkIf stdenv.isDarwin {
+  options.my.programs.hammerspoon.enable = lib.mkEnableOption "hammerspoon";
+
+  config = lib.mkIf config.my.programs.hammerspoon.enable {
+    assertions = [
+      {
+        assertion = stdenv.isDarwin;
+        message = "hammerspoon is Darwin-only";
+      }
+    ];
+
     home = {
       packages = [
         hammerspoon

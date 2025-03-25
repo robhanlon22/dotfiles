@@ -15,6 +15,7 @@
       kitty.enable = false;
       neovim.enable = false;
       nixvim.enable = false;
+      starship.enable = false;
     };
   };
 }
