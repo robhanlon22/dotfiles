@@ -4,16 +4,17 @@
   outputs = inputs @ {
     flake-parts,
     pre-commit,
-    systems,
     ...
-  }:
+  }: let
+    systems = ["aarch64-linux" "aarch64-darwin" "x86_64-darwin" "x86_64-linux"];
+  in
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         ./flake-modules
         pre-commit.flakeModule
       ];
 
-      systems = import systems;
+      inherit systems;
 
       transposition.lib = {};
 
@@ -35,6 +36,15 @@
           devShells.default = config.pre-commit.devShell;
         };
       };
+
+      flake.system = builtins.listToAttrs (
+        map
+        (system: {
+          name = system;
+          value = system;
+        })
+        systems
+      );
     };
 
   inputs = {
@@ -67,6 +77,5 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    systems.url = "github:nix-systems/default";
   };
 }

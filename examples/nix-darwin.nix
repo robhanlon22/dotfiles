@@ -7,7 +7,7 @@
     pre-commit,
     ...
   }: let
-    system = "aarch64-darwin";
+    system = dotfiles.system.aarch64-darwin;
     lib = dotfiles.lib.${system};
   in
     flake-parts.lib.mkFlake {inherit inputs;} {

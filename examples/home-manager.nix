@@ -7,7 +7,7 @@
     pre-commit,
     ...
   }: let
-    system = "x86_64-linux";
+    system = dotfiles.system.x86_64-linux;
     lib = dotfiles.lib.${system};
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
