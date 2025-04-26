@@ -7,7 +7,7 @@
     pre-commit,
     ...
   }: let
-    system = "x86_64-linux";
+    system = "aarch64-darwin";
     lib = dotfiles.lib.${system};
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
@@ -15,9 +15,11 @@
 
       systems = [system];
 
-      flake = lib.homeManagerConfiguration {
+      flake = lib.darwinSystem {
         username = "rob";
+        hostname = "jazz";
         overlays = [];
+        configurationModule = ./configuration.nix;
         homeModule = ./home.nix;
       };
 
