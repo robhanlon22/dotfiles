@@ -1,5 +1,5 @@
 {my, ...}: {
-  imports = [./kitty ./nixvim ./starship ./zsh];
+  imports = [./kitty ./nixvim ./ssh.nix ./starship ./zsh];
 
   programs = with my; {
     bat.enable = true;
@@ -27,6 +27,8 @@
     gpg.enable = true;
 
     ripgrep.enable = true;
+
+    ssh.enable = true;
 
     zoxide =
       shellIntegrations

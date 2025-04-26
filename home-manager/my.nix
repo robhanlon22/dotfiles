@@ -38,21 +38,25 @@
         ctrl- = mkMod "C";
 
         which-key = {
-          group = name: attrs:
-            {
-              inherit name;
-            }
-            // attrs;
+          group = group: mappings: {
+            type = "group";
+            inherit group mappings;
+          };
 
-          vim = command: desc: [
-            "<cmd>${toString command}<cr>"
-            desc
-          ];
+          vim = action: desc: {
+            inherit action desc;
+            type = "vim";
+          };
 
-          lua = fn: desc: [
-            (my.nixvim.mkRaw fn)
-            desc
-          ];
+          lua = action: desc: {
+            inherit action desc;
+            type = "lua";
+          };
+
+          generic = action: desc: {
+            inherit action desc;
+            type = "generic";
+          };
         };
 
         wk = which-key;

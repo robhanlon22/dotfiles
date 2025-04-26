@@ -12,7 +12,7 @@
     }
     {
       mappings = {
-        "<F9>" = ["${ctrl- "\\"}${ctrl- "n"}" "Enter normal mode in terminal"];
+        "<F9>" = wk.generic "${ctrl- "\\"}${ctrl- "n"}" "Enter normal mode in terminal";
       };
       opts = {
         mode = ["t"];

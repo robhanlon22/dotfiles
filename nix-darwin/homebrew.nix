@@ -6,7 +6,10 @@
 }: let
   brewPath = "${config.homebrew.brewPrefix}/brew";
 in {
-  homebrew.enable = true;
+  homebrew = {
+    enable = true;
+    casks = ["wine-stable" "vlc"];
+  };
 
   system.activationScripts.preUserActivation.text = ''
     echo >&2 "ensuring Homebrew is available..."

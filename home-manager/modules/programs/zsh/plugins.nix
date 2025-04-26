@@ -44,11 +44,13 @@
         "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions")
     ];
   in {
-    initExtraBeforeCompInit = sourceScripts pluginsBeforeCompInit;
-    initExtra = lib.mkBefore ''
-      ${sourceScripts plugins}
-      compstyle zshzoo
-    '';
+    initContent = lib.mkMerge [
+      (lib.mkOrder 550 (sourceScripts pluginsBeforeCompInit))
+      (lib.mkOrder 600 ''
+        ${sourceScripts plugins}
+        compstyle zshzoo
+      '')
+    ];
   };
 
   home.activation = let

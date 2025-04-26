@@ -39,7 +39,7 @@
 in {
   programs.starship = my.shellIntegrations // starship;
 
-  programs.zsh.initExtraFirst = ''
+  programs.zsh.initContent = lib.mkBefore ''
     export STARSHIP_LOG=error
   '';
 }
