@@ -44,6 +44,8 @@
 
     rainbow-delimiters.enable = true;
 
+    rustaceanvim.enable = true;
+
     typescript-tools = {
       enable = true;
       settings.expose_as_code_action = "all";

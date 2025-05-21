@@ -13,6 +13,8 @@
 
   config = with pkgs;
     lib.mkIf stdenv.isDarwin {
+      stylix.targets.gnome.enable = false;
+
       home = {
         packages = [
           coreutils

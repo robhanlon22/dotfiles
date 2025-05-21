@@ -18,11 +18,6 @@
         marksman.enable = true;
         nil_ls.enable = true;
         pyright.enable = true;
-        rust_analyzer = {
-          enable = true;
-          installRustc = true;
-          installCargo = true;
-        };
         taplo.enable = true;
         solargraph.enable = true;
         yamlls.enable = true;

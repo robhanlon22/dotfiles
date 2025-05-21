@@ -11,10 +11,10 @@ in {
     casks = ["wine-stable" "vlc"];
   };
 
-  system.activationScripts.preUserActivation.text = ''
+  system.activationScripts.preActivation.text = ''
     echo >&2 "ensuring Homebrew is available..."
     if [ ! -x '${brewPath}' ]; then
-      NONINTERACTIVE=1 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      NONINTERACTIVE=1 sudo -u '${config.system.primaryUser}' bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
   '';
 

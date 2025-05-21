@@ -22,7 +22,7 @@
       ../home-manager
       homeModule
       inputs.nixvim.homeManagerModules.nixvim
-      inputs.stylix.homeManagerModules.stylix
+      inputs.stylix.homeModules.stylix
     ];
     home = {
       inherit username homeDirectory stateVersion;

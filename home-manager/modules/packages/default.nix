@@ -2,6 +2,7 @@
   imports = [./antifennel.nix];
 
   home.packages = with pkgs; [
+    cargo
     cmake
     fd
     fennel
@@ -15,6 +16,8 @@
     nodejs
     rsync
     ruby
+    rustc
+    rustlings
     sqlite
     wormhole-william
     yt-dlp
