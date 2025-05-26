@@ -4,12 +4,6 @@
   programs = with my; {
     bat.enable = true;
 
-    carapace =
-      shellIntegrations
-      // {
-        enable = true;
-      };
-
     direnv =
       shellIntegrations
       // {
