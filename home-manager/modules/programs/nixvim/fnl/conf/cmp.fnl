@@ -41,8 +41,7 @@
                    :<C-f> (cmp.mapping.scroll_docs 4)
                    :<CR> confirm-mapping
                    :<Right> confirm-mapping}
-          sources (cmp.config.sources [{:name :copilot}
-                                       {:name :nvim_lsp}
+          sources (cmp.config.sources [{:name :nvim_lsp}
                                        {:name :nvim_lsp_signature_help}
                                        {:name :nvim_lua}
                                        {:name :luasnip}
@@ -50,13 +49,10 @@
                                       [{:name :fuzzy_buffer}])
           formatting {:format (let [{:cmp_format format} (require :lspkind)]
                                 (format {:mode :symbol_text
-                                         :symbol_map {:Copilot ""}
                                          :show_labelDetails true
                                          :before before-lspkind}))}
           compare (require :cmp.config.compare)
-          {:prioritize copilot-prio} (require :copilot_cmp.comparators)
-          sorting {:comparators [copilot-prio
-                                 compare.offset
+          sorting {:comparators [compare.offset
                                  compare.exact
                                  compare.scopes
                                  compare.score

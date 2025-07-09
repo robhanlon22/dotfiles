@@ -43,8 +43,7 @@
       };
 
       flake.system = builtins.listToAttrs (
-        map
-        (system: {
+        map (system: {
           name = system;
           value = system;
         })
@@ -78,7 +77,6 @@
     stylix = {
       url = "github:danth/stylix";
       inputs = {
-        home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
       };
     };

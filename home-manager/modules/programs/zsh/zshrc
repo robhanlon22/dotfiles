@@ -1,3 +1,7 @@
 function loudness() {
-  ffmpeg -i "$1" -hide_banner -filter_complex ebur128=peak=true:framelog=quiet -f null -nostats -
+  ffmpeg -i "$1" -hide_banner -filter_complex ebur128=peak=true:framelog=quiet -f null -
+}
+
+function to-mp3() {
+  ffmpeg -i "$1" -loglevel error -stats -c:a libmp3lame -ar 44100 -b:a 320k "${1%.*}.mp3"
 }

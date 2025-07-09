@@ -2,7 +2,6 @@
   imports = [
     ./bufferline.nix
     ./cmp.nix
-    ./copilot.nix
     ./extra.nix
     ./floaterm.nix
     ./hotpot.nix
@@ -26,7 +25,7 @@
 
     committia.enable = true;
 
-    conjure.enable = true;
+    claude-code.enable = true;
 
     inc-rename.enable = true;
 
@@ -37,6 +36,8 @@
     leap.enable = true;
 
     luasnip.enable = true;
+
+    minuet.enable = true;
 
     nix.enable = true;
 

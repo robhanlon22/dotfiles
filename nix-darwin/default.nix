@@ -1,5 +1,8 @@
 {pkgs, ...}: {
-  imports = [./homebrew.nix ./my.nix];
+  imports = [
+    ./homebrew.nix
+    ./my.nix
+  ];
 
   nix = {
     enable = false;
@@ -39,6 +42,4 @@
       };
     };
   };
-
-  nixpkgs.config.allowUnfree = true;
 }

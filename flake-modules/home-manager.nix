@@ -1,6 +1,6 @@
 {inputs, ...}: {
   perSystem = {
-    pkgs,
+    system,
     lib,
     ...
   }: {
@@ -12,11 +12,12 @@
       };
 
     config.lib.homeManagerConfiguration = {username, ...} @ args: let
-      modules = import ./modules.nix (args // {inherit inputs pkgs;});
+      pkgs = import ./modules/nixpkgs.nix (args // {inherit inputs system;});
+      home-manager = import ./modules/home-manager.nix (args // {inherit inputs pkgs;});
     in {
       homeConfigurations.${username} = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        modules = [modules.nixpkgs modules.home-manager];
+        modules = [home-manager];
       };
     };
   };

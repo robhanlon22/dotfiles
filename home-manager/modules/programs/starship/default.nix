@@ -1,5 +1,4 @@
 {
-  my,
   config,
   pkgs,
   lib,
@@ -12,19 +11,31 @@
       builtins.readFile
       builtins.fromTOML
     ];
-  catppuccin = readTOML (pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/catppuccin/starship/main/themes/mocha.toml";
-    hash = "sha256-cSaZrSfbk97d2kV3q5dT924MgmUuY8eYIIU0PIygH5w=";
-  });
-  nerdfonts = readTOML (pkgs.runCommand "starship-nerdfonts" {} ''
-    ${config.programs.starship.package}/bin/starship preset nerd-font-symbols -o $out
-  '');
+  catppuccin = readTOML (
+    pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/catppuccin/starship/main/themes/mocha.toml";
+      hash = "sha256-cSaZrSfbk97d2kV3q5dT924MgmUuY8eYIIU0PIygH5w=";
+    }
+  );
+  nerdfonts = readTOML (
+    pkgs.runCommand "starship-nerdfonts" {} ''
+      ${config.programs.starship.package}/bin/starship preset nerd-font-symbols -o $out
+    ''
+  );
   settings = {
     format = lib.mkDefault "$all";
     palette = "catppuccin_${flavor}";
     command_timeout = 50;
-    directory = nerdfonts.directory // {style = "bold teal";};
-    git_branch = nerdfonts.git_branch // {style = "bold lavender";};
+    directory =
+      nerdfonts.directory
+      // {
+        style = "bold teal";
+      };
+    git_branch =
+      nerdfonts.git_branch
+      // {
+        style = "bold lavender";
+      };
     shell = {
       disabled = false;
       bash_indicator = "󰣪";
@@ -32,12 +43,12 @@
       zsh_indicator = "󰰷";
     };
   };
-  starship = {
+in {
+  programs.starship = {
     enable = true;
     settings = catppuccin // nerdfonts // settings;
+    enableZshIntegration = true;
   };
-in {
-  programs.starship = my.shellIntegrations // starship;
 
   programs.zsh.initContent = lib.mkBefore ''
     export STARSHIP_LOG=error

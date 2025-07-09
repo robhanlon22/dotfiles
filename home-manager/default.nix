@@ -1,3 +1,6 @@
 {
-  imports = [./modules ./my.nix];
+  imports = [
+    ./modules
+    ./my.nix
+  ];
 }

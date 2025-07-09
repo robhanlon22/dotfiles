@@ -24,25 +24,25 @@
           configurationModule,
           ...
         } @ args: let
-          modules = import ./modules.nix (args // {inherit inputs pkgs;});
+          pkgs = import ./modules/nixpkgs.nix (args // {inherit inputs system;});
+          home-manager = import ./modules/home-manager.nix (args // {inherit inputs pkgs;});
 
           darwinConfiguration = inputs.nix-darwin.lib.darwinSystem {
+            inherit pkgs;
             modules = [
               {
                 # Set Git commit hash for darwin-version.
                 system.configurationRevision = self.rev or self.dirtyRev or null;
                 users.users.${username}.home = homeDirectory;
                 nix.settings.trusted-users = [username];
-                nixpkgs.hostPlatform = system;
               }
-              modules.nixpkgs
               ../nix-darwin
               configurationModule
               inputs.home-manager.darwinModules.home-manager
               {
                 home-manager = {
                   useUserPackages = true;
-                  users.${username} = modules.home-manager;
+                  users.${username} = home-manager;
                 };
               }
             ];

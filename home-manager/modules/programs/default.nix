@@ -1,17 +1,20 @@
-{my, ...}: {
-  imports = [./kitty ./nixvim ./ssh.nix ./starship ./zsh];
+{
+  imports = [
+    ./kitty
+    ./nixvim
+    ./ssh.nix
+    ./starship
+    ./zsh
+  ];
 
-  programs = with my; {
+  programs = {
     bat.enable = true;
 
-    direnv =
-      shellIntegrations
-      // {
-        enable = true;
-        nix-direnv.enable = true;
-      };
-
-    nushell.enable = true;
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
 
     fzf = {
       enable = true;
@@ -20,14 +23,15 @@
 
     gpg.enable = true;
 
+    mise.enable = true;
+
     ripgrep.enable = true;
 
     ssh.enable = true;
 
-    zoxide =
-      shellIntegrations
-      // {
-        enable = true;
-      };
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
   };
 }

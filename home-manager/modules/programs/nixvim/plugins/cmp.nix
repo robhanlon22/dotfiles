@@ -10,7 +10,6 @@
       cmp-nvim-lsp-signature-help.enable = true;
       cmp-nvim-lsp.enable = true;
       cmp.enable = true;
-      copilot-cmp.enable = true;
       friendly-snippets.enable = true;
       lsp.capabilities = ''
         capabilities = conf.cmp.capabilities(capabilities)

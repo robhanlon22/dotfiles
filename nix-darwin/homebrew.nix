@@ -8,7 +8,10 @@
 in {
   homebrew = {
     enable = true;
-    casks = ["wine-stable" "vlc"];
+    casks = [
+      "wine-stable"
+      "vlc"
+    ];
   };
 
   system.activationScripts.preActivation.text = ''
@@ -23,6 +26,7 @@ in {
     export PATH="${lib.makeBinPath (config.environment.profiles ++ ["$PATH"])}"
     typeset -aU path
     path=(''${path[@]})
+    export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_NO_ENV_HINTS=1
     source '${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/brew/brew.plugin.zsh'
   '';

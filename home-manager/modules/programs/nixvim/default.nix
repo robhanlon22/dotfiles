@@ -2,6 +2,7 @@
   imports = [./plugins];
 
   programs.nixvim = {
+    nixpkgs.pkgs = pkgs;
     enable = true;
     defaultEditor = true;
     viAlias = true;
@@ -70,6 +71,10 @@
 
     extraConfigLuaPre = ''
       require("hotpot").setup({})
+
+      if vim.g.vscode then
+        return
+      end
 
       local conf = require("conf")(vim)
     '';

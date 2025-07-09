@@ -9,14 +9,11 @@
   config.my = {
     home.bin = "${config.home.profileDirectory}/bin";
 
-    shellIntegrations = {
-      enableNushellIntegration = true;
-      enableZshIntegration = true;
-    };
-
     hm = {
       activations = with lib;
-        pipe ["writeBoundary"] [
+        pipe
+        ["writeBoundary"]
+        [
           hm.dag.entryAfter
           const
           mapAttrs

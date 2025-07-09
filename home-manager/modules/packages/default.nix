@@ -3,6 +3,7 @@
 
   home.packages = with pkgs; [
     cargo
+    claude-code
     cmake
     fd
     fennel
@@ -19,6 +20,7 @@
     rustc
     rustlings
     sqlite
+    tree-sitter
     wormhole-william
     yt-dlp
   ];
