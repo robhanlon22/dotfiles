@@ -2,6 +2,7 @@
   imports = [
     ./zsh.nix
     ./homebrew.nix
+    ./ghostty.nix
     ./my.nix
   ];
 
@@ -10,7 +11,11 @@
     package = pkgs.nix;
   };
 
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    enableBashCompletion = false;
+    enableGlobalCompInit = false;
+  };
 
   security.pam.services.sudo_local.touchIdAuth = true;
 

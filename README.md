@@ -20,11 +20,15 @@ by overriding the values defined in `my.nix`.
 `homeManagerConfiguration` now defaults to a lightweight base module:
 
 - `home-manager/lightweight.nix`
-- `git`, `ssh`, `zsh`, and `neovim` (LazyVim-style config path)
-- no `nixvim` dependency in the default path
+- only core Home Manager wiring (`my.nix` + `programs.home-manager`)
+- no default package/program modules enabled
 
 If you want a different base, pass `baseHomeModule` to
 `lib.${system}.homeManagerConfiguration`.
+
+`nix-darwin` owns base `zsh` unless Home Manager explicitly enables
+`programs.zsh` for the primary user. This avoids duplicate shell setup while
+keeping a working default when Home Manager is enabled in minimal mode.
 
 ## Mutable local overrides
 

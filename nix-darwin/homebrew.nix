@@ -1,14 +1,17 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
-  brewPath = "${config.homebrew.brewPrefix}/brew";
+  brewBinDir = config.homebrew.brewPrefix;
+  brewPrefix = builtins.dirOf brewBinDir;
+  brewPath = "${brewBinDir}/brew";
 in {
   homebrew = {
     enable = true;
     casks = [
+      "ghostty"
+      "raycast"
       "wine-stable"
       "vlc"
     ];
@@ -22,13 +25,16 @@ in {
   '';
 
   programs.zsh.interactiveShellInit = lib.mkBefore ''
-    eval "$('${brewPath}' shellenv)"
-    export PATH="${lib.makeBinPath (config.environment.profiles ++ ["$PATH"])}"
-    typeset -aU path
+    export HOMEBREW_PREFIX="${brewPrefix}"
+    export HOMEBREW_CELLAR="${brewPrefix}/Cellar"
+    export HOMEBREW_REPOSITORY="${brewPrefix}"
+    export PATH="${brewPrefix}/bin:${brewPrefix}/sbin:$PATH"
+    export INFOPATH="${brewPrefix}/share/info:''${INFOPATH:-}"
+    fpath=("${brewPrefix}/share/zsh/site-functions" ''${fpath[@]})
+    typeset -aU path fpath
     path=(''${path[@]})
     export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_NO_ENV_HINTS=1
-    source '${pkgs.oh-my-zsh}/share/oh-my-zsh/plugins/brew/brew.plugin.zsh'
   '';
 
   launchd.user.agents.brew-upgrade = {

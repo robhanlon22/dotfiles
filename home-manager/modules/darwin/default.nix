@@ -20,7 +20,6 @@
           coreutils
           findutils
           ice-bar
-          raycast
         ];
 
         file.".gnupg/gpg-agent.conf".text = ''

@@ -1,6 +1,5 @@
 {
   config,
-  enableHomeManager ? false,
   lib,
   pkgs,
   ...
@@ -8,7 +7,7 @@
   zshShared = import ../shared/zsh.nix {inherit lib pkgs;};
   inherit (zshShared) sourceScripts;
 in {
-  config = lib.mkIf (!enableHomeManager) {
+  config = {
     environment.systemPackages = with pkgs; [
       bat
       ffmpeg
@@ -36,6 +35,7 @@ in {
 
       interactiveShellInit = lib.mkAfter ''
         ${sourceScripts zshShared.pluginsBeforeCompInit}
+        autoload -U compinit && compinit -C
 
         export STARSHIP_LOG=error
 
@@ -44,7 +44,10 @@ in {
 
         ${sourceScripts zshShared.plugins}
         compstyle zshzoo
-        fast-theme -q '${zshShared.catppuccinFastTheme}'
+        if [[ -t 1 ]]; then
+          mkdir -p "''${XDG_CACHE_HOME:-$HOME/.cache}/fsh" >/dev/null 2>&1 || true
+          fast-theme -q '${zshShared.catppuccinFastTheme}' >/dev/null 2>&1 || true
+        fi
 
         ${builtins.readFile ../shared/zshrc}
       '';
