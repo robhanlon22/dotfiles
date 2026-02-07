@@ -65,14 +65,16 @@
                    :priority_weight 2}
           window {:completion (cmp.config.window.bordered)
                   :documentation (cmp.config.window.bordered)}
-          experimental {:ghost_text true}]
+          experimental {:ghost_text true}
+          performance {:debounce 200 :throttle 100 :max_view_entries 50}]
       (cmp.setup {: mapping
                   : expand
                   : sources
                   : formatting
                   : sorting
                   : window
-                  : experimental}))))
+                  : experimental
+                  : performance}))))
 
 (fn gitcommit-setup [{: cmp}]
   (cmp.setup.filetype :gitcommit

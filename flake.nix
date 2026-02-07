@@ -1,11 +1,7 @@
 {
   description = "Dotfiles builder";
 
-  outputs = inputs @ {
-    flake-parts,
-    pre-commit,
-    ...
-  }: let
+  outputs = inputs @ {flake-parts, ...}: let
     systems = [
       "aarch64-linux"
       "aarch64-darwin"
@@ -16,18 +12,13 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         ./flake-modules
-        pre-commit.flakeModule
       ];
 
       inherit systems;
 
       transposition.lib = {};
 
-      perSystem = {
-        config,
-        lib,
-        ...
-      }: {
+      perSystem = {lib, ...}: {
         options.lib = with lib;
           mkOption {
             type = with types;
@@ -35,11 +26,6 @@
                 freeformType = anything;
               };
           };
-
-        config = {
-          pre-commit.settings.hooks = config.lib.preCommitHooks;
-          devShells.default = config.pre-commit.devShell;
-        };
       };
 
       flake.system = builtins.listToAttrs (
@@ -64,16 +50,8 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nur.url = "github:nix-community/NUR";
-    pre-commit = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     stylix = {
       url = "github:danth/stylix";
       inputs = {

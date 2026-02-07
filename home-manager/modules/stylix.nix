@@ -12,6 +12,8 @@
       package = pkgs.nerd-fonts.caskaydia-cove;
     };
     targets = {
+      bat.enable = false;
+      fish.enable = false;
       kitty.enable = false;
       neovim.enable = false;
       nixvim.enable = false;

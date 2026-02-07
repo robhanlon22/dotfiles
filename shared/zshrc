@@ -5,3 +5,15 @@ function loudness() {
 function to-mp3() {
   ffmpeg -i "$1" -loglevel error -stats -c:a libmp3lame -ar 44100 -b:a 320k "${1%.*}.mp3"
 }
+
+if command -v fzf >/dev/null; then
+  source <(fzf --zsh)
+fi
+
+if [ -x "$HOME/.local/bin/mise" ]; then
+  eval "$($HOME/.local/bin/mise activate zsh)"
+fi
+
+if command -v fnox >/dev/null; then
+  eval "$(fnox activate zsh)"
+fi

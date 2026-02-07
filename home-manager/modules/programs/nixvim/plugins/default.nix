@@ -25,6 +25,8 @@
 
     committia.enable = true;
 
+    conjure.enable = true;
+
     claude-code.enable = true;
 
     inc-rename.enable = true;
@@ -37,15 +39,11 @@
 
     luasnip.enable = true;
 
-    minuet.enable = true;
-
     nix.enable = true;
 
     nvim-autopairs.enable = true;
 
     rainbow-delimiters.enable = true;
-
-    rustaceanvim.enable = true;
 
     typescript-tools = {
       enable = true;

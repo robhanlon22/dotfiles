@@ -1,7 +1,7 @@
 {
   config,
+  darwinLaunchdAgents,
   lib,
-  my,
   pkgs,
   ...
 }:
@@ -82,7 +82,7 @@ in {
 
     launchd = {
       enable = true;
-      agents = my.darwin.launchdAgents {
+      agents = darwinLaunchdAgents {
         hammerspoon = {
           debug = true;
           Program = "${hammerspoon}/share/Hammerspoon.app/Contents/MacOS/Hammerspoon";

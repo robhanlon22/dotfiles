@@ -3,85 +3,85 @@
 PLUGIN_DIR="$(dirname "${BASH_SOURCE[0]}")/plugins"
 
 sketchybar --bar height=44 \
-  blur_radius=10 \
-  position=top \
-  sticky=off \
-  padding_left=0 \
-  padding_right=0 \
-  color=0xee1c0538
+	blur_radius=10 \
+	position=top \
+	sticky=off \
+	padding_left=0 \
+	padding_right=0 \
+	color=0xee1c0538
 
 FONT_FACE="CaskaydiaCove Nerd Font Mono"
 APP_ICON_FONT="sketchybar-app-font:Regular:17.0"
 
 sketchybar --default \
-  height=44 \
-  icon.color=0xffcdd6f4 \
-  icon.font="$FONT_FACE:Bold:25.0" \
-  label.font="$FONT_FACE:Bold:16.0" \
-  icon.padding_right=5 \
-  label.color=0xffcdd6f4
+	height=44 \
+	icon.color=0xffcdd6f4 \
+	icon.font="$FONT_FACE:Bold:25.0" \
+	label.font="$FONT_FACE:Bold:16.0" \
+	icon.padding_right=5 \
+	label.color=0xffcdd6f4
 
 sketchybar --add item front_app left \
-  --set front_app script="$PLUGIN_DIR/front_app.sh" \
-  icon.font="$APP_ICON_FONT" \
-  background.color=0x551e66f5 \
-  width=150 \
-  label.max_chars=10 \
-  scroll_texts=true \
-  align=center \
-  --subscribe front_app front_app_switched
+	--set front_app script="$PLUGIN_DIR/front_app.sh" \
+	icon.font="$APP_ICON_FONT" \
+	background.color=0x551e66f5 \
+	width=150 \
+	label.max_chars=10 \
+	scroll_texts=true \
+	align=center \
+	--subscribe front_app front_app_switched
 
 sketchybar --add item weather left \
-  --set weather \
-  icon.drawing=no \
-  label.drawing=no \
-  update_freq=1800 \
-  script="$PLUGIN_DIR/weather.sh" \
-  --subscribe weather system_woke
+	--set weather \
+	icon.drawing=no \
+	label.drawing=no \
+	update_freq=1800 \
+	script="$PLUGIN_DIR/weather.sh" \
+	--subscribe weather system_woke
 
 sketchybar --add item weather.conditions left \
-  --set weather.conditions \
-  width=45 \
-  align=center \
-  icon.font="$FONT_FACE:Bold:40.0" \
-  label.drawing=no \
-  background.color=0x5504a5e5
+	--set weather.conditions \
+	width=45 \
+	align=center \
+	icon.font="$FONT_FACE:Bold:40.0" \
+	label.drawing=no \
+	background.color=0x5504a5e5
 
 sketchybar --add item weather.temperature left \
-  --set weather.temperature \
-  width=61 \
-  icon.font="$FONT_FACE:Bold:20.0" \
-  icon.padding_right=7 \
-  align=center \
-  background.color=0x5540a02b
+	--set weather.temperature \
+	width=61 \
+	icon.font="$FONT_FACE:Bold:20.0" \
+	icon.padding_right=7 \
+	align=center \
+	background.color=0x5540a02b
 
 sketchybar --add item weather.wind left \
-  --set weather.wind \
-  width=60 \
-  align=center \
-  background.color=0x558839ef
+	--set weather.wind \
+	width=60 \
+	align=center \
+	background.color=0x558839ef
 
 sketchybar --add item clock right \
-  --set clock update_freq=10 \
-  width=198 \
-  background.color=0x55fe640b \
-  align=center \
-  script="$PLUGIN_DIR/clock.sh"
+	--set clock update_freq=10 \
+	width=198 \
+	background.color=0x55fe640b \
+	align=center \
+	script="$PLUGIN_DIR/clock.sh"
 
 sketchybar --add item volume right \
-  --set volume script="$PLUGIN_DIR/volume.sh" \
-  icon.font="$APP_ICON_FONT" \
-  background.color=0x55dc8a78 \
-  width=84 \
-  align=center \
-  --subscribe volume volume_change
+	--set volume script="$PLUGIN_DIR/volume.sh" \
+	icon.font="$APP_ICON_FONT" \
+	background.color=0x55dc8a78 \
+	width=84 \
+	align=center \
+	--subscribe volume volume_change
 
 sketchybar --add item battery right \
-  --set battery script="$PLUGIN_DIR/battery.sh" \
-  update_freq=120 \
-  width=81 \
-  align=center \
-  background.color=0x55d20f39 \
-  --subscribe battery system_woke power_source_change
+	--set battery script="$PLUGIN_DIR/battery.sh" \
+	update_freq=120 \
+	width=81 \
+	align=center \
+	background.color=0x55d20f39 \
+	--subscribe battery system_woke power_source_change
 
 sketchybar --update

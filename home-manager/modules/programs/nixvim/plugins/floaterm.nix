@@ -1,7 +1,7 @@
-{my, ...}: {
+{nixvimKeymap, ...}: {
   programs.nixvim.plugins.floaterm.enable = true;
 
-  my.programs.nixvim.plugins.which-key.register = with my.nixvim.keymap; [
+  my.programs.nixvim.plugins.which-key.register = with nixvimKeymap; [
     {
       mappings = {
         "<F10>" = wk.vim "FloatermToggle" "Toggle floating terminal";

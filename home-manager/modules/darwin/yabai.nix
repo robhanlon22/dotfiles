@@ -1,6 +1,6 @@
 {
-  my,
   config,
+  darwinLaunchdAgents,
   pkgs,
   lib,
   ...
@@ -15,7 +15,7 @@
       }
     ];
 
-    launchd.agents = my.darwin.launchdAgents {
+    launchd.agents = darwinLaunchdAgents {
       yabai.ProgramArguments = let
         yabai = "${pkgs.yabai}/bin/yabai";
         yabairc = pkgs.writeScript "yabairc" (

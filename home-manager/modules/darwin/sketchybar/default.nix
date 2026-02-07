@@ -1,6 +1,7 @@
 {
-  my,
   config,
+  darwinLaunchdAgents,
+  hmActivations,
   pkgs,
   lib,
   ...
@@ -19,14 +20,14 @@
       home = {
         packages = [sketchybar sketchybar-app-font];
 
-        activation = my.hm.activations {
+        activation = hmActivations {
           sketchybarReload = ''
             ${sketchybar}/bin/sketchybar --reload
           '';
         };
       };
 
-      launchd.agents = my.darwin.launchdAgents {
+      launchd.agents = darwinLaunchdAgents {
         sketchybar.zshProgram = "${sketchybar}/bin/sketchybar";
       };
 

@@ -55,18 +55,6 @@
             action = "hover";
             desc = "Show info";
           };
-          gd = {
-            action = "definition";
-            desc = "Go to definition";
-          };
-          gi = {
-            action = "implementation";
-            desc = "Go to implementation";
-          };
-          gt = {
-            action = "type_definition";
-            desc = "Go to type definition";
-          };
         };
       };
     };

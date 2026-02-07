@@ -2,19 +2,19 @@
   programs.ssh = {
     enable = true;
 
-    # Global defaults
-    controlMaster = "auto";
-    controlPath = "~/.ssh/cm-%r@%h:%p";
-    controlPersist = "10m";
-
-    compression = true;
-    hashKnownHosts = true;
-    forwardAgent = false;
-
-    serverAliveInterval = 60;
-    serverAliveCountMax = 3;
+    enableDefaultConfig = false;
 
     matchBlocks."*" = {
+      controlMaster = "auto";
+      controlPath = "~/.ssh/cm-%r@%h:%p";
+      controlPersist = "10m";
+
+      compression = true;
+      hashKnownHosts = true;
+      forwardAgent = false;
+
+      serverAliveInterval = 60;
+      serverAliveCountMax = 3;
       forwardX11 = false;
       forwardX11Trusted = false;
 

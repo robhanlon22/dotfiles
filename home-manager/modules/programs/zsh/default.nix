@@ -1,9 +1,15 @@
 {
   config,
-  my,
+  lib,
+  pkgs,
   ...
-}: {
-  imports = [./nix.nix ./plugins.nix];
+}: let
+  zshShared = import ../../../../shared/zsh.nix {inherit lib pkgs;};
+in {
+  imports = [
+    ./nix.nix
+    ./plugins.nix
+  ];
 
   programs.zsh = {
     enable = true;
@@ -21,12 +27,7 @@
       GPG_TTY = "$(tty)";
       FAST_WORK_DIR = "${config.xdg.configHome}/fsh";
     };
-    shellAliases = {
-      cddb = "cd ${my.dotfiles.base}";
-      cddc = "cd ${my.dotfiles.config}";
-      ls = "ls --color=auto";
-      cat = "bat";
-    };
-    initContent = builtins.readFile ./zshrc;
+    shellAliases = zshShared.mkBaseAliases config.my.dotfiles;
+    initContent = builtins.readFile ../../../../shared/zshrc;
   };
 }

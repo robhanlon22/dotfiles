@@ -3,51 +3,15 @@
   pkgs,
   lib,
   ...
-}: {
-  programs.zsh = let
-    zsh-utils = pkgs.fetchFromGitHub {
-      owner = "belak";
-      repo = "zsh-utils";
-      rev = "main";
-      hash = "sha256-lO3+Pa8YjQaVkuD93fgO2AOcWN5JvNIBxBDu9+0ck48=";
-    };
-
-    script = name: dir: {inherit name dir;};
-
-    zshUtil = name: script "${name}.plugin" "${zsh-utils}/${name}";
-
-    ohMyZsh = name: dir:
-      script name "${pkgs.oh-my-zsh}/share/oh-my-zsh/${dir}";
-    ohMyZshLib = name: ohMyZsh name "lib";
-    ohMyZshPlugin = name: ohMyZsh "${name}.plugin" "plugins/${name}";
-
-    sourceScripts = lib.concatMapStringsSep "\n" ({
-      name,
-      dir,
-    }: ''
-      source '${dir}/${name}.zsh'
-    '');
-
-    pluginsBeforeCompInit = [
-      (zshUtil "completion")
-      (zshUtil "editor")
-    ];
-
-    plugins = [
-      (zshUtil "history")
-      (zshUtil "utility")
-      (ohMyZshPlugin "git")
-      (ohMyZshLib "directories")
-      (ohMyZshLib "spectrum")
-      (script
-        "fast-syntax-highlighting.plugin"
-        "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions")
-    ];
-  in {
+}: let
+  zshShared = import ../../../../shared/zsh.nix {inherit lib pkgs;};
+  inherit (zshShared) sourceScripts fastSyntaxHighlighting;
+in {
+  programs.zsh = {
     initContent = lib.mkMerge [
-      (lib.mkOrder 550 (sourceScripts pluginsBeforeCompInit))
+      (lib.mkOrder 550 (sourceScripts zshShared.pluginsBeforeCompInit))
       (lib.mkOrder 600 ''
-        ${sourceScripts plugins}
+        ${sourceScripts zshShared.plugins}
         compstyle zshzoo
       '')
     ];
@@ -55,18 +19,10 @@
 
   home.activation = let
     setFastTheme = pkgs.writeShellScript "set-fast-theme" ''
-      source "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh"
-      fast-theme -q XDG:themes/catppuccin-mocha
+      source "${fastSyntaxHighlighting}/fast-syntax-highlighting.plugin.zsh"
+      fast-theme -q '${zshShared.catppuccinFastTheme}'
     '';
   in {
     fastTheme = "${config.programs.zsh.package}/bin/zsh ${setFastTheme}";
-  };
-
-  xdg.configFile."fsh/themes/catppuccin-mocha.ini" = {
-    enable = true;
-    source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/catppuccin/zsh-fsh/main/themes/catppuccin-mocha.ini";
-      hash = "sha256-YuiWhbgxlIZRlLBB0ut5ge5KLmnPrqgrBhQ7PUswYU4=";
-    };
   };
 }

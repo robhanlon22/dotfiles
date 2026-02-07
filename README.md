@@ -15,9 +15,25 @@ to live in `~/.config/dotfiles`, and a local clone of this flake is meant to
 live in `~/Documents/dotfiles`. These can be changed on a per-machine basis
 by overriding the values defined in `my.nix`.
 
-Speaking of the `my.nix`s that are scattered throughout this flake... these
-form a custom `lib` hierarchy. Rather than futz with extending `lib`, `my`
-lives its own separate life, and is available in all modules via `_module.args`
-under the `my` attr. Custom program definitions also use `my` as a prefix by
-convention to disambiguate them from programs defined by `home-manager`,
-`nixvim`, etc.
+## Lightweight by default
+
+`homeManagerConfiguration` now defaults to a lightweight base module:
+
+- `home-manager/lightweight.nix`
+- `git`, `ssh`, `zsh`, and `neovim` (LazyVim-style config path)
+- no `nixvim` dependency in the default path
+
+If you want a different base, pass `baseHomeModule` to
+`lib.${system}.homeManagerConfiguration`.
+
+## Mutable local overrides
+
+When present, these local modules are auto-imported:
+
+- `local/nix-darwin.nix`
+- `local/home-manager.nix`
+
+For Neovim, if `local/nvim/` exists, Home Manager symlinks `~/.config/nvim`
+to that directory as an out-of-store symlink.
+
+See `local/README.md` for examples.

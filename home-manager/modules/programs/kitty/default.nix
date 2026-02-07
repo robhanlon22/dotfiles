@@ -1,6 +1,6 @@
 {
-  my,
   config,
+  homeBin,
   ...
 }: let
   # Use latte colors because black and white text can render on top of them
@@ -50,7 +50,7 @@ in {
       tab_bar_style = "fade";
       tab_fade = "0.29629629629 0.44444444444 0.66666666667 1";
       scrollback_pager = ''
-        "${my.home.bin}/nvim" -c "silent write! /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer -"
+        "${homeBin}/nvim" -c "silent write! /tmp/kitty_scrollback_buffer | te cat /tmp/kitty_scrollback_buffer -"
       '';
       window_margin_width = 10;
       window_padding_width = 10;

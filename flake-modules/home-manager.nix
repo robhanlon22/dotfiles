@@ -13,7 +13,7 @@
 
     config.lib.homeManagerConfiguration = {username, ...} @ args: let
       pkgs = import ./modules/nixpkgs.nix (args // {inherit inputs system;});
-      home-manager = import ./modules/home-manager.nix (args // {inherit inputs pkgs;});
+      home-manager = import ./modules/home-manager.nix (args // {inherit inputs lib pkgs;});
     in {
       homeConfigurations.${username} = inputs.home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [./plugins];
 
   programs.nixvim = {
@@ -71,16 +76,11 @@
 
     extraConfigLuaPre = ''
       require("hotpot").setup({})
-
-      if vim.g.vscode then
-        return
-      end
-
       local conf = require("conf")(vim)
     '';
   };
 
-  xdg.configFile = {
+  xdg.configFile = lib.mkIf config.programs.nixvim.enable {
     "nvim/fnl" = {
       enable = true;
       source = ./fnl;

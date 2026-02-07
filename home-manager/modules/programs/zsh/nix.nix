@@ -1,9 +1,10 @@
-{my, ...}: let
-  update = dir: "(cd ${dir} && nix flake update)";
-  switch = cmd: "${update my.dotfiles.base} && ${update my.dotfiles.config} && ${cmd} switch --flake ${my.dotfiles.config}";
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  zshShared = import ../../../../shared/zsh.nix {inherit lib pkgs;};
 in {
-  programs.zsh.shellAliases = {
-    hmup = switch "home-manager";
-    ndup = switch "sudo darwin-rebuild";
-  };
+  programs.zsh.shellAliases = zshShared.mkUpdateAliases config.my.dotfiles;
 }

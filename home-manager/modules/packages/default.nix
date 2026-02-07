@@ -1,27 +1,31 @@
 {pkgs, ...}: {
   imports = [./antifennel.nix];
 
-  home.packages = with pkgs; [
-    cargo
-    claude-code
+  home.packages = with pkgs; let
+    bunx = package: ''
+      ${pkgs.bun}/bin/bunx -y ${package} "$@"
+    '';
+  in [
+    _1password-cli
     cmake
+    devenv
     fd
-    fennel
+    fennel-ls
     ffmpeg
     gh
-    git
-    git-lfs
     jq
     lame
+    luaPackages.fennel
     nerd-fonts.caskaydia-cove
     nodejs
+    openai
     rsync
     ruby
-    rustc
-    rustlings
     sqlite
     tree-sitter
     wormhole-william
     yt-dlp
+    (writeShellScriptBin "codex" (bunx "@openai/codex"))
+    (writeShellScriptBin "repomix" (bunx "repomix"))
   ];
 }

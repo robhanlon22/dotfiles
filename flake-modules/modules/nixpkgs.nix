@@ -11,5 +11,14 @@ import inputs.nixpkgs {
     allowUnfree = true;
     allowUnfreePredicate = _: true;
   };
-  overlays = [inputs.nur.overlays.default] ++ overlays;
+  overlays =
+    [
+      inputs.nur.overlays.default
+      (_final: prev: {
+        fish = prev.fish.overrideAttrs (_old: {
+          doCheck = false;
+        });
+      })
+    ]
+    ++ overlays;
 }

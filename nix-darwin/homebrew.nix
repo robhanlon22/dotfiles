@@ -21,7 +21,7 @@ in {
     fi
   '';
 
-  programs.zsh.interactiveShellInit = ''
+  programs.zsh.interactiveShellInit = lib.mkBefore ''
     eval "$('${brewPath}' shellenv)"
     export PATH="${lib.makeBinPath (config.environment.profiles ++ ["$PATH"])}"
     typeset -aU path

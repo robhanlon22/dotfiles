@@ -1,14 +1,43 @@
 {
+  hmActivations,
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
+    ./git.nix
     ./kitty
-    ./nixvim
+    ./neovim
     ./ssh.nix
     ./starship
     ./zsh
   ];
 
+  home.activation = hmActivations {
+    batCacheReset = let
+      bat-cache = "${config.programs.bat.package}/bin/bat cache";
+    in ''
+      ${bat-cache} --clear
+      ${bat-cache} --build
+    '';
+  };
+
   programs = {
-    bat.enable = true;
+    bash.enable = true;
+
+    bat = {
+      enable = true;
+      config.theme = "catppuccin-mocha";
+      themes.catppuccin-mocha = {
+        src = pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "bat";
+          rev = "main";
+          hash = "sha256-lJapSgRVENTrbmpVyn+UQabC9fpV1G1e+CdlJ090uvg=";
+        };
+        file = "themes/Catppuccin Mocha.tmTheme";
+      };
+    };
 
     direnv = {
       enable = true;
@@ -18,12 +47,13 @@
 
     fzf = {
       enable = true;
-      enableZshIntegration = true;
+      enableBashIntegration = true;
+      enableZshIntegration = false;
     };
 
-    gpg.enable = true;
+    fish.enable = false;
 
-    mise.enable = true;
+    gpg.enable = true;
 
     ripgrep.enable = true;
 
@@ -31,6 +61,7 @@
 
     zoxide = {
       enable = true;
+      enableBashIntegration = true;
       enableZshIntegration = true;
     };
   };

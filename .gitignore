@@ -2,3 +2,6 @@
 .pre-commit-config.yaml
 .direnv
 .vscode
+local/home-manager.nix
+local/nix-darwin.nix
+local/nvim

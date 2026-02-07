@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./zsh.nix
     ./homebrew.nix
     ./my.nix
   ];

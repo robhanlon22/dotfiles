@@ -1,5 +1,5 @@
 {
-  my,
+  hmActivations,
   pkgs,
   ...
 }: {
@@ -7,7 +7,7 @@
     pkgs.vimPlugins.hotpot-nvim
   ];
 
-  home.activation = my.hm.activations {
+  home.activation = hmActivations {
     hotpotCache = ''
       (
         set -x
