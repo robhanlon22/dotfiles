@@ -37,7 +37,8 @@ When present, these local modules are auto-imported:
 - `local/nix-darwin.nix`
 - `local/home-manager.nix`
 
-For Neovim, if `local/nvim/` exists, Home Manager symlinks `~/.config/nvim`
-to that directory as an out-of-store symlink.
+For Neovim, Home Manager always symlinks `~/.config/nvim` to a mutable
+out-of-store path (default: `~/.config/nvim-local`) and bootstraps that
+directory from the bundled LazyVim starter when `init.lua` is missing.
 
 See `local/README.md` for examples.

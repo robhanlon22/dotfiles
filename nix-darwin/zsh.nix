@@ -14,6 +14,7 @@ in {
       fzf
       neovim
       starship
+      zoxide
     ];
 
     environment.shellAliases =
@@ -34,6 +35,8 @@ in {
       };
 
       interactiveShellInit = lib.mkAfter ''
+        eval "$(${lib.getExe pkgs.zoxide} init zsh)"
+
         ${sourceScripts zshShared.pluginsBeforeCompInit}
         autoload -U compinit && compinit -C
 

@@ -17,6 +17,10 @@
     enableGlobalCompInit = false;
   };
 
+  fonts.packages = with pkgs; [
+    nerd-fonts.recursive-mono
+  ];
+
   security.pam.services.sudo_local.touchIdAuth = true;
 
   system = {

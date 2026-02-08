@@ -11,7 +11,7 @@
   baseHomeModule ? ../../home-manager/lightweight.nix,
   homeModule,
   localHomeModule ? ../../local/home-manager.nix,
-  localNvimConfig ? ../../local/nvim,
+  localNvimConfig ? "${homeDirectory}/.config/nvim-local",
   extraHomeModules ? [],
   ...
 }: {
